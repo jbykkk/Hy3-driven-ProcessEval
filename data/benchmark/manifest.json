@@ -1,0 +1,60 @@
+{
+  "schema_version": "1.0",
+  "seed": 20260824,
+  "selection_method": "ascending SHA-256 rank of '<seed>:<stable-id>' within each stratum",
+  "counts": {
+    "gsm8k": 100,
+    "math": 250,
+    "aime": 50,
+    "total": 400
+  },
+  "strata": {
+    "math_levels": {
+      "Level 1": 50,
+      "Level 2": 50,
+      "Level 3": 50,
+      "Level 4": 50,
+      "Level 5": 50
+    },
+    "aime_years": {
+      "2024": 25,
+      "2025": 25
+    }
+  },
+  "sources": {
+    "gsm8k": {
+      "repo": "openai/gsm8k",
+      "revision": "740312add88f781978c0658806c59bc2815b9866"
+    },
+    "math": {
+      "repo": "EleutherAI/hendrycks_math",
+      "revision": "21a5633873b6a120296cce3e2df9d5550074f4a3"
+    },
+    "aime24": {
+      "repo": "math-ai/aime24",
+      "revision": "83a7f387baaa524a8bda0022eac0541582297103"
+    },
+    "aime25": {
+      "repo": "math-ai/aime25",
+      "revision": "563bb8404243c5f09de6ec262f2db674fe5bce9b"
+    }
+  },
+  "files": {
+    "gsm8k.jsonl": {
+      "records": 100,
+      "sha256": "a5e0a6d1744f3cbed4a5cbfe606bf5d28947f65993a995ed6635f7f9f9e58b7b"
+    },
+    "math.jsonl": {
+      "records": 250,
+      "sha256": "6ddb04a0360ff93e467ac05467867a59ee612a5924156e27dd91fa5cbdc8cc6f"
+    },
+    "aime.jsonl": {
+      "records": 50,
+      "sha256": "04361043d1900287dadf73ee960b1e9c0fac1d193090bc1d4093de760b7b84a7"
+    },
+    "benchmark.jsonl": {
+      "records": 400,
+      "sha256": "139cad7cc58b478338acba333e308e9bf250890fff67ad8c093b47600a369e39"
+    }
+  }
+}
