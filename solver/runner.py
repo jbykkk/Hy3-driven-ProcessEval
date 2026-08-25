@@ -20,7 +20,7 @@ from solver.prompt import PROMPT_VERSION, build_messages
 
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_INPUT = ROOT / "data" / "benchmark" / "benchmark.jsonl"
+DEFAULT_INPUT = ROOT / "data" / "benchmark" / "math.jsonl"
 DEFAULT_OUTPUT = ROOT / "outputs" / "solver_outputs.jsonl"
 
 
@@ -235,7 +235,19 @@ def main() -> int:
                 print(f"  failed after {record['attempt_count']} attempt(s)", file=sys.stderr)
             else:
                 usage = record["response"].get("usage") or {}
-                print(f"  success; usage={json.dumps(usage, ensure_ascii=False)}")
+                finish_reason = record["response"].get("finish_reason")
+                warnings = record["parsed"].get("warnings") or []
+                print(
+                    "  success; "
+                    f"finish_reason={finish_reason!r}; "
+                    f"parser_warnings={warnings}; "
+                    f"usage={json.dumps(usage, ensure_ascii=False)}"
+                )
+                if finish_reason != "stop" or not record["response"].get("content"):
+                    print(
+                        "  warning: response may be truncated or have no visible content",
+                        file=sys.stderr,
+                    )
         return 1 if failures else 0
     except (OSError, RuntimeError, ValueError) as error:
         print(f"error: {error}", file=sys.stderr)

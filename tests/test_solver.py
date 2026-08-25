@@ -90,6 +90,34 @@ class ParserTests(unittest.TestCase):
         parsed = parse_solution(content)
         self.assertEqual(parsed.final_answer, "0.5")
 
+    def test_parser_prefers_answer_stated_in_last_numbered_step(self) -> None:
+        content = (
+            "Step 1: Compute part of the result. Thus, this part is **40**.\n"
+            "Step 2: Add the remaining amount. 20 + 40 = 60.\n"
+            "Step 3: State the final answer.\n"
+            "The total is **60 instructions**."
+        )
+        parsed = parse_solution(content)
+        self.assertEqual(parsed.final_answer, "60")
+
+    def test_parser_reads_unbolded_percent_from_final_step(self) -> None:
+        content = (
+            "Step 1: Compute the fraction.\n"
+            "Step 2: State the final answer.\n"
+            "40% of the spools are blue."
+        )
+        parsed = parse_solution(content)
+        self.assertEqual(parsed.final_answer, "40")
+
+    def test_parser_reads_bold_maximum_from_last_step(self) -> None:
+        content = (
+            "Step 1: Derive the area formula.\n"
+            "Step 2: State the maximum area.\n"
+            "The maximum area is **2500 square feet**."
+        )
+        parsed = parse_solution(content)
+        self.assertEqual(parsed.final_answer, "2500")
+
 
 class ConfigTests(unittest.TestCase):
     def test_public_config_never_contains_api_key(self) -> None:

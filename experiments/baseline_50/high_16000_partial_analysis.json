@@ -1,0 +1,135 @@
+{
+  "schema_version": "1.0",
+  "experiment": "baseline_50_high_16000_partial",
+  "status": "stopped_by_user_after_16_of_23",
+  "scope_decision_after_stop": {
+    "primary_evaluation_dataset": "math",
+    "primary_sample_count": 250,
+    "math_sampling": "50 samples from each official Level 1-5",
+    "supplementary_datasets": [
+      "gsm8k",
+      "aime"
+    ],
+    "planned_high_24000_retry": "cancelled_not_started"
+  },
+  "configuration": {
+    "model": "hy3",
+    "temperature": 0.9,
+    "top_p": 1.0,
+    "thinking": {
+      "type": "enabled"
+    },
+    "reasoning_effort": "high",
+    "prompt_version": "math-solver-v1",
+    "stream": false,
+    "max_tokens": 16000,
+    "max_retries": 0
+  },
+  "planned": 23,
+  "completed": 16,
+  "not_started_or_interrupted_without_record": 7,
+  "finish_reasons": {
+    "stop": 12,
+    "length": 4
+  },
+  "recovered_from_high_4096_length": 12,
+  "still_truncated": 4,
+  "recovery_rate_among_completed": 0.75,
+  "verification_all_completed": {
+    "unverified": 5,
+    "correct": 11
+  },
+  "verification_stop_only": {
+    "unverified": 1,
+    "correct": 11
+  },
+  "note_on_scoring": "Only finish_reason=stop responses are eligible for answer scoring. One stop response is parser-unverified but visibly states the correct answer; all 11 other stop responses verify correct.",
+  "tokens": {
+    "total": 167169,
+    "completion": 164605,
+    "reasoning": 157210,
+    "baseline_4096_total_for_same_samples": 68100
+  },
+  "latency_ms": {
+    "sum": 2044490.529,
+    "mean": 127780.6580625
+  },
+  "by_dataset": {
+    "gsm8k": {
+      "stop": 2,
+      "completed": 2
+    },
+    "math": {
+      "stop": 10,
+      "completed": 14,
+      "length": 4
+    }
+  },
+  "math_by_difficulty": {
+    "Level 1": {
+      "stop": 2,
+      "completed": 2
+    },
+    "Level 2": {
+      "stop": 2,
+      "completed": 3,
+      "length": 1
+    },
+    "Level 3": {
+      "stop": 1,
+      "completed": 1
+    },
+    "Level 4": {
+      "stop": 3,
+      "completed": 5,
+      "length": 2
+    },
+    "Level 5": {
+      "stop": 2,
+      "completed": 3,
+      "length": 1
+    }
+  },
+  "asymptote": {
+    "completed": 7,
+    "stop": 3,
+    "length": 4
+  },
+  "non_asymptote": {
+    "completed": 9,
+    "stop": 9,
+    "length": 0
+  },
+  "still_truncated_ids": [
+    "math-test-prealgebra-0779",
+    "math-test-geometry-0200",
+    "math-test-precalculus-0130",
+    "math-test-geometry-0105"
+  ],
+  "completed_sample_ids": [
+    "gsm8k-test-0012",
+    "gsm8k-test-0304",
+    "math-test-geometry-0180",
+    "math-test-number_theory-0518",
+    "math-test-intermediate_algebra-0386",
+    "math-test-prealgebra-0779",
+    "math-test-precalculus-0055",
+    "math-test-intermediate_algebra-0196",
+    "math-test-counting_and_probability-0386",
+    "math-test-geometry-0200",
+    "math-test-geometry-0462",
+    "math-test-precalculus-0080",
+    "math-test-precalculus-0130",
+    "math-test-algebra-0817",
+    "math-test-geometry-0105",
+    "math-test-prealgebra-0133"
+  ],
+  "source_files": {
+    "selection": "experiments/baseline_50/high_16000_selection.jsonl",
+    "selection_sha256": "cb2613215d79eb9ce3913201553675c2f67b69d3e3874deab16b0ce6075c411c",
+    "local_solver_output": "outputs/baseline_50_high16000_rerun_solver_outputs.jsonl",
+    "local_solver_output_sha256": "bffe01ff138d145fec249c971a850014e957c6ceff4a8fdd6e01dabcf0421b3e",
+    "local_verification": "outputs/baseline_50_high16000_rerun_answer_verification.jsonl",
+    "local_verification_sha256": "5769e6026ea1d1fef190600ca17b407a3f72726e53ef3c5503e3f0548e93fb7d"
+  }
+}

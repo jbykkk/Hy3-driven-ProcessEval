@@ -2,6 +2,8 @@
 
 本目录由 `scripts/build_benchmark.py` 从 `data/raw/` 中的固定数据版本确定性生成。
 
+当前主实验只使用 `math.jsonl` 的250题，并按官方 Level 1-5 各50题报告结果。GSM8K 与 AIME 文件继续保留，供后续补充实验使用；`benchmark.jsonl` 的400题组成不变，但不再代表当前一次主实验必须全部运行的范围。
+
 ## 文件
 
 - `gsm8k.jsonl`：GSM8K test split 抽取 100 题，不添加难度。

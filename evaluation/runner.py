@@ -72,6 +72,7 @@ def evaluate_records(
             sample_id = str(inference["sample"]["id"])
             inference_id = str(inference["inference_id"])
             content = str(inference["response"]["content"])
+            finish_reason = str(inference["response"]["finish_reason"])
         except (KeyError, TypeError) as error:
             raise ValueError(
                 f"Invalid successful inference at {solver_output_path}:{line_number}"
@@ -82,10 +83,13 @@ def evaluate_records(
             raise ValueError(f"Inference references unknown benchmark ID {sample_id!r}")
 
         current_parse = parse_solution(content)
+        eligible_for_scoring = finish_reason == "stop"
+        prediction = current_parse.final_answer if eligible_for_scoring else None
+        warnings = list(current_parse.warnings)
+        if not eligible_for_scoring:
+            warnings.append(f"generation_not_complete:{finish_reason}")
         reference = references[sample_id]
-        verification = verify_answer(
-            reference["reference_answer"], current_parse.final_answer
-        )
+        verification = verify_answer(reference["reference_answer"], prediction)
         results.append(
             {
                 "schema_version": "1.0",
@@ -93,10 +97,13 @@ def evaluate_records(
                 "inference_id": inference_id,
                 "sample_id": sample_id,
                 "dataset": reference["dataset"],
+                "finish_reason": finish_reason,
+                "eligible_for_scoring": eligible_for_scoring,
                 "prediction": {
-                    "value": current_parse.final_answer,
+                    "value": prediction,
+                    "parser_candidate": current_parse.final_answer,
                     "parser_version": current_parse.as_dict()["parser_version"],
-                    "warnings": current_parse.warnings,
+                    "warnings": warnings,
                 },
                 "reference_answer": reference["reference_answer"],
                 "verification": verification.as_dict(),

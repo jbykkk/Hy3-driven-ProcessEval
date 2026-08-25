@@ -7,7 +7,7 @@
 ## 架构
 
 ```text
-data/benchmark/benchmark.jsonl
+data/benchmark/math.jsonl（当前主实验）
               |
               v
        Dataset Loader
@@ -53,6 +53,8 @@ Problem:
 
 prompt 中不包含 `reference_answer`、`reference_solution`、难度、学科或其他参考 metadata。
 
+runner 默认读取 `data/benchmark/math.jsonl` 的250题。GSM8K、AIME或400题合并数据仍保留，但只有显式传入相应 `--input` 时才使用；AIME当前暂停评测。
+
 ## API 配置
 
 solver 使用腾讯云 TokenHub 的 OpenAI-compatible Chat Completions API。默认参数：
@@ -68,6 +70,8 @@ solver 使用腾讯云 TokenHub 的 OpenAI-compatible Chat Completions API。默
 | Reasoning effort | `high` |
 | Stream | `false` |
 | Timeout | `300s` |
+
+注意：`4096` 是初始 smoke test 默认值。50题 baseline 在 high reasoning 下出现23/50截断；随后16条已完成的high/16000对照仍有4条截断，而且token消耗约为同样本4096轮的2.45倍。代码默认值暂未改动；执行较大批次前必须阅读 `docs/experiments/BASELINE_50_FINDINGS.md`，并显式确认输出预算和额度风险。
 
 solver 会自动读取项目根目录中被 Git 忽略的 `.env`。把本地密钥写入：
 
@@ -102,8 +106,16 @@ uv run python -m solver.runner
 指定样本或少量题目：
 
 ```bash
-uv run python -m solver.runner --id gsm8k-test-0008
+uv run python -m solver.runner --id math-test-algebra-0024
 uv run python -m solver.runner --limit 3
+```
+
+补充数据集必须显式指定输入，例如：
+
+```bash
+uv run python -m solver.runner \
+  --input data/benchmark/gsm8k.jsonl \
+  --id gsm8k-test-0008
 ```
 
 只有显式传入 `--all` 才会运行所有未完成样本，避免误消耗额度：
@@ -140,4 +152,4 @@ parsed.parser_version / steps / final_answer / warnings
 
 `response.raw` 保存 SDK 解析后的完整 API 响应；`response.content` 是后续过程评估的主要对象；`reasoning_content` 单独保存，但不与模型面向用户给出的可见解答混为一谈。运行输出位于被 Git 忽略的 `outputs/`，不会提交到仓库。
 
-solver 不负责判断最终答案是否正确。独立的等价性验证流程和输出格式见 `docs/ANSWER_VERIFICATION.md`，从而保证生成证据、答案提取和评分可以分别升级及复查。
+solver 不负责判断最终答案是否正确。独立的等价性验证流程和输出格式见同目录的 `ANSWER_VERIFICATION.md`，从而保证生成证据、答案提取和评分可以分别升级及复查。

@@ -10,7 +10,7 @@ from typing import Any
 STEP_PATTERN = re.compile(
     r"(?im)^\s*(?:\*\*)?Step\s+(\d+)\s*:?\s*(?:\*\*)?\s*"
 )
-PARSER_VERSION = "solution-parser-v1.2"
+PARSER_VERSION = "solution-parser-v1.3"
 
 
 @dataclass(frozen=True)
@@ -91,6 +91,39 @@ def _extract_final_answer(text: str) -> str | None:
     return candidate.strip("$* ")
 
 
+def _extract_stated_answer_from_last_step(step: ParsedStep) -> str | None:
+    """Prefer a clearly marked answer inside the final numbered step."""
+
+    explicit_statement = re.search(
+        r"(?i)\bstate\s+(?:the\s+)?final\s+answer\b", step.text
+    )
+    answer_context = re.search(
+        r"(?i)\b(?:answer|final|total|maximum|minimum)\b", step.text
+    )
+    if not explicit_statement and not answer_context:
+        return None
+    boxed = _extract_last_boxed(step.text)
+    if boxed:
+        return boxed
+
+    body = step.text
+    if explicit_statement:
+        body = re.sub(
+            r"(?is)^.*?\bstate\s+(?:the\s+)?final\s+answer(?:\s+with\s+units)?\s*\.?\s*",
+            "",
+            body,
+            count=1,
+        ).strip()
+    bold_spans = re.findall(r"\*\*(.+?)\*\*", body)
+    if not bold_spans and not explicit_statement:
+        return None
+    candidate = bold_spans[-1].strip() if bold_spans else body
+    numeric_tokens = re.findall(r"(?<![\w.])-?\d[\d,]*(?:\.\d+)?(?![\w.])", candidate)
+    if len(numeric_tokens) == 1:
+        return numeric_tokens[0].replace(",", "")
+    return candidate.strip("$* ") or None
+
+
 def parse_solution(content: str) -> ParsedSolution:
     """Extract explicitly numbered visible steps and a best-effort final answer."""
 
@@ -111,7 +144,15 @@ def parse_solution(content: str) -> ParsedSolution:
     elif [step.number for step in steps] != list(range(1, len(steps) + 1)):
         warnings.append("non_sequential_step_numbers")
 
-    final_answer = _extract_final_answer(content)
+    has_answer_label = bool(
+        re.search(r"(?im)^\s*(?:\*\*)?(?:Final\s+Answer|Answer)\s*:", content)
+    )
+    if has_answer_label:
+        final_answer = _extract_final_answer(content)
+    else:
+        final_answer = (
+            _extract_stated_answer_from_last_step(steps[-1]) if steps else None
+        ) or _extract_final_answer(content)
     if final_answer is None:
         warnings.append("final_answer_not_detected")
     return ParsedSolution(steps=steps, final_answer=final_answer, warnings=warnings)

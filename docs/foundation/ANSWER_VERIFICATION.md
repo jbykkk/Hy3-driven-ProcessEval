@@ -82,3 +82,7 @@ GSM8K 的 100 题与 AIME 的 50 题在当前 benchmark 中都是整数参考答
 实验促使答案 parser 升级到 `solution-parser-v1.2`：支持无显式 `Answer:` 标签的结论句、优先读取主要单位答案，以及从 `\(...\)` 数学片段中读取末尾等价表达。旧 inference 直接从原始回答重新解析，无需重复 API 调用。
 
 多根题首次使用 high reasoning 时，4096 个 completion tokens 全部用于推理，`finish_reason=length` 且没有可见答案；以 low reasoning 重试后使用 1988 tokens 正常完成并验证正确。截断记录仍作为 `unverified` 历史证据保留，说明后续批量运行需要监控 `finish_reason` 和 reasoning token 占比。
+
+评测入口现在执行生成完整性门控：只有 `finish_reason=stop` 的响应才把 parser 结果送入正确性判定。`length` 等非正常结束响应即使从残缺正文提取出候选字符串，也只把该值保存在 `prediction.parser_candidate` 中用于审计，正式 `prediction.value` 置空并记为 `unverified`。这是为了避免把截断片段（例如几何推导中的线段名）误报为模型最终错答。
+
+后续50题 high/4096 分层 baseline 的结果、成本和Asymptote输入问题见 `docs/experiments/BASELINE_50_FINDINGS.md`。

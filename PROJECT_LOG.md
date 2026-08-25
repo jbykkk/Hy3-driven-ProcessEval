@@ -40,3 +40,17 @@
 
 - 新增 `HANDOFF.md`，面向零上下文的新会话汇总当前阶段、已完成实现、真实验证结果、运行步骤、下一优先级以及 API、密钥、截断、验证误判和本地输出等风险。
 - 核对并更新 `PROJECT_PROGRESS.md`：已反映 GSM8K/MATH 多格式答案实验，当前下一目标仍是结构化答案校验、截断重试策略、扩大分层验证和固定 revision 下载脚本。
+- 使用固定种子 `20260825` 生成50题分层 baseline：GSM8K 13题、MATH 31题（Level 1为7题，其余各6题）、AIME 2024/2025各3题；选择文件校验和为 `a516f864b9eabb6d44bcd7d11d896aa17bb8cb328f5921e32f20e831809b1cf5`。
+- 统一以 Hy3、thinking enabled、high reasoning、`max_tokens=4096` 完成50次调用；全部一次请求成功，无API错误或重试，总计135,966 tokens、串行 inference 延迟约29.2分钟。
+- 50题中27题正常结束、23题 `finish_reason=length`，其中22题可见内容为空；GSM8K/MATH/AIME截断率分别为15.4%、48.4%、100%。截断请求消耗总 token 的72.1%。
+- 发现8道含 `[asy]` Asymptote 绘图代码的题目全部截断，非 Asymptote 题为15/42截断；将图形题输入形式列为需单独控制的混杂因素。
+- parser 升级至 `solution-parser-v1.3`，从最后编号步骤的明确 final/total/maximum 等上下文提取答案，并优先保留显式 Answer 标签；离线重评后27条完整回答全部验证正确，23条截断保留为 `unverified`，18项测试通过。
+- 新增 baseline 聚合分析、31条机器可读问题记录和实验报告。腾讯官方当前说明思考与回答共享输出额度，Hy3出现空响应/截断时建议 `max_tokens>=16000`；下一步保持 high reasoning 做小规模16000上限对照，不直接批量重跑。
+- 对23条high/4096截断题发起high/16000单变量重跑；用户在完成16题后暂停，保存结果为12条正常结束、4条仍截断、7条无本轮记录，未运行到AIME，也未启动24000测试。
+- high/16000已完成16题共消耗167,169 tokens，约为同16题4096轮68,100 tokens的2.45倍，平均单题延迟约127.8秒；7道Asymptote题中4道仍截断，9道非Asymptote题全部恢复。
+- 修复答案评测的生成完整性门控：只有 `finish_reason=stop` 才参与正确性判断，截断正文中的候选答案仅审计并标记为 `unverified`，消除残缺字符串造成的假错答。
+- 调整实验范围：MATH 250题（Level 1-5各50题）成为当前主评测集；GSM8K与AIME数据继续保留但仅作后续补充，AIME评测暂时停止。
+- 将solver默认输入切换为 `data/benchmark/math.jsonl`；补充数据集必须显式指定 `--input`，避免后续误把400题合并文件或AIME纳入主实验。
+- 新增当前问题与决策总览，统一记录截断、token成本、Asymptote输入、评分门控、parser/验证器限制、resume语义和非确定性，并同步刷新项目进展与零上下文交接文档。
+- 重组`docs/`：工程说明统一移至`docs/foundation/`，实验问题与决策移至`docs/experiments/`；将两份重复的baseline/问题报告合并为`BASELINE_50_FINDINGS.md`并修复引用，同时把文档分类、合并和命名规则加入`AGENTS.md`。
+- 在`AGENTS.md`增加按需读取规范与检索触发器：默认使用最小上下文，按任务路由到进展、交接、基础设计、实验结论、机器记录或原始输出，并限制整批读取日志、JSONL和reasoning正文。
