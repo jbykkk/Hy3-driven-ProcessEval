@@ -6,10 +6,12 @@
 
 ## 当前范围
 
-- 当前主实验评测集为 MATH 250 题；官方 Level 1-5 每层 50 题。
-- GSM8K 100 题与 AIME 50 题保留在仓库中，仅作为后续补充实验，不纳入当前主实验。
-- 已整理的初始数据池仍共 400 题，不因实验范围调整而删除或改写样本。
-- MATH 按官方 Level 1-5 分层抽样，每层 50 题。
+- 当前不设需要全量API运行的固定主实验评测集；优先使用少量、明确目的的分层样本和受控错误样本。
+- 纯文字MATH 250题（`data/benchmark/math_text.jsonl`）继续作为可复现候选池保留；其文件构成仍为官方Level 1-5每层50题，但不再要求每层50题全部调用或作为当前正式评测分母。
+- 原 `math.jsonl` 的250题完整保留，其中20道含Asymptote源码；纯文字变体保留其余230题，并按同层级确定性补入20道未进入原集合的文字题。
+- GSM8K 100题与AIME 50题保留在仓库中，仅作为后续候选或补充实验。
+- 已整理的初始数据池仍共 400 题，不因实验范围调整而删除或改写样本；新增纯文字变体不覆盖原数据池。
+- MATH保留官方Level 1-5标签；具体实验可按目的做小规模分层抽样，样本量由实验单独记录，不再固定为每层50题API调用。
 - GSM8K 不额外添加难度等级，保留官方字段语义。
 - AIME 作为高难度竞赛题集，不强行映射到 MATH 的等级。
 - 应用输入、模型输出和评测记录统一使用 JSONL；允许在 `metadata` 中保留数据集特有字段。
@@ -41,6 +43,7 @@
 - 合并文档时删除重复叙述；已解决问题只保留必要结论、解决方式和“已解决”状态，详细历史证据放在机器可读实验记录或项目日志中。
 - 移动、重命名或合并文档后，必须同步修复仓库内引用，并删除已经被替代的旧文档。
 - `PROJECT_PROGRESS.md` 只保留里程碑与下一关键目标，`HANDOFF.md` 只保留新会话恢复工作所需的当前事实；两者不复制完整实验报告。
+- 根目录 `TODO.md` 集中记录跨阶段的待办计划、待验证假设和已知问题，不用它替代里程碑、实验结论或实施日志。
 
 ## 按需读取与检索路由
 
@@ -63,8 +66,15 @@
 | 查询benchmark组成、schema、来源与抽样 | `docs/foundation/BENCHMARK.md` | 先定位对应数据集章节；revision和哈希再查manifest |
 | 查询solver架构、CLI、请求或输出schema | `docs/foundation/SOLVER.md` | 读取与命令或模块对应章节 |
 | 查询答案解析、数学等价验证或评分输出 | `docs/foundation/ANSWER_VERIFICATION.md` | 先读取相关答案类型或评测规则 |
+| 查询过程评估器、步骤解析、首错定位或过程输出schema | `docs/foundation/PROCESS_EVALUATOR.md` | 先读取证据边界和对应模块章节 |
 | 查询baseline结果、截断、成本、Asymptote问题或当前技术决策 | `docs/experiments/BASELINE_50_FINDINGS.md` | 先看结论、问题状态或对应实验小节 |
+| 查询Process Evaluator v1真实验证或Solver prompt v1/v2单题对照 | `docs/experiments/PROCESS_EVALUATOR_V1_SMOKE.md` | 先看结果表、适配判断和实验限制 |
+| 查询Solver prompt v1/v2的MATH分层对照、过程成本或结构差异 | `docs/experiments/PROCESS_EVALUATOR_V1V2_25.md` | 先看总体结果、分Level表、配对长尾和结论边界 |
+| 查询受控过程错误、答案—过程独立性、继承错误或首错定位表现 | `docs/experiments/PROCESS_EVALUATOR_ERROR_INJECTION_LEVEL4.md` | 先看构造、结果表、协议问题和实验边界 |
+| 查询待办计划、待验证假设、过程评估适配或Prompt v2 | `TODO.md` | 先定位对应主题，只读取相关TODO小节 |
 | 查询机器可读实验配置、汇总统计或异常样本 | `experiments/baseline_50/` | 先读`README.md`和manifest/analysis；issues与selection按ID定点读取 |
+| 查询v1/v2 25题对照的选择、配置、哈希或逐样本聚合 | `experiments/process_evaluator_v1v2_25/` | 先读`README.md`和manifest/analysis；不读取被忽略的原始reasoning |
+| 查询Level 4受控错误探针的预期标签、调用量或逐例对照 | `experiments/process_evaluator_error_injection_level4/` | 先读`README.md`与`analysis.json`；按需读取`cases.jsonl`，不读取内部reasoning |
 | 查询原始数据来源、许可或上游revision | `data/SOURCES.md`、`data/benchmark/manifest.json` | 不读取原始数据正文，除非需要核对指定样本 |
 | 查询某次模型原始响应、reasoning、请求ID、token或耗时 | `outputs/*.jsonl` | 仅按sample/inference读取目标行；不得批量展示reasoning |
 | 追溯历史决策、实施顺序或某日发生的工作 | `PROJECT_LOG.md` | 用日期或关键词定位后读取局部范围 |
@@ -77,3 +87,8 @@
 - 优先做最小、可验证的改动。
 - 下载数据集、引入大型依赖或改变 benchmark 构成前，先说明来源、许可、版本和可复现方案。
 - 不提交数据集缓存、模型缓存、运行输出、密钥或虚拟环境。
+
+## 解释说明
+
+- 减少使用“契约”，“gold要求”等不明确的内容来进行解释和描述，尽量采用项目技术相关的语言进行解释。
+- 非必要不使用SHA-256等加密算法来检验文件哈希或进行审计。

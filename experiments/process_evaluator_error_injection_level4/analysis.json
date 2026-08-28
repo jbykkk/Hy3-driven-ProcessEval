@@ -1,0 +1,221 @@
+{
+  "schema_version": "1.0",
+  "experiment": "process-evaluator-error-injection-level4-v1",
+  "case_count": 4,
+  "summary": {
+    "complete_process_evaluations": 4,
+    "process_error_detected": 4,
+    "needs_review": 0,
+    "metric_matches": {
+      "answer_correct": 4,
+      "first_error_step": 4,
+      "first_error_status": 4,
+      "first_error_importance": 4,
+      "first_error_type": 4,
+      "first_error_origin": 4,
+      "global_status": 4,
+      "final_answer_supported": 3,
+      "process_correct": 4,
+      "answer_process_relation": 4
+    },
+    "metric_total": 4,
+    "final_answer_supported_note": "Under the frozen mathematical-support definition, both wrong-answer variants must be false. The historical v1 result was false and the historical v2 result was true, so v2 is a mismatch under the new definition."
+  },
+  "api_calls": {
+    "successful": 28,
+    "sandbox_connection_failures_before_escalated_run": 4,
+    "completion_tokens": 29921,
+    "reasoning_tokens": 27167,
+    "total_tokens": 54770,
+    "latency_ms": 310110.025
+  },
+  "cases": [
+    {
+      "case_id": "level4-prealgebra-0485-v1-correct-answer",
+      "solver_prompt_version": "math-solver-v1",
+      "answer_mode": "correct",
+      "actual": {
+        "answer_correct": true,
+        "first_error_step": 4,
+        "first_error_type": "concept_or_theorem_error",
+        "first_error_local_result": {
+          "step_id": 4,
+          "status": "invalid",
+          "importance": "high",
+          "purpose": "Find the four smallest composite numbers greater than 0.",
+          "error_type": "concept_or_theorem_error",
+          "error_origin": "current_step",
+          "evidence": "Step 4 incorrectly treats 1 as composite, contradicting Step 1's definition that composites are >1 with more than two divisors and that 1 is neither. The four smallest composites are 4,6,8,9, not 1,4,6,8."
+        },
+        "inherited_step_ids": [
+          5,
+          6
+        ],
+        "global_status": "invalid",
+        "process_complete": true,
+        "final_answer_supported": false,
+        "global_error_type": "answer_extraction_or_format_error",
+        "first_error_step_override": 4,
+        "process_correct": false,
+        "answer_process_relation": "correct_answer_invalid_process",
+        "needs_review": false
+      },
+      "matches": {
+        "answer_correct": true,
+        "first_error_step": true,
+        "first_error_status": true,
+        "first_error_importance": true,
+        "first_error_type": true,
+        "first_error_origin": true,
+        "global_status": true,
+        "final_answer_supported": true,
+        "process_correct": true,
+        "answer_process_relation": true
+      }
+    },
+    {
+      "case_id": "level4-prealgebra-0485-v1-wrong-answer",
+      "solver_prompt_version": "math-solver-v1",
+      "answer_mode": "wrong",
+      "actual": {
+        "answer_correct": false,
+        "first_error_step": 4,
+        "first_error_type": "concept_or_theorem_error",
+        "first_error_local_result": {
+          "step_id": 4,
+          "status": "invalid",
+          "importance": "high",
+          "purpose": "Identify the four smallest composite numbers greater than 0 for use in the product difference.",
+          "error_type": "concept_or_theorem_error",
+          "error_origin": "current_step",
+          "evidence": "Step 1 correctly defined composite as >1 with more than two divisors and stated 1 is neither prime nor composite. Step 4 contradicts this by treating 1 as composite and lists 1,4,6,8; the actual four smallest composites >0 are 4,6,8,9."
+        },
+        "inherited_step_ids": [
+          5,
+          6,
+          7
+        ],
+        "global_status": "invalid",
+        "process_complete": true,
+        "final_answer_supported": false,
+        "global_error_type": "concept_or_theorem_error",
+        "first_error_step_override": 4,
+        "process_correct": false,
+        "answer_process_relation": "wrong_answer_invalid_process",
+        "needs_review": false
+      },
+      "matches": {
+        "answer_correct": true,
+        "first_error_step": true,
+        "first_error_status": true,
+        "first_error_importance": true,
+        "first_error_type": true,
+        "first_error_origin": true,
+        "global_status": true,
+        "final_answer_supported": true,
+        "process_correct": true,
+        "answer_process_relation": true
+      }
+    },
+    {
+      "case_id": "level4-prealgebra-0485-v2-correct-answer",
+      "solver_prompt_version": "math-solver-v2",
+      "answer_mode": "correct",
+      "actual": {
+        "answer_correct": true,
+        "first_error_step": 3,
+        "first_error_type": "concept_or_theorem_error",
+        "first_error_local_result": {
+          "step_id": 3,
+          "status": "invalid",
+          "importance": "high",
+          "purpose": "Identify the four smallest composite numbers greater than 0.",
+          "error_type": "concept_or_theorem_error",
+          "error_origin": "current_step",
+          "evidence": "Step claims 1 is composite because its only positive divisor is itself; by standard definition a composite number must be >1 and have more than two positive divisors, so 1 is neither prime nor composite. The selected set 1,4,6,8 is therefore incorrect."
+        },
+        "inherited_step_ids": [
+          4,
+          5
+        ],
+        "global_status": "invalid",
+        "process_complete": true,
+        "final_answer_supported": false,
+        "global_error_type": "answer_extraction_or_format_error",
+        "first_error_step_override": null,
+        "process_correct": false,
+        "answer_process_relation": "correct_answer_invalid_process",
+        "needs_review": false
+      },
+      "matches": {
+        "answer_correct": true,
+        "first_error_step": true,
+        "first_error_status": true,
+        "first_error_importance": true,
+        "first_error_type": true,
+        "first_error_origin": true,
+        "global_status": true,
+        "final_answer_supported": true,
+        "process_correct": true,
+        "answer_process_relation": true
+      }
+    },
+    {
+      "case_id": "level4-prealgebra-0485-v2-wrong-answer",
+      "solver_prompt_version": "math-solver-v2",
+      "answer_mode": "wrong",
+      "actual": {
+        "answer_correct": false,
+        "first_error_step": 3,
+        "first_error_type": "concept_or_theorem_error",
+        "first_error_local_result": {
+          "step_id": 3,
+          "status": "invalid",
+          "importance": "high",
+          "purpose": "Identify the four smallest composite numbers greater than 0.",
+          "error_type": "concept_or_theorem_error",
+          "error_origin": "current_step",
+          "evidence": "Step incorrectly treats 1 as composite (claiming its only positive divisor is itself); by definition a composite number is an integer >1 with a positive divisor other than 1 and itself, so 1 is neither prime nor composite. The selected set 1,4,6,8 is wrong."
+        },
+        "inherited_step_ids": [
+          4,
+          5
+        ],
+        "global_status": "invalid",
+        "process_complete": true,
+        "final_answer_supported": true,
+        "global_error_type": "concept_or_theorem_error",
+        "first_error_step_override": 3,
+        "process_correct": false,
+        "answer_process_relation": "wrong_answer_invalid_process",
+        "needs_review": false
+      },
+      "matches": {
+        "answer_correct": true,
+        "first_error_step": true,
+        "first_error_status": true,
+        "first_error_importance": true,
+        "first_error_type": true,
+        "first_error_origin": true,
+        "global_status": true,
+        "final_answer_supported": false,
+        "process_correct": true,
+        "answer_process_relation": true
+      }
+    }
+  ],
+  "artifacts": {
+    "cases": {
+      "path": "experiments/process_evaluator_error_injection_level4/cases.jsonl",
+      "sha256": "9920048d57b8fd3cb51d2d597f0f5b6e509958e34cea2a04fd3914053f4b0a5e"
+    },
+    "process": {
+      "path": "outputs/process_error_injection_level4_process_evaluations.jsonl",
+      "sha256": "fdbb3680942642c114b57c1c84f2b08b79faebe9a1a4d3de22ac0db2e721011d"
+    },
+    "raw": {
+      "path": "outputs/process_error_injection_level4_process_responses.jsonl",
+      "sha256": "9e513fe21e5800c6a04dabede0e0a734a5923ac57f72a93ef7e957b8c8a271c9"
+    }
+  }
+}

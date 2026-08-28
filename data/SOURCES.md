@@ -13,6 +13,8 @@
 
 MATH 官方仓库当前 README 链接的 `qwedsacf/competition_math` revision `e839825f9ec5c6cfa585c654a59610969ec13993` 已下载到 `data/raw/math/` 用于核验。该版本将 12,500 题合并为单一 `train` 文件，未保留原始 train/test split，因此 benchmark 抽样改用保留原始 split 的 `EleutherAI/hendrycks_math` 镜像。
 
+纯文字候选池`data/benchmark/math_text.jsonl`也只使用上述`EleutherAI/hendrycks_math`固定revision的test split。它不修改原题，只排除原选择中含字面量`[asy]`的20题，并从未进入原`math.jsonl`的同Level纯文字候选中确定性补齐；完整ID映射见`data/benchmark/math_text_manifest.json`。该文件继续用于可复现的小规模选择，不代表需要执行250题全量API评测。
+
 ## 下载原则
 
 - 下载时固定上述 revision，避免上游更新造成数据漂移。

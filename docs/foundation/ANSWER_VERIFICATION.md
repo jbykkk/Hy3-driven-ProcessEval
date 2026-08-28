@@ -21,6 +21,8 @@ solver_outputs.jsonl --> 当前版本答案解析 --> 数学等价验证
 
 例如 `\frac{4}{5}` 与 `0.8`、`5+6\sqrt{2}` 与 `6\sqrt{2}+5` 应判为数学等价，而不是因为字符串不同被误判。
 
+这里的`reference_answer`是最终结论的标准答案，不是过程正确性的标准标注。即使`answer_correct=true`，可见解答仍可能包含相互抵消的错误、关键跳步或无法支持答案的断言；即使最终答案错误，也需要另行判断此前过程是否局部有效。因此该记录可以作为Process Aggregator的独立元数据，但不能用于给Local/Global过程判断自动贴标签。过程级有效性验证所需的人工标注见`PROCESS_EVALUATOR.md`。
+
 运行全部已有结果：
 
 ```bash

@@ -54,3 +54,51 @@
 - 新增当前问题与决策总览，统一记录截断、token成本、Asymptote输入、评分门控、parser/验证器限制、resume语义和非确定性，并同步刷新项目进展与零上下文交接文档。
 - 重组`docs/`：工程说明统一移至`docs/foundation/`，实验问题与决策移至`docs/experiments/`；将两份重复的baseline/问题报告合并为`BASELINE_50_FINDINGS.md`并修复引用，同时把文档分类、合并和命名规则加入`AGENTS.md`。
 - 在`AGENTS.md`增加按需读取规范与检索触发器：默认使用最小上下文，按任务路由到进展、交接、基础设计、实验结论、机器记录或原始输出，并限制整批读取日志、JSONL和reasoning正文。
+
+## 2026-08-26
+
+- 对4道不含Asymptote的MATH Level 4/5题执行high/16000输出长度探针，覆盖几何、数论、计数与概率和中等代数；关闭自动重试并写入独立本地输出。
+- 3题以`stop`完成，completion tokens分别为1005、3979和2924，均离线验证正确；另1道Level 5中等代数题耗尽16000 completion tokens且全部为reasoning tokens，没有产生可见答案，标记为`unverified`。
+- 四题合计消耗23,908 completion tokens，其中22,637为reasoning tokens，串行延迟约333.3秒。该探针说明提高上限不会按上限预扣token，但会放大少数失控推理的实际成本和尾部延迟；16000仍不能保证完成。
+- 将上述16000截断的Level 5中等代数题和一道人含Asymptote源码的Level 5几何题改用high/32000继续探测。首次图形题调用受原300秒客户端timeout限制失败，随后将timeout放宽至1800秒并保持`max_retries=0`；中等代数题在旧批次刚开始后即人工中止，再以新timeout执行。
+- 1800秒timeout下两题均以`stop`完成并验证正确：图形题使用20,452 completion tokens（19,670 reasoning），耗时272.6秒；中等代数题使用14,374 completion tokens（13,586 reasoning），耗时193.6秒。结果说明32000能够覆盖本次两个长尾样本，但非流式timeout必须同步放宽；temperature 0.9下同题推理长度也存在明显波动。
+- 新增`docs/experiments/PROCESS_EVALUATION_PROMPT_TODO.md`，明确正式过程评估只使用可见`response.content`，内部`reasoning_content`仅作本地诊断；记录`math-solver-v2`的原子步骤、依据与依赖标注、兼容parser、错误样本和v1/v2受控对照计划，当前不实现也不启动全量调用。
+- 按用户要求将专用过程评估TODO迁移为根目录通用`TODO.md`，集中记录跨阶段计划、待验证假设和已知问题；删除原专用文档并同步更新`AGENTS.md`检索路由。
+- 将Hy3客户端由非流式完整响应切换为SSE流式接收，启用最终usage chunk，分别聚合`reasoning_content`与可见`content`，同时保留原始stream chunks；新增流聚合和不完整流测试。
+- 使用`math-test-algebra-0144`完成一次真实流式smoke test：接收717个chunks，`finish_reason=stop`，使用2085 completion tokens（1783 reasoning），parser提取答案64且离线验证正确；完整结果保存在本地忽略的`outputs/`。
+- 将solver记录schema扩展为1.1，显式区分`request_status`与`generation_status`；默认resume继续跳过已有成功请求以防相同参数循环调用，新增`--retry-incomplete`作为截断重跑的显式授权，并将默认自动重试数改为0。
+- 将流式chunks增量写入独立事件JSONL，使用`stream_started`、`stream_completed`、`stream_incomplete`和`stream_interrupted`区分完整结束、达到上限和异常中断；正式solver记录仍只在聚合完成后落盘。
+- 将当前生成协议候选设为SSE stream、high reasoning、`max_tokens=32000`、300秒网络读取timeout；批次、额度、temperature/seed和重试策略仍待分层实验冻结。
+- 使用上述候选协议对新样本`math-test-intermediate_algebra-0878`执行一次Level 5非图形测试：总耗时503.2秒但因持续流式传输未触发300秒读取超时，9650个chunks完整结束，使用24,744 completion tokens（23,987 reasoning），答案17且离线验证正确。
+- 基于已下载的`EleutherAI/hendrycks_math`固定revision新增纯文字主实验变体`data/benchmark/math_text.jsonl`：完整保留原230道非图形题，按Level分别排除5/6/1/4/4道Asymptote题，并从未进入原选择的同Level纯文字test候选中确定性补齐20题。
+- 新增`math_text_manifest.json`记录筛选规则、原`math.jsonl`哈希、逐层排除与替换ID和输出哈希；两次完整重建均得到250个唯一ID、Level 1-5各50题、0道`[asy]`及相同SHA-256 `007b163e212272059562bff67e314ad19a6506d44c5799677b94cd9dafea40da`。
+- 原`math.jsonl`与400题`benchmark.jsonl`未删除或改写，哈希仍分别为`6ddb04a0360ff93e467ac05467867a59ee612a5924156e27dd91fa5cbdc8cc6f`和`139cad7cc58b478338acba333e308e9bf250890fff67ad8c093b47600a369e39`；solver与evaluation默认输入切换到纯文字变体。
+- 明确纯文字变体的字段边界：250条模型输入`problem`均不含`[asy]`；13条不进入solver prompt的`reference_solution`仍含解释性Asymptote插图，已写入manifest并列为后续过程评估器需要单独处理的问题。
+
+## 2026-08-28
+
+- 实现独立Hy3 Process Evaluator v1：确定性Step Parser保留完整`response.content`与步骤原文，并显式报告无步骤、编号不连续、重复编号、空步骤和最终答案缺失等结构问题。
+- 新增`math-process-evaluator-v1`与`math-global-evaluator-v1`，Local按`valid/invalid/insufficient/uncertain`、`low/medium/high`重要性、固定错误分类和`none/current_step/inherited/uncertain`错误来源返回严格JSON；Global检查跨步骤完整性与最终结论支持度。
+- 新增无LLM聚合器，独立读取已有答案验证元数据，支持`answer_correct=true`但`process_correct=false`；Local首错与Global override同时保留，冲突或高影响不确定时进入人工复核。
+- Evaluator原始API响应、流事件和最终过程记录分别写入三个被Git忽略的JSONL；原始响应先于schema解析落盘，解析失败不静默修复，默认不自动重试且不自动反复重跑不完整评估。
+- 增加用户提供的`math-solver-v2`过程友好提示词和显式`--prompt-version`选择；v1继续作为默认复现基线，待同题单次探索和后续小规模受控实验后再决定是否切换。
+- 对既有`math-test-algebra-0144` v1解答完成5次Local和1次Global真实评估，6次调用均`stop`且通过严格JSON；5步均为`valid`，Global为`valid/complete/supported`，聚合为`correct_answer_valid_process`，Evaluator共使用4,790 completion tokens。
+- 使用相同Solver参数仅替换prompt生成同题v2解答，最终答案仍正确；v2为3步且显式`Final Answer:`，再完成3次Local和1次Global评估，4次调用均通过，Evaluator completion tokens为3,076。
+- 单题v2相对v1减少33.3%的Evaluator调用、约35.8%的Evaluator completion tokens和约37.5%的累计调用延迟，但把两个关键推断合并进同一步，错误定位粒度可能变粗；由于本题无错误且每版只运行一次，结论仅作为可行性探索，未将v2升为默认。
+- 最终本地回归为38项单元测试全部通过，覆盖严格JSON失败保留原始响应、历史Solver schema兼容、不完整评估显式重试、继承错误不重复定位和答案正确但过程错误等边界；Python compileall与`git diff --check`同时通过。
+- 使用固定种子`20260828`从`math_text.jsonl`确定性选择Level 1-5各5题，排除先前单题probe，共25题；选择文件SHA-256为`7b980f136d0e6d1d7c6af56ad3fadedb52a6d37489697a82d87692af6c10fb96`，覆盖7个学科。
+- 以stream/high/32000/300秒、temperature 0.9、0次重试对25题分别运行`math-solver-v1`和v2，共50次Solver调用全部一次完成、无截断和parser warning；两版最终答案均25/25正确。
+- v1生成155步、v2生成117步，v2减少24.5%；v1有5条`final_answer_missing`结构告警，v2为0。v2可见字符仅减少2.7%，表明单步平均更密集，潜在首错粒度需要另行验证。
+- 对50条解答执行322次Process Evaluator调用：v1为180次、v2为142次，全部`stop`且严格JSON有效；两版所有Local步骤和Global结果均为`valid`，25/25过程正确。v1的5条结构告警触发复核，v2复核数为0。
+- v2相对v1减少21.1% Evaluator调用、14.1% Evaluator completion tokens和17.7% Evaluator总tokens；但Solver completion仅减少3.45%，更长prompt使Solver总tokens增加1.17%。端到端Solver+Evaluator总tokens从445,964降至390,696，减少约12.4%。
+- 25个配对中v2步骤更少19题，但Solver completion更少仅8题、更多17题；Level 1/2 v2 Solver成本明显上升，且存在24,490-token反例。结论是v2主要降低过程评估成本，并不稳定降低Solver推理成本。
+- 本轮所有解答均正确且过程有效，不能检验`invalid/insufficient`、错误来源或首错定位。下一关键实验改为小规模受控错误过程，不继续用正确样本数量替代Evaluator有效性验证。
+- 新增25题选择与聚合脚本测试后，最终完整回归为40项单元测试全部通过，Python compileall与`git diff --check`通过；selection、manifest和analysis连续重建哈希一致。
+- 整理v2 Solver与Process Evaluator的信息契约：v2可见解答提供连续数学阶段、关键依据、条件/case和显式最终答案；Evaluator保留确定性步骤、逐步四态判断、错误类型/来源、全局完整性与支持度、首错和聚合关系，已足以审计运行链路。
+- 明确有效性验证边界：官方`reference_answer`只能验证最终结论，`reference_solution`只可辅助标注且不能作为唯一过程gold；当前25题全为正确过程，尚不能证明错误判定或首错定位能力。
+- 将后续计划拆为来源关联增强、独立过程gold协议、小规模受控错误集和之后的自然错误正式有效性集；当前阶段仍不实现人工validity benchmark、multi-agent voting或ensemble。
+- 复用`math-test-prealgebra-0485`既有v1/v2正确解答构造首个受控错误探针：把1错误地视为合数并一致推导18，每版分别搭配正确答案1518和错误答案18，共4条；未重新调用Solver。
+- 28次有效Process Evaluator调用均一次完整。4条全部检测为错误过程，首错位置、`concept_or_theorem_error`、`current_step/inherited`来源及答案—过程关系均符合预设；两个正确答案变体均得到`correct_answer_invalid_process`。
+- 错误答案18与错误推导局部一致时，v1/v2 Global的`final_answer_supported`分别为false/true；将字段语义冻结列为下一待办。本轮有效调用共使用29,921 completion tokens、54,770 total tokens，累计调用延迟310.1秒。
+- 统一`final_answer_supported`定义：只有可见推理在数学上有效、信息充分且能推出最终答案时才为true；与错误链条局部一致不算支持。Global prompt升级为`math-global-evaluator-v1.1`，严格schema增加状态一致性检查，历史响应不回写。
+- 因API额度成本，取消MATH纯文字250题、Level 1-5每层50题的全量评测方案。所有数据文件、官方Level标签和既有实验继续保留；后续只运行有明确问题、选择规则、样本数和额度上限的小规模实验。

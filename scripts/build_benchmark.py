@@ -140,7 +140,7 @@ def build_gsm8k(raw_dir: Path, seed: int) -> list[dict[str, Any]]:
     return sorted(select_by_hash(records, 100, seed), key=lambda row: row["id"])
 
 
-def build_math(raw_dir: Path, seed: int) -> list[dict[str, Any]]:
+def load_math_groups(raw_dir: Path) -> dict[str, list[dict[str, Any]]]:
     root = raw_dir / "math_eleutherai"
     paths = sorted(root.glob("*/test-*.parquet"))
     if len(paths) != 7:
@@ -180,10 +180,70 @@ def build_math(raw_dir: Path, seed: int) -> list[dict[str, Any]]:
     if sorted(grouped) != expected_levels:
         raise ValueError(f"Unexpected MATH difficulty levels: {sorted(grouped)}")
 
+    return grouped
+
+
+def build_math(raw_dir: Path, seed: int) -> list[dict[str, Any]]:
+    grouped = load_math_groups(raw_dir)
     selected = []
+    expected_levels = [f"Level {level}" for level in range(1, 6)]
     for level in expected_levels:
         selected.extend(select_by_hash(grouped[level], 50, seed))
     return sorted(selected, key=lambda row: (row["metadata"]["difficulty"], row["id"]))
+
+
+def select_math_text_variant(
+    grouped: dict[str, list[dict[str, Any]]],
+    base_records: list[dict[str, Any]],
+    seed: int,
+) -> tuple[list[dict[str, Any]], dict[str, dict[str, list[str]]]]:
+    """Replace every selected Asymptote problem with a new text-only problem per level."""
+
+    base_ids = {row["id"] for row in base_records}
+    selected: list[dict[str, Any]] = []
+    replacements: dict[str, dict[str, list[str]]] = {}
+    for level in (f"Level {number}" for number in range(1, 6)):
+        base_level = [row for row in base_records if row["metadata"]["difficulty"] == level]
+        excluded = [row for row in base_level if "[asy]" in row["problem"]]
+        retained = [row for row in base_level if "[asy]" not in row["problem"]]
+        candidates = [
+            row
+            for row in grouped[level]
+            if row["id"] not in base_ids and "[asy]" not in row["problem"]
+        ]
+        added = select_by_hash(candidates, len(excluded), seed)
+        selected.extend(retained)
+        selected.extend(added)
+        replacements[level] = {
+            "excluded_ids": sorted(row["id"] for row in excluded),
+            "replacement_ids": sorted(row["id"] for row in added),
+        }
+
+    selected = sorted(selected, key=lambda row: (row["metadata"]["difficulty"], row["id"]))
+    if len(selected) != len(base_records):
+        raise ValueError(
+            f"Expected {len(base_records)} text-only MATH records, found {len(selected)}"
+        )
+    if any("[asy]" in row["problem"] for row in selected):
+        raise ValueError("Text-only MATH variant still contains Asymptote source")
+    if len({row["id"] for row in selected}) != len(selected):
+        raise ValueError("Text-only MATH variant contains duplicate IDs")
+    return selected, replacements
+
+
+def build_math_text(
+    raw_dir: Path,
+    seed: int,
+    base_records: list[dict[str, Any]],
+) -> tuple[list[dict[str, Any]], dict[str, dict[str, list[str]]]]:
+    selected, replacements = select_math_text_variant(
+        load_math_groups(raw_dir),
+        base_records,
+        seed,
+    )
+    if len(selected) != 250:
+        raise ValueError(f"Expected 250 text-only MATH records, found {len(selected)}")
+    return selected, replacements
 
 
 def build_aime(raw_dir: Path, seed: int) -> list[dict[str, Any]]:
@@ -278,6 +338,11 @@ def main() -> None:
         "math": build_math(args.raw_dir, args.seed),
         "aime": build_aime(args.raw_dir, args.seed),
     }
+    math_text, math_text_replacements = build_math_text(
+        args.raw_dir,
+        args.seed,
+        datasets["math"],
+    )
     expected_counts = {"gsm8k": 100, "math": 250, "aime": 50}
     if {name: len(rows) for name, rows in datasets.items()} != expected_counts:
         raise ValueError("Unexpected selected dataset counts")
@@ -289,6 +354,8 @@ def main() -> None:
     for name, rows in datasets.items():
         output_paths[name] = args.output_dir / f"{name}.jsonl"
         write_jsonl(output_paths[name], rows)
+    output_paths["math_text"] = args.output_dir / "math_text.jsonl"
+    write_jsonl(output_paths["math_text"], math_text)
     output_paths["benchmark"] = args.output_dir / "benchmark.jsonl"
     write_jsonl(output_paths["benchmark"], combined)
 
@@ -304,6 +371,30 @@ def main() -> None:
             "aime_years": dict(sorted(aime_years.items())),
         },
         "sources": SOURCES,
+        "variants": {
+            "math_text": {
+                "base_file": "math.jsonl",
+                "selection_rule": (
+                    "retain selected records without literal '[asy]'; replace excluded records "
+                    "within the same level by ascending SHA-256 rank from text-only test "
+                    "records not present in math.jsonl"
+                ),
+                "records": len(math_text),
+                "problem_asymptote_records": sum(
+                    "[asy]" in row["problem"] for row in math_text
+                ),
+                "reference_solution_asymptote_records": sum(
+                    "[asy]" in (row["reference_solution"] or "") for row in math_text
+                ),
+                "replacement_count": sum(
+                    len(entry["replacement_ids"])
+                    for entry in math_text_replacements.values()
+                ),
+                "levels": dict(
+                    sorted(Counter(row["metadata"]["difficulty"] for row in math_text).items())
+                ),
+            }
+        },
         "files": {
             path.name: {"records": sum(1 for _ in path.open(encoding="utf-8")), "sha256": file_sha256(path)}
             for path in output_paths.values()
@@ -311,6 +402,37 @@ def main() -> None:
     }
     manifest_path = args.output_dir / "manifest.json"
     manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+    math_text_manifest = {
+        "schema_version": "1.0",
+        "variant": "math_text",
+        "seed": args.seed,
+        "source": SOURCES["math"],
+        "base_file": {
+            "path": "math.jsonl",
+            "records": len(datasets["math"]),
+            "sha256": file_sha256(output_paths["math"]),
+        },
+        "selection_rule": manifest["variants"]["math_text"]["selection_rule"],
+        "replacements": math_text_replacements,
+        "output_file": {
+            "path": "math_text.jsonl",
+            "records": len(math_text),
+            "sha256": file_sha256(output_paths["math_text"]),
+        },
+        "levels": manifest["variants"]["math_text"]["levels"],
+        "problem_asymptote_records": manifest["variants"]["math_text"][
+            "problem_asymptote_records"
+        ],
+        "reference_solution_asymptote_records": manifest["variants"]["math_text"][
+            "reference_solution_asymptote_records"
+        ],
+    }
+    math_text_manifest_path = args.output_dir / "math_text_manifest.json"
+    math_text_manifest_path.write_text(
+        json.dumps(math_text_manifest, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
 
     print(json.dumps(manifest["counts"], ensure_ascii=False))
     print(json.dumps(manifest["strata"], ensure_ascii=False))

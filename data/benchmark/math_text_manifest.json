@@ -1,0 +1,101 @@
+{
+  "schema_version": "1.0",
+  "variant": "math_text",
+  "seed": 20260824,
+  "source": {
+    "repo": "EleutherAI/hendrycks_math",
+    "revision": "21a5633873b6a120296cce3e2df9d5550074f4a3"
+  },
+  "base_file": {
+    "path": "math.jsonl",
+    "records": 250,
+    "sha256": "6ddb04a0360ff93e467ac05467867a59ee612a5924156e27dd91fa5cbdc8cc6f"
+  },
+  "selection_rule": "retain selected records without literal '[asy]'; replace excluded records within the same level by ascending SHA-256 rank from text-only test records not present in math.jsonl",
+  "replacements": {
+    "Level 1": {
+      "excluded_ids": [
+        "math-test-geometry-0162",
+        "math-test-geometry-0180",
+        "math-test-precalculus-0228",
+        "math-test-precalculus-0229",
+        "math-test-precalculus-0484"
+      ],
+      "replacement_ids": [
+        "math-test-algebra-0384",
+        "math-test-counting_and_probability-0096",
+        "math-test-prealgebra-0301",
+        "math-test-precalculus-0290",
+        "math-test-precalculus-0349"
+      ]
+    },
+    "Level 2": {
+      "excluded_ids": [
+        "math-test-geometry-0142",
+        "math-test-geometry-0424",
+        "math-test-prealgebra-0117",
+        "math-test-prealgebra-0779",
+        "math-test-precalculus-0312",
+        "math-test-precalculus-0325"
+      ],
+      "replacement_ids": [
+        "math-test-algebra-0086",
+        "math-test-algebra-0872",
+        "math-test-counting_and_probability-0118",
+        "math-test-intermediate_algebra-0762",
+        "math-test-intermediate_algebra-0837",
+        "math-test-number_theory-0354"
+      ]
+    },
+    "Level 3": {
+      "excluded_ids": [
+        "math-test-prealgebra-0820"
+      ],
+      "replacement_ids": [
+        "math-test-algebra-1037"
+      ]
+    },
+    "Level 4": {
+      "excluded_ids": [
+        "math-test-geometry-0200",
+        "math-test-geometry-0462",
+        "math-test-prealgebra-0049",
+        "math-test-precalculus-0130"
+      ],
+      "replacement_ids": [
+        "math-test-counting_and_probability-0187",
+        "math-test-intermediate_algebra-0298",
+        "math-test-number_theory-0323",
+        "math-test-prealgebra-0415"
+      ]
+    },
+    "Level 5": {
+      "excluded_ids": [
+        "math-test-algebra-0437",
+        "math-test-geometry-0105",
+        "math-test-intermediate_algebra-0085",
+        "math-test-prealgebra-0133"
+      ],
+      "replacement_ids": [
+        "math-test-algebra-0743",
+        "math-test-prealgebra-0446",
+        "math-test-precalculus-0116",
+        "math-test-precalculus-0463"
+      ]
+    }
+  },
+  "output_file": {
+    "path": "math_text.jsonl",
+    "records": 250,
+    "sha256": "007b163e212272059562bff67e314ad19a6506d44c5799677b94cd9dafea40da"
+  },
+  "levels": {
+    "Level 1": 50,
+    "Level 2": 50,
+    "Level 3": 50,
+    "Level 4": 50,
+    "Level 5": 50
+  },
+  "problem_asymptote_records": 0,
+  "reference_solution_asymptote_records": 13
+}

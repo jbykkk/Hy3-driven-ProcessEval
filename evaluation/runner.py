@@ -14,7 +14,7 @@ from solver.parser import parse_solution
 
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_BENCHMARK = ROOT / "data" / "benchmark" / "benchmark.jsonl"
+DEFAULT_BENCHMARK = ROOT / "data" / "benchmark" / "math_text.jsonl"
 DEFAULT_INPUT = ROOT / "outputs" / "solver_outputs.jsonl"
 DEFAULT_OUTPUT = ROOT / "outputs" / "answer_verification.jsonl"
 

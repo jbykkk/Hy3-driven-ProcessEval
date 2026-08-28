@@ -1,0 +1,3399 @@
+{
+  "schema_version": "1.0",
+  "experiment": "process-evaluator-v1v2-25",
+  "selection_sha256": "7b980f136d0e6d1d7c6af56ad3fadedb52a6d37489697a82d87692af6c10fb96",
+  "config": {
+    "solver": {
+      "model": "hy3",
+      "temperature": 0.9,
+      "top_p": 1.0,
+      "max_tokens": 32000,
+      "thinking": "enabled",
+      "reasoning_effort": "high",
+      "timeout_seconds": 300,
+      "max_retries": 0
+    },
+    "process_evaluator": {
+      "local_prompt": "math-process-evaluator-v1",
+      "global_prompt": "math-global-evaluator-v1",
+      "temperature": 0.1,
+      "top_p": 1.0,
+      "max_tokens": 8000,
+      "thinking": "enabled",
+      "reasoning_effort": "high",
+      "timeout_seconds": 300,
+      "max_retries": 0
+    }
+  },
+  "artifacts": {
+    "v1": {
+      "solver": {
+        "path": "outputs/process_v1v2_25_v1_solver.jsonl",
+        "sha256": "f4e2bad572b7aba2bcaf919171e4dbb072b890fda5aeb1b47de36ce2b0cc2665",
+        "jsonl_records": 25
+      },
+      "solver_stream_events": {
+        "path": "outputs/process_v1v2_25_v1_solver_stream_events.jsonl",
+        "sha256": "b9d2502dbafad77ace5af13eeacd62834a8561fa51de45bc0041b0b6bf529f19",
+        "jsonl_records": 54694
+      },
+      "answer_verification": {
+        "path": "outputs/process_v1v2_25_v1_answer_verification.jsonl",
+        "sha256": "4849448b7bb4ef9d0df8d841e8ab28409a84473d8c078bcd5162fe34d81d1ff3",
+        "jsonl_records": 25
+      },
+      "process_evaluations": {
+        "path": "outputs/process_v1v2_25_v1_process_evaluations.jsonl",
+        "sha256": "14fb5f634a98b231c8e333338a1361815e851155bffd82e361946967469a61da",
+        "jsonl_records": 25
+      },
+      "process_responses": {
+        "path": "outputs/process_v1v2_25_v1_process_responses.jsonl",
+        "sha256": "ea02873be530a85c2190e99542e78afe176656b33f0142ec933c4d36f399e0dd",
+        "jsonl_records": 180
+      },
+      "process_stream_events": {
+        "path": "outputs/process_v1v2_25_v1_process_stream_events.jsonl",
+        "sha256": "f9f9372d66223cc90bdeb9ac8b3a75144011b683550362f70fb8e3a4d2a3603b",
+        "jsonl_records": 65858
+      }
+    },
+    "v2": {
+      "solver": {
+        "path": "outputs/process_v1v2_25_v2_solver.jsonl",
+        "sha256": "1b4c96d546199acb9cac595387c4404b2b2fe7e6c61f8d71dee6e4390936f93d",
+        "jsonl_records": 25
+      },
+      "solver_stream_events": {
+        "path": "outputs/process_v1v2_25_v2_solver_stream_events.jsonl",
+        "sha256": "96a549156b180fe0028f6ec5e1edcb3a6caed8170b5fa56430740cf53fe97be5",
+        "jsonl_records": 53229
+      },
+      "answer_verification": {
+        "path": "outputs/process_v1v2_25_v2_answer_verification.jsonl",
+        "sha256": "2f40637902cf28e4ecf25d661d5c08502d94ca6ab84da799d98a787c3778fe78",
+        "jsonl_records": 25
+      },
+      "process_evaluations": {
+        "path": "outputs/process_v1v2_25_v2_process_evaluations.jsonl",
+        "sha256": "e48b6744b713d08d70824e4e74cb12133a26861870b3ce73c0e7c472eb29946c",
+        "jsonl_records": 25
+      },
+      "process_responses": {
+        "path": "outputs/process_v1v2_25_v2_process_responses.jsonl",
+        "sha256": "ec9b2527455e4f551440b52f27273896db06a0e8c4f9afe0d17b56495f81b889",
+        "jsonl_records": 142
+      },
+      "process_stream_events": {
+        "path": "outputs/process_v1v2_25_v2_process_stream_events.jsonl",
+        "sha256": "4fdd77eec7398e331b0862bcb2a2aef0eb787ba4b5f1b46403d0d2fe1e1a5968",
+        "jsonl_records": 56257
+      }
+    }
+  },
+  "versions": {
+    "v1": {
+      "samples": 25,
+      "solver_complete": 25,
+      "answer_correct": 25,
+      "format_mismatch_but_equivalent": 5,
+      "steps": {
+        "total": 155,
+        "mean": 6.2,
+        "median": 6,
+        "min": 3,
+        "max": 9
+      },
+      "structure_issues": {
+        "final_answer_missing": 5
+      },
+      "visible_characters": {
+        "total": 28845,
+        "mean": 1153.8,
+        "median": 1231
+      },
+      "solver_usage": {
+        "prompt_tokens": 2477,
+        "completion_tokens": 123402,
+        "reasoning_tokens": 113289,
+        "non_reasoning_completion_tokens": 10113,
+        "total_tokens": 125879
+      },
+      "solver_completion_tokens": {
+        "mean": 4936.08,
+        "median": 1841,
+        "max": 19643,
+        "at_least_8000": 5,
+        "at_least_16000": 5
+      },
+      "solver_latency_ms": {
+        "total": 1190870,
+        "mean": 47634.8,
+        "median": 20032,
+        "max": 202955
+      },
+      "process": {
+        "evaluation_complete": 25,
+        "process_correct_true": 25,
+        "process_correct_false": 0,
+        "process_correct_null": 0,
+        "needs_review": 5,
+        "global_statuses": {
+          "valid": 25
+        },
+        "local_statuses": {
+          "valid": 155
+        },
+        "evaluator_calls": 180,
+        "complete_evaluator_calls": 180,
+        "evaluator_usage": {
+          "prompt_tokens": 173104,
+          "completion_tokens": 146981,
+          "reasoning_tokens": 129093,
+          "non_reasoning_completion_tokens": 17888,
+          "total_tokens": 320085
+        },
+        "evaluator_latency_ms": {
+          "total": 1645140,
+          "mean_per_sample": 65805.6,
+          "median_per_sample": 54549
+        }
+      },
+      "by_level": {
+        "Level 1": {
+          "samples": 5,
+          "answer_correct": 5,
+          "steps_mean": 5.4,
+          "steps_total": 27,
+          "structure_issue_samples": 1,
+          "solver_completion_tokens_total": 4398,
+          "solver_completion_tokens_mean": 879.6,
+          "solver_completion_tokens_median": 740,
+          "process_correct_true": 5,
+          "needs_review": 1,
+          "evaluator_calls": 32,
+          "evaluator_completion_tokens": 19583
+        },
+        "Level 2": {
+          "samples": 5,
+          "answer_correct": 5,
+          "steps_mean": 5,
+          "steps_total": 25,
+          "structure_issue_samples": 2,
+          "solver_completion_tokens_total": 4126,
+          "solver_completion_tokens_mean": 825.2,
+          "solver_completion_tokens_median": 673,
+          "process_correct_true": 5,
+          "needs_review": 2,
+          "evaluator_calls": 30,
+          "evaluator_completion_tokens": 17797
+        },
+        "Level 3": {
+          "samples": 5,
+          "answer_correct": 5,
+          "steps_mean": 7,
+          "steps_total": 35,
+          "structure_issue_samples": 1,
+          "solver_completion_tokens_total": 24755,
+          "solver_completion_tokens_mean": 4951,
+          "solver_completion_tokens_median": 1028,
+          "process_correct_true": 5,
+          "needs_review": 1,
+          "evaluator_calls": 40,
+          "evaluator_completion_tokens": 34198
+        },
+        "Level 4": {
+          "samples": 5,
+          "answer_correct": 5,
+          "steps_mean": 6.8,
+          "steps_total": 34,
+          "structure_issue_samples": 1,
+          "solver_completion_tokens_total": 30847,
+          "solver_completion_tokens_mean": 6169.4,
+          "solver_completion_tokens_median": 3211,
+          "process_correct_true": 5,
+          "needs_review": 1,
+          "evaluator_calls": 39,
+          "evaluator_completion_tokens": 33766
+        },
+        "Level 5": {
+          "samples": 5,
+          "answer_correct": 5,
+          "steps_mean": 6.8,
+          "steps_total": 34,
+          "structure_issue_samples": 0,
+          "solver_completion_tokens_total": 59276,
+          "solver_completion_tokens_mean": 11855.2,
+          "solver_completion_tokens_median": 16996,
+          "process_correct_true": 5,
+          "needs_review": 0,
+          "evaluator_calls": 39,
+          "evaluator_completion_tokens": 41637
+        }
+      }
+    },
+    "v2": {
+      "samples": 25,
+      "solver_complete": 25,
+      "answer_correct": 25,
+      "format_mismatch_but_equivalent": 3,
+      "steps": {
+        "total": 117,
+        "mean": 4.68,
+        "median": 5,
+        "min": 3,
+        "max": 7
+      },
+      "structure_issues": {},
+      "visible_characters": {
+        "total": 28054,
+        "mean": 1122.16,
+        "median": 960
+      },
+      "solver_usage": {
+        "prompt_tokens": 8202,
+        "completion_tokens": 119145,
+        "reasoning_tokens": 109400,
+        "non_reasoning_completion_tokens": 9745,
+        "total_tokens": 127347
+      },
+      "solver_completion_tokens": {
+        "mean": 4765.8,
+        "median": 2131,
+        "max": 24490,
+        "at_least_8000": 5,
+        "at_least_16000": 2
+      },
+      "solver_latency_ms": {
+        "total": 1185072,
+        "mean": 47402.88,
+        "median": 22108,
+        "max": 225042
+      },
+      "process": {
+        "evaluation_complete": 25,
+        "process_correct_true": 25,
+        "process_correct_false": 0,
+        "process_correct_null": 0,
+        "needs_review": 0,
+        "global_statuses": {
+          "valid": 25
+        },
+        "local_statuses": {
+          "valid": 117
+        },
+        "evaluator_calls": 142,
+        "complete_evaluator_calls": 142,
+        "evaluator_usage": {
+          "prompt_tokens": 137125,
+          "completion_tokens": 126224,
+          "reasoning_tokens": 111491,
+          "non_reasoning_completion_tokens": 14733,
+          "total_tokens": 263349
+        },
+        "evaluator_latency_ms": {
+          "total": 1435800,
+          "mean_per_sample": 57432,
+          "median_per_sample": 43590
+        }
+      },
+      "by_level": {
+        "Level 1": {
+          "samples": 5,
+          "answer_correct": 5,
+          "steps_mean": 4.2,
+          "steps_total": 21,
+          "structure_issue_samples": 0,
+          "solver_completion_tokens_total": 8158,
+          "solver_completion_tokens_mean": 1631.6,
+          "solver_completion_tokens_median": 1433,
+          "process_correct_true": 5,
+          "needs_review": 0,
+          "evaluator_calls": 26,
+          "evaluator_completion_tokens": 14844
+        },
+        "Level 2": {
+          "samples": 5,
+          "answer_correct": 5,
+          "steps_mean": 4.4,
+          "steps_total": 22,
+          "structure_issue_samples": 0,
+          "solver_completion_tokens_total": 7622,
+          "solver_completion_tokens_mean": 1524.4,
+          "solver_completion_tokens_median": 1573,
+          "process_correct_true": 5,
+          "needs_review": 0,
+          "evaluator_calls": 27,
+          "evaluator_completion_tokens": 18094
+        },
+        "Level 3": {
+          "samples": 5,
+          "answer_correct": 5,
+          "steps_mean": 4.6,
+          "steps_total": 23,
+          "structure_issue_samples": 0,
+          "solver_completion_tokens_total": 19255,
+          "solver_completion_tokens_mean": 3851,
+          "solver_completion_tokens_median": 1624,
+          "process_correct_true": 5,
+          "needs_review": 0,
+          "evaluator_calls": 28,
+          "evaluator_completion_tokens": 23222
+        },
+        "Level 4": {
+          "samples": 5,
+          "answer_correct": 5,
+          "steps_mean": 4.6,
+          "steps_total": 23,
+          "structure_issue_samples": 0,
+          "solver_completion_tokens_total": 31369,
+          "solver_completion_tokens_mean": 6273.8,
+          "solver_completion_tokens_median": 4552,
+          "process_correct_true": 5,
+          "needs_review": 0,
+          "evaluator_calls": 28,
+          "evaluator_completion_tokens": 29078
+        },
+        "Level 5": {
+          "samples": 5,
+          "answer_correct": 5,
+          "steps_mean": 5.6,
+          "steps_total": 28,
+          "structure_issue_samples": 0,
+          "solver_completion_tokens_total": 52741,
+          "solver_completion_tokens_mean": 10548.2,
+          "solver_completion_tokens_median": 8319,
+          "process_correct_true": 5,
+          "needs_review": 0,
+          "evaluator_calls": 33,
+          "evaluator_completion_tokens": 40986
+        }
+      }
+    }
+  },
+  "comparison": {
+    "delta_v2_minus_v1": {
+      "steps_total": -38,
+      "steps_percent": -24.516,
+      "visible_characters_total": -791,
+      "visible_characters_percent": -2.742,
+      "solver_prompt_tokens": 5725,
+      "solver_completion_tokens": -4257,
+      "solver_completion_tokens_percent": -3.45,
+      "solver_total_tokens": 1468,
+      "solver_total_tokens_percent": 1.166,
+      "evaluator_calls": -38,
+      "evaluator_calls_percent": -21.111,
+      "evaluator_completion_tokens": -20757,
+      "evaluator_completion_tokens_percent": -14.122,
+      "evaluator_total_tokens": -56736,
+      "evaluator_total_tokens_percent": -17.725
+    },
+    "paired_direction": {
+      "steps": {
+        "v2_lower": 19,
+        "equal": 5,
+        "v2_higher": 1
+      },
+      "solver_completion_tokens": {
+        "v2_lower": 8,
+        "equal": 0,
+        "v2_higher": 17
+      },
+      "evaluator_completion_tokens": {
+        "v2_lower": 19,
+        "equal": 0,
+        "v2_higher": 6
+      }
+    }
+  },
+  "paired_samples": [
+    {
+      "sample_id": "math-test-algebra-0024",
+      "level": "Level 1",
+      "subject": "Algebra",
+      "v1": {
+        "inference_id": "fd088e09-2310-4d64-9102-d2b8d5372a90",
+        "level": "Level 1",
+        "subject": "Algebra",
+        "solver": {
+          "request_status": "success",
+          "generation_status": "complete",
+          "finish_reason": "stop",
+          "latency_ms": 19473.9,
+          "visible_characters": 641,
+          "step_count": 5,
+          "step_parse_status": "success",
+          "structure_issues": [],
+          "usage": {
+            "prompt_tokens": 73,
+            "completion_tokens": 1841,
+            "reasoning_tokens": 1583,
+            "non_reasoning_completion_tokens": 258,
+            "total_tokens": 1914
+          }
+        },
+        "answer_verification": {
+          "verdict": "correct",
+          "format_mismatch_but_equivalent": false
+        },
+        "process": {
+          "evaluation_status": "complete",
+          "process_correct": true,
+          "needs_review": false,
+          "global_status": "valid",
+          "process_complete": true,
+          "final_answer_supported": true,
+          "first_error_step": null,
+          "answer_process_relation": "correct_answer_valid_process",
+          "local_statuses": {
+            "valid": 5
+          },
+          "local_importance": {
+            "high": 3,
+            "medium": 1,
+            "low": 1
+          },
+          "evaluator_calls": 6,
+          "complete_evaluator_calls": 6,
+          "evaluator_latency_ms": 50321,
+          "usage": {
+            "prompt_tokens": 4987,
+            "completion_tokens": 4293,
+            "reasoning_tokens": 3776,
+            "non_reasoning_completion_tokens": 517,
+            "total_tokens": 9280
+          }
+        }
+      },
+      "v2": {
+        "inference_id": "3f76e23f-579d-4604-b91d-af3982b199bb",
+        "level": "Level 1",
+        "subject": "Algebra",
+        "solver": {
+          "request_status": "success",
+          "generation_status": "complete",
+          "finish_reason": "stop",
+          "latency_ms": 23060.78,
+          "visible_characters": 749,
+          "step_count": 4,
+          "step_parse_status": "success",
+          "structure_issues": [],
+          "usage": {
+            "prompt_tokens": 302,
+            "completion_tokens": 2131,
+            "reasoning_tokens": 1858,
+            "non_reasoning_completion_tokens": 273,
+            "total_tokens": 2433
+          }
+        },
+        "answer_verification": {
+          "verdict": "correct",
+          "format_mismatch_but_equivalent": false
+        },
+        "process": {
+          "evaluation_status": "complete",
+          "process_correct": true,
+          "needs_review": false,
+          "global_status": "valid",
+          "process_complete": true,
+          "final_answer_supported": true,
+          "first_error_step": null,
+          "answer_process_relation": "correct_answer_valid_process",
+          "local_statuses": {
+            "valid": 4
+          },
+          "local_importance": {
+            "low": 1,
+            "medium": 2,
+            "high": 1
+          },
+          "evaluator_calls": 5,
+          "complete_evaluator_calls": 5,
+          "evaluator_latency_ms": 43590,
+          "usage": {
+            "prompt_tokens": 4166,
+            "completion_tokens": 3765,
+            "reasoning_tokens": 3306,
+            "non_reasoning_completion_tokens": 459,
+            "total_tokens": 7931
+          }
+        }
+      },
+      "delta_v2_minus_v1": {
+        "steps": -1,
+        "visible_characters": 108,
+        "solver_completion_tokens": 290,
+        "solver_total_tokens": 519,
+        "evaluator_calls": -1,
+        "evaluator_completion_tokens": -528
+      }
+    },
+    {
+      "sample_id": "math-test-algebra-0422",
+      "level": "Level 3",
+      "subject": "Algebra",
+      "v1": {
+        "inference_id": "77602e8d-62be-42ec-b130-b61e87681f14",
+        "level": "Level 3",
+        "subject": "Algebra",
+        "solver": {
+          "request_status": "success",
+          "generation_status": "complete",
+          "finish_reason": "stop",
+          "latency_ms": 28658.324,
+          "visible_characters": 1426,
+          "step_count": 9,
+          "step_parse_status": "success",
+          "structure_issues": [],
+          "usage": {
+            "prompt_tokens": 84,
+            "completion_tokens": 2379,
+            "reasoning_tokens": 1903,
+            "non_reasoning_completion_tokens": 476,
+            "total_tokens": 2463
+          }
+        },
+        "answer_verification": {
+          "verdict": "correct",
+          "format_mismatch_but_equivalent": true
+        },
+        "process": {
+          "evaluation_status": "complete",
+          "process_correct": true,
+          "needs_review": false,
+          "global_status": "valid",
+          "process_complete": true,
+          "final_answer_supported": true,
+          "first_error_step": null,
+          "answer_process_relation": "correct_answer_valid_process",
+          "local_statuses": {
+            "valid": 9
+          },
+          "local_importance": {
+            "low": 3,
+            "high": 5,
+            "medium": 1
+          },
+          "evaluator_calls": 10,
+          "complete_evaluator_calls": 10,
+          "evaluator_latency_ms": 88066,
+          "usage": {
+            "prompt_tokens": 9667,
+            "completion_tokens": 7311,
+            "reasoning_tokens": 6345,
+            "non_reasoning_completion_tokens": 966,
+            "total_tokens": 16978
+          }
+        }
+      },
+      "v2": {
+        "inference_id": "5e18f359-e9bd-485c-a31c-aa302aefb3d1",
+        "level": "Level 3",
+        "subject": "Algebra",
+        "solver": {
+          "request_status": "success",
+          "generation_status": "complete",
+          "finish_reason": "stop",
+          "latency_ms": 82671.5,
+          "visible_characters": 1081,
+          "step_count": 6,
+          "step_parse_status": "success",
+          "structure_issues": [],
+          "usage": {
+            "prompt_tokens": 313,
+            "completion_tokens": 6596,
+            "reasoning_tokens": 6252,
+            "non_reasoning_completion_tokens": 344,
+            "total_tokens": 6909
+          }
+        },
+        "answer_verification": {
+          "verdict": "correct",
+          "format_mismatch_but_equivalent": false
+        },
+        "process": {
+          "evaluation_status": "complete",
+          "process_correct": true,
+          "needs_review": false,
+          "global_status": "valid",
+          "process_complete": true,
+          "final_answer_supported": true,
+          "first_error_step": null,
+          "answer_process_relation": "correct_answer_valid_process",
+          "local_statuses": {
+            "valid": 6
+          },
+          "local_importance": {
+            "high": 5,
+            "medium": 1
+          },
+          "evaluator_calls": 7,
+          "complete_evaluator_calls": 7,
+          "evaluator_latency_ms": 64187,
+          "usage": {
+            "prompt_tokens": 6333,
+            "completion_tokens": 6286,
+            "reasoning_tokens": 5597,
+            "non_reasoning_completion_tokens": 689,
+            "total_tokens": 12619
+          }
+        }
+      },
+      "delta_v2_minus_v1": {
+        "steps": -3,
+        "visible_characters": -345,
+        "solver_completion_tokens": 4217,
+        "solver_total_tokens": 4446,
+        "evaluator_calls": -3,
+        "evaluator_completion_tokens": -1025
+      }
+    },
+    {
+      "sample_id": "math-test-algebra-0962",
+      "level": "Level 1",
+      "subject": "Algebra",
+      "v1": {
+        "inference_id": "d9392651-6b0c-42db-8911-be0119d6b200",
+        "level": "Level 1",
+        "subject": "Algebra",
+        "solver": {
+          "request_status": "success",
+          "generation_status": "complete",
+          "finish_reason": "stop",
+          "latency_ms": 5476.909,
+          "visible_characters": 684,
+          "step_count": 5,
+          "step_parse_status": "issues",
+          "structure_issues": [
+            "final_answer_missing"
+          ],
+          "usage": {
+            "prompt_tokens": 129,
+            "completion_tokens": 425,
+            "reasoning_tokens": 200,
+            "non_reasoning_completion_tokens": 225,
+            "total_tokens": 554
+          }
+        },
+        "answer_verification": {
+          "verdict": "correct",
+          "format_mismatch_but_equivalent": false
+        },
+        "process": {
+          "evaluation_status": "complete",
+          "process_correct": true,
+          "needs_review": true,
+          "global_status": "valid",
+          "process_complete": true,
+          "final_answer_supported": true,
+          "first_error_step": null,
+          "answer_process_relation": "correct_answer_valid_process",
+          "local_statuses": {
+            "valid": 5
+          },
+          "local_importance": {
+            "low": 2,
+            "high": 3
+          },
+          "evaluator_calls": 6,
+          "complete_evaluator_calls": 6,
+          "evaluator_latency_ms": 40046,
+          "usage": {
+            "prompt_tokens": 5142,
+            "completion_tokens": 3068,
+            "reasoning_tokens": 2576,
+            "non_reasoning_completion_tokens": 492,
+            "total_tokens": 8210
+          }
+        }
+      },
+      "v2": {
+        "inference_id": "9934d95a-9d23-4a8b-8ccb-87e101657515",
+        "level": "Level 1",
+        "subject": "Algebra",
+        "solver": {
+          "request_status": "success",
+          "generation_status": "complete",
+          "finish_reason": "stop",
+          "latency_ms": 19933.657,
+          "visible_characters": 528,
+          "step_count": 4,
+          "step_parse_status": "success",
+          "structure_issues": [],
+          "usage": {
+            "prompt_tokens": 358,
+            "completion_tokens": 2542,
+            "reasoning_tokens": 2366,
+            "non_reasoning_completion_tokens": 176,
+            "total_tokens": 2900
+          }
+        },
+        "answer_verification": {
+          "verdict": "correct",
+          "format_mismatch_but_equivalent": false
+        },
+        "process": {
+          "evaluation_status": "complete",
+          "process_correct": true,
+          "needs_review": false,
+          "global_status": "valid",
+          "process_complete": true,
+          "final_answer_supported": true,
+          "first_error_step": null,
+          "answer_process_relation": "correct_answer_valid_process",
+          "local_statuses": {
+            "valid": 4
+          },
+          "local_importance": {
+            "low": 2,
+            "medium": 1,
+            "high": 1
+          },
+          "evaluator_calls": 5,
+          "complete_evaluator_calls": 5,
+          "evaluator_latency_ms": 31539,
+          "usage": {
+            "prompt_tokens": 4120,
+            "completion_tokens": 2501,
+            "reasoning_tokens": 2059,
+            "non_reasoning_completion_tokens": 442,
+            "total_tokens": 6621
+          }
+        }
+      },
+      "delta_v2_minus_v1": {
+        "steps": -1,
+        "visible_characters": -156,
+        "solver_completion_tokens": 2117,
+        "solver_total_tokens": 2346,
+        "evaluator_calls": -1,
+        "evaluator_completion_tokens": -567
+      }
+    },
+    {
+      "sample_id": "math-test-algebra-1050",
+      "level": "Level 2",
+      "subject": "Algebra",
+      "v1": {
+        "inference_id": "a6e2f0b6-f92b-4dd2-8bb3-da66f1efaea6",
+        "level": "Level 2",
+        "subject": "Algebra",
+        "solver": {
+          "request_status": "success",
+          "generation_status": "complete",
+          "finish_reason": "stop",
+          "latency_ms": 6218.018,
+          "visible_characters": 324,
+          "step_count": 3,
+          "step_parse_status": "success",
+          "structure_issues": [],
+          "usage": {
+            "prompt_tokens": 86,
+            "completion_tokens": 445,
+            "reasoning_tokens": 305,
+            "non_reasoning_completion_tokens": 140,
+            "total_tokens": 531
+          }
+        },
+        "answer_verification": {
+          "verdict": "correct",
+          "format_mismatch_but_equivalent": true
+        },
+        "process": {
+          "evaluation_status": "complete",
+          "process_correct": true,
+          "needs_review": false,
+          "global_status": "valid",
+          "process_complete": true,
+          "final_answer_supported": true,
+          "first_error_step": null,
+          "answer_process_relation": "correct_answer_valid_process",
+          "local_statuses": {
+            "valid": 3
+          },
+          "local_importance": {
+            "high": 2,
+            "medium": 1
+          },
+          "evaluator_calls": 4,
+          "complete_evaluator_calls": 4,
+          "evaluator_latency_ms": 22832,
+          "usage": {
+            "prompt_tokens": 3039,
+            "completion_tokens": 1857,
+            "reasoning_tokens": 1524,
+            "non_reasoning_completion_tokens": 333,
+            "total_tokens": 4896
+          }
+        }
+      },
+      "v2": {
+        "inference_id": "cb3d5055-69c5-45ab-ad8a-5c88d7711530",
+        "level": "Level 2",
+        "subject": "Algebra",
+        "solver": {
+          "request_status": "success",
+          "generation_status": "complete",
+          "finish_reason": "stop",
+          "latency_ms": 7252.477,
+          "visible_characters": 501,
+          "step_count": 3,
+          "step_parse_status": "success",
+          "structure_issues": [],
+          "usage": {
+            "prompt_tokens": 315,
+            "completion_tokens": 507,
+            "reasoning_tokens": 313,
+            "non_reasoning_completion_tokens": 194,
+            "total_tokens": 822
+          }
+        },
+        "answer_verification": {
+          "verdict": "correct",
+          "format_mismatch_but_equivalent": false
+        },
+        "process": {
+          "evaluation_status": "complete",
+          "process_correct": true,
+          "needs_review": false,
+          "global_status": "valid",
+          "process_complete": true,
+          "final_answer_supported": true,
+          "first_error_step": null,
+          "answer_process_relation": "correct_answer_valid_process",
+          "local_statuses": {
+            "valid": 3
+          },
+          "local_importance": {
+            "low": 1,
+            "high": 2
+          },
+          "evaluator_calls": 4,
+          "complete_evaluator_calls": 4,
+          "evaluator_latency_ms": 27034,
+          "usage": {
+            "prompt_tokens": 3163,
+            "completion_tokens": 2264,
+            "reasoning_tokens": 1914,
+            "non_reasoning_completion_tokens": 350,
+            "total_tokens": 5427
+          }
+        }
+      },
+      "delta_v2_minus_v1": {
+        "steps": 0,
+        "visible_characters": 177,
+        "solver_completion_tokens": 62,
+        "solver_total_tokens": 291,
+        "evaluator_calls": 0,
+        "evaluator_completion_tokens": 407
+      }
+    },
+    {
+      "sample_id": "math-test-algebra-1175",
+      "level": "Level 3",
+      "subject": "Algebra",
+      "v1": {
+        "inference_id": "e1aff72b-8ebd-40ba-bc9e-eb32dbf1312f",
+        "level": "Level 3",
+        "subject": "Algebra",
+        "solver": {
+          "request_status": "success",
+          "generation_status": "complete",
+          "finish_reason": "stop",
+          "latency_ms": 9293.874,
+          "visible_characters": 694,
+          "step_count": 6,
+          "step_parse_status": "success",
+          "structure_issues": [],
+          "usage": {
+            "prompt_tokens": 91,
+            "completion_tokens": 728,
+            "reasoning_tokens": 468,
+            "non_reasoning_completion_tokens": 260,
+            "total_tokens": 819
+          }
+        },
+        "answer_verification": {
+          "verdict": "correct",
+          "format_mismatch_but_equivalent": false
+        },
+        "process": {
+          "evaluation_status": "complete",
+          "process_correct": true,
+          "needs_review": false,
+          "global_status": "valid",
+          "process_complete": true,
+          "final_answer_supported": true,
+          "first_error_step": null,
+          "answer_process_relation": "correct_answer_valid_process",
+          "local_statuses": {
+            "valid": 6
+          },
+          "local_importance": {
+            "high": 4,
+            "medium": 1,
+            "low": 1
+          },
+          "evaluator_calls": 7,
+          "complete_evaluator_calls": 7,
+          "evaluator_latency_ms": 51477,
+          "usage": {
+            "prompt_tokens": 5977,
+            "completion_tokens": 4523,
+            "reasoning_tokens": 3868,
+            "non_reasoning_completion_tokens": 655,
+            "total_tokens": 10500
+          }
+        }
+      },
+      "v2": {
+        "inference_id": "ffbfefbe-ceda-435e-8fa1-707bb87b5452",
+        "level": "Level 3",
+        "subject": "Algebra",
+        "solver": {
+          "request_status": "success",
+          "generation_status": "complete",
+          "finish_reason": "stop",
+          "latency_ms": 13457.6,
+          "visible_characters": 762,
+          "step_count": 4,
+          "step_parse_status": "success",
+          "structure_issues": [],
+          "usage": {
+            "prompt_tokens": 320,
+            "completion_tokens": 1624,
+            "reasoning_tokens": 1357,
+            "non_reasoning_completion_tokens": 267,
+            "total_tokens": 1944
+          }
+        },
+        "answer_verification": {
+          "verdict": "correct",
+          "format_mismatch_but_equivalent": false
+        },
+        "process": {
+          "evaluation_status": "complete",
+          "process_correct": true,
+          "needs_review": false,
+          "global_status": "valid",
+          "process_complete": true,
+          "final_answer_supported": true,
+          "first_error_step": null,
+          "answer_process_relation": "correct_answer_valid_process",
+          "local_statuses": {
+            "valid": 4
+          },
+          "local_importance": {
+            "high": 3,
+            "low": 1
+          },
+          "evaluator_calls": 5,
+          "complete_evaluator_calls": 5,
+          "evaluator_latency_ms": 36672,
+          "usage": {
+            "prompt_tokens": 4297,
+            "completion_tokens": 3232,
+            "reasoning_tokens": 2737,
+            "non_reasoning_completion_tokens": 495,
+            "total_tokens": 7529
+          }
+        }
+      },
+      "delta_v2_minus_v1": {
+        "steps": -2,
+        "visible_characters": 68,
+        "solver_completion_tokens": 896,
+        "solver_total_tokens": 1125,
+        "evaluator_calls": -2,
+        "evaluator_completion_tokens": -1291
+      }
+    },
+    {
+      "sample_id": "math-test-counting_and_probability-0280",
+      "level": "Level 3",
+      "subject": "Counting & Probability",
+      "v1": {
+        "inference_id": "7c7b1cb0-a3cc-4777-84c0-c3b7af429387",
+        "level": "Level 3",
+        "subject": "Counting & Probability",
+        "solver": {
+          "request_status": "success",
+          "generation_status": "complete",
+          "finish_reason": "stop",
+          "latency_ms": 12996.909,
+          "visible_characters": 1231,
+          "step_count": 6,
+          "step_parse_status": "issues",
+          "structure_issues": [
+            "final_answer_missing"
+          ],
+          "usage": {
+            "prompt_tokens": 124,
+            "completion_tokens": 1028,
+            "reasoning_tokens": 668,
+            "non_reasoning_completion_tokens": 360,
+            "total_tokens": 1152
+          }
+        },
+        "answer_verification": {
+          "verdict": "correct",
+          "format_mismatch_but_equivalent": false
+        },
+        "process": {
+          "evaluation_status": "complete",
+          "process_correct": true,
+          "needs_review": true,
+          "global_status": "valid",
+          "process_complete": true,
+          "final_answer_supported": true,
+          "first_error_step": null,
+          "answer_process_relation": "correct_answer_valid_process",
+          "local_statuses": {
+            "valid": 6
+          },
+          "local_importance": {
+            "low": 2,
+            "high": 4
+          },
+          "evaluator_calls": 7,
+          "complete_evaluator_calls": 7,
+          "evaluator_latency_ms": 45828,
+          "usage": {
+            "prompt_tokens": 6593,
+            "completion_tokens": 4175,
+            "reasoning_tokens": 3524,
+            "non_reasoning_completion_tokens": 651,
+            "total_tokens": 10768
+          }
+        }
+      },
+      "v2": {
+        "inference_id": "2fff662a-5367-40f3-9425-6d9214b514e6",
+        "level": "Level 3",
+        "subject": "Counting & Probability",
+        "solver": {
+          "request_status": "success",
+          "generation_status": "complete",
+          "finish_reason": "stop",
+          "latency_ms": 9925.155,
+          "visible_characters": 718,
+          "step_count": 3,
+          "step_parse_status": "success",
+          "structure_issues": [],
+          "usage": {
+            "prompt_tokens": 353,
+            "completion_tokens": 1048,
+            "reasoning_tokens": 871,
+            "non_reasoning_completion_tokens": 177,
+            "total_tokens": 1401
+          }
+        },
+        "answer_verification": {
+          "verdict": "correct",
+          "format_mismatch_but_equivalent": false
+        },
+        "process": {
+          "evaluation_status": "complete",
+          "process_correct": true,
+          "needs_review": false,
+          "global_status": "valid",
+          "process_complete": true,
+          "final_answer_supported": true,
+          "first_error_step": null,
+          "answer_process_relation": "correct_answer_valid_process",
+          "local_statuses": {
+            "valid": 3
+          },
+          "local_importance": {
+            "high": 3
+          },
+          "evaluator_calls": 4,
+          "complete_evaluator_calls": 4,
+          "evaluator_latency_ms": 27645,
+          "usage": {
+            "prompt_tokens": 3261,
+            "completion_tokens": 2121,
+            "reasoning_tokens": 1782,
+            "non_reasoning_completion_tokens": 339,
+            "total_tokens": 5382
+          }
+        }
+      },
+      "delta_v2_minus_v1": {
+        "steps": -3,
+        "visible_characters": -513,
+        "solver_completion_tokens": 20,
+        "solver_total_tokens": 249,
+        "evaluator_calls": -3,
+        "evaluator_completion_tokens": -2054
+      }
+    },
+    {
+      "sample_id": "math-test-counting_and_probability-0289",
+      "level": "Level 5",
+      "subject": "Counting & Probability",
+      "v1": {
+        "inference_id": "70207e58-9365-454a-bdd0-3b100772b5ce",
+        "level": "Level 5",
+        "subject": "Counting & Probability",
+        "solver": {
+          "request_status": "success",
+          "generation_status": "complete",
+          "finish_reason": "stop",
+          "latency_ms": 30439.822,
+          "visible_characters": 1303,
+          "step_count": 5,
+          "step_parse_status": "success",
+          "structure_issues": [],
+          "usage": {
+            "prompt_tokens": 105,
+            "completion_tokens": 2698,
+            "reasoning_tokens": 2231,
+            "non_reasoning_completion_tokens": 467,
+            "total_tokens": 2803
+          }
+        },
+        "answer_verification": {
+          "verdict": "correct",
+          "format_mismatch_but_equivalent": false
+        },
+        "process": {
+          "evaluation_status": "complete",
+          "process_correct": true,
+          "needs_review": false,
+          "global_status": "valid",
+          "process_complete": true,
+          "final_answer_supported": true,
+          "first_error_step": null,
+          "answer_process_relation": "correct_answer_valid_process",
+          "local_statuses": {
+            "valid": 5
+          },
+          "local_importance": {
+            "high": 5
+          },
+          "evaluator_calls": 6,
+          "complete_evaluator_calls": 6,
+          "evaluator_latency_ms": 46705,
+          "usage": {
+            "prompt_tokens": 5971,
+            "completion_tokens": 4012,
+            "reasoning_tokens": 3428,
+            "non_reasoning_completion_tokens": 584,
+            "total_tokens": 9983
+          }
+        }
+      },
+      "v2": {
+        "inference_id": "70c31526-a7f8-4b71-bbf3-9008e6d247f2",
+        "level": "Level 5",
+        "subject": "Counting & Probability",
+        "solver": {
+          "request_status": "success",
+          "generation_status": "complete",
+          "finish_reason": "stop",
+          "latency_ms": 32754.388,
+          "visible_characters": 1954,
+          "step_count": 7,
+          "step_parse_status": "success",
+          "structure_issues": [],
+          "usage": {
+            "prompt_tokens": 334,
+            "completion_tokens": 2167,
+            "reasoning_tokens": 1594,
+            "non_reasoning_completion_tokens": 573,
+            "total_tokens": 2501
+          }
+        },
+        "answer_verification": {
+          "verdict": "correct",
+          "format_mismatch_but_equivalent": false
+        },
+        "process": {
+          "evaluation_status": "complete",
+          "process_correct": true,
+          "needs_review": false,
+          "global_status": "valid",
+          "process_complete": true,
+          "final_answer_supported": true,
+          "first_error_step": null,
+          "answer_process_relation": "correct_answer_valid_process",
+          "local_statuses": {
+            "valid": 7
+          },
+          "local_importance": {
+            "high": 7
+          },
+          "evaluator_calls": 8,
+          "complete_evaluator_calls": 8,
+          "evaluator_latency_ms": 58577,
+          "usage": {
+            "prompt_tokens": 8511,
+            "completion_tokens": 4591,
+            "reasoning_tokens": 3786,
+            "non_reasoning_completion_tokens": 805,
+            "total_tokens": 13102
+          }
+        }
+      },
+      "delta_v2_minus_v1": {
+        "steps": 2,
+        "visible_characters": 651,
+        "solver_completion_tokens": -531,
+        "solver_total_tokens": -302,
+        "evaluator_calls": 2,
+        "evaluator_completion_tokens": 579
+      }
+    },
+    {
+      "sample_id": "math-test-geometry-0470",
+      "level": "Level 4",
+      "subject": "Geometry",
+      "v1": {
+        "inference_id": "fd2b095c-85d3-4536-b196-c8fb62251e42",
+        "level": "Level 4",
+        "subject": "Geometry",
+        "solver": {
+          "request_status": "success",
+          "generation_status": "complete",
+          "finish_reason": "stop",
+          "latency_ms": 25631.69,
+          "visible_characters": 1236,
+          "step_count": 6,
+          "step_parse_status": "success",
+          "structure_issues": [],
+          "usage": {
+            "prompt_tokens": 92,
+            "completion_tokens": 3211,
+            "reasoning_tokens": 2825,
+            "non_reasoning_completion_tokens": 386,
+            "total_tokens": 3303
+          }
+        },
+        "answer_verification": {
+          "verdict": "correct",
+          "format_mismatch_but_equivalent": false
+        },
+        "process": {
+          "evaluation_status": "complete",
+          "process_correct": true,
+          "needs_review": false,
+          "global_status": "valid",
+          "process_complete": true,
+          "final_answer_supported": true,
+          "first_error_step": null,
+          "answer_process_relation": "correct_answer_valid_process",
+          "local_statuses": {
+            "valid": 6
+          },
+          "local_importance": {
+            "high": 4,
+            "medium": 1,
+            "low": 1
+          },
+          "evaluator_calls": 7,
+          "complete_evaluator_calls": 7,
+          "evaluator_latency_ms": 54549,
+          "usage": {
+            "prompt_tokens": 6397,
+            "completion_tokens": 4524,
+            "reasoning_tokens": 3912,
+            "non_reasoning_completion_tokens": 612,
+            "total_tokens": 10921
+          }
+        }
+      },
+      "v2": {
+        "inference_id": "f2f85986-833e-4ae4-9f9b-e0e27ae34bd3",
+        "level": "Level 4",
+        "subject": "Geometry",
+        "solver": {
+          "request_status": "success",
+          "generation_status": "complete",
+          "finish_reason": "stop",
+          "latency_ms": 13901.303,
+          "visible_characters": 934,
+          "step_count": 4,
+          "step_parse_status": "success",
+          "structure_issues": [],
+          "usage": {
+            "prompt_tokens": 321,
+            "completion_tokens": 1215,
+            "reasoning_tokens": 925,
+            "non_reasoning_completion_tokens": 290,
+            "total_tokens": 1536
+          }
+        },
+        "answer_verification": {
+          "verdict": "correct",
+          "format_mismatch_but_equivalent": false
+        },
+        "process": {
+          "evaluation_status": "complete",
+          "process_correct": true,
+          "needs_review": false,
+          "global_status": "valid",
+          "process_complete": true,
+          "final_answer_supported": true,
+          "first_error_step": null,
+          "answer_process_relation": "correct_answer_valid_process",
+          "local_statuses": {
+            "valid": 4
+          },
+          "local_importance": {
+            "high": 4
+          },
+          "evaluator_calls": 5,
+          "complete_evaluator_calls": 5,
+          "evaluator_latency_ms": 34627,
+          "usage": {
+            "prompt_tokens": 4342,
+            "completion_tokens": 2574,
+            "reasoning_tokens": 2118,
+            "non_reasoning_completion_tokens": 456,
+            "total_tokens": 6916
+          }
+        }
+      },
+      "delta_v2_minus_v1": {
+        "steps": -2,
+        "visible_characters": -302,
+        "solver_completion_tokens": -1996,
+        "solver_total_tokens": -1767,
+        "evaluator_calls": -2,
+        "evaluator_completion_tokens": -1950
+      }
+    },
+    {
+      "sample_id": "math-test-intermediate_algebra-0174",
+      "level": "Level 3",
+      "subject": "Intermediate Algebra",
+      "v1": {
+        "inference_id": "e4d85d4c-ffe3-4a2b-948b-e1c8bdb14adb",
+        "level": "Level 3",
+        "subject": "Intermediate Algebra",
+        "solver": {
+          "request_status": "success",
+          "generation_status": "complete",
+          "finish_reason": "stop",
+          "latency_ms": 202955.099,
+          "visible_characters": 1291,
+          "step_count": 8,
+          "step_parse_status": "success",
+          "structure_issues": [],
+          "usage": {
+            "prompt_tokens": 98,
+            "completion_tokens": 19643,
+            "reasoning_tokens": 19110,
+            "non_reasoning_completion_tokens": 533,
+            "total_tokens": 19741
+          }
+        },
+        "answer_verification": {
+          "verdict": "correct",
+          "format_mismatch_but_equivalent": false
+        },
+        "process": {
+          "evaluation_status": "complete",
+          "process_correct": true,
+          "needs_review": false,
+          "global_status": "valid",
+          "process_complete": true,
+          "final_answer_supported": true,
+          "first_error_step": null,
+          "answer_process_relation": "correct_answer_valid_process",
+          "local_statuses": {
+            "valid": 8
+          },
+          "local_importance": {
+            "low": 1,
+            "medium": 3,
+            "high": 4
+          },
+          "evaluator_calls": 9,
+          "complete_evaluator_calls": 9,
+          "evaluator_latency_ms": 117688,
+          "usage": {
+            "prompt_tokens": 9067,
+            "completion_tokens": 10932,
+            "reasoning_tokens": 9843,
+            "non_reasoning_completion_tokens": 1089,
+            "total_tokens": 19999
+          }
+        }
+      },
+      "v2": {
+        "inference_id": "d1d958ff-3f46-436c-bf0c-cde9779f5e96",
+        "level": "Level 3",
+        "subject": "Intermediate Algebra",
+        "solver": {
+          "request_status": "success",
+          "generation_status": "complete",
+          "finish_reason": "stop",
+          "latency_ms": 60742.091,
+          "visible_characters": 1949,
+          "step_count": 6,
+          "step_parse_status": "success",
+          "structure_issues": [],
+          "usage": {
+            "prompt_tokens": 327,
+            "completion_tokens": 8767,
+            "reasoning_tokens": 7948,
+            "non_reasoning_completion_tokens": 819,
+            "total_tokens": 9094
+          }
+        },
+        "answer_verification": {
+          "verdict": "correct",
+          "format_mismatch_but_equivalent": false
+        },
+        "process": {
+          "evaluation_status": "complete",
+          "process_correct": true,
+          "needs_review": false,
+          "global_status": "valid",
+          "process_complete": true,
+          "final_answer_supported": true,
+          "first_error_step": null,
+          "answer_process_relation": "correct_answer_valid_process",
+          "local_statuses": {
+            "valid": 6
+          },
+          "local_importance": {
+            "high": 6
+          },
+          "evaluator_calls": 7,
+          "complete_evaluator_calls": 7,
+          "evaluator_latency_ms": 92428,
+          "usage": {
+            "prompt_tokens": 8863,
+            "completion_tokens": 8335,
+            "reasoning_tokens": 7354,
+            "non_reasoning_completion_tokens": 981,
+            "total_tokens": 17198
+          }
+        }
+      },
+      "delta_v2_minus_v1": {
+        "steps": -2,
+        "visible_characters": 658,
+        "solver_completion_tokens": -10876,
+        "solver_total_tokens": -10647,
+        "evaluator_calls": -2,
+        "evaluator_completion_tokens": -2597
+      }
+    },
+    {
+      "sample_id": "math-test-intermediate_algebra-0298",
+      "level": "Level 4",
+      "subject": "Intermediate Algebra",
+      "v1": {
+        "inference_id": "d2d66746-63be-42ff-a1b3-fa9d984beb87",
+        "level": "Level 4",
+        "subject": "Intermediate Algebra",
+        "solver": {
+          "request_status": "success",
+          "generation_status": "complete",
+          "finish_reason": "stop",
+          "latency_ms": 196246.616,
+          "visible_characters": 1665,
+          "step_count": 7,
+          "step_parse_status": "success",
+          "structure_issues": [],
+          "usage": {
+            "prompt_tokens": 108,
+            "completion_tokens": 18243,
+            "reasoning_tokens": 17719,
+            "non_reasoning_completion_tokens": 524,
+            "total_tokens": 18351
+          }
+        },
+        "answer_verification": {
+          "verdict": "correct",
+          "format_mismatch_but_equivalent": false
+        },
+        "process": {
+          "evaluation_status": "complete",
+          "process_correct": true,
+          "needs_review": false,
+          "global_status": "valid",
+          "process_complete": true,
+          "final_answer_supported": true,
+          "first_error_step": null,
+          "answer_process_relation": "correct_answer_valid_process",
+          "local_statuses": {
+            "valid": 7
+          },
+          "local_importance": {
+            "high": 5,
+            "low": 2
+          },
+          "evaluator_calls": 8,
+          "complete_evaluator_calls": 8,
+          "evaluator_latency_ms": 93910,
+          "usage": {
+            "prompt_tokens": 8232,
+            "completion_tokens": 9550,
+            "reasoning_tokens": 8788,
+            "non_reasoning_completion_tokens": 762,
+            "total_tokens": 17782
+          }
+        }
+      },
+      "v2": {
+        "inference_id": "e47d7b38-bf7f-4906-8b57-73ef6c0efa61",
+        "level": "Level 4",
+        "subject": "Intermediate Algebra",
+        "solver": {
+          "request_status": "success",
+          "generation_status": "complete",
+          "finish_reason": "stop",
+          "latency_ms": 182812.916,
+          "visible_characters": 1914,
+          "step_count": 5,
+          "step_parse_status": "success",
+          "structure_issues": [],
+          "usage": {
+            "prompt_tokens": 337,
+            "completion_tokens": 18125,
+            "reasoning_tokens": 17536,
+            "non_reasoning_completion_tokens": 589,
+            "total_tokens": 18462
+          }
+        },
+        "answer_verification": {
+          "verdict": "correct",
+          "format_mismatch_but_equivalent": false
+        },
+        "process": {
+          "evaluation_status": "complete",
+          "process_correct": true,
+          "needs_review": false,
+          "global_status": "valid",
+          "process_complete": true,
+          "final_answer_supported": true,
+          "first_error_step": null,
+          "answer_process_relation": "correct_answer_valid_process",
+          "local_statuses": {
+            "valid": 5
+          },
+          "local_importance": {
+            "high": 5
+          },
+          "evaluator_calls": 6,
+          "complete_evaluator_calls": 6,
+          "evaluator_latency_ms": 153887,
+          "usage": {
+            "prompt_tokens": 6608,
+            "completion_tokens": 13605,
+            "reasoning_tokens": 12834,
+            "non_reasoning_completion_tokens": 771,
+            "total_tokens": 20213
+          }
+        }
+      },
+      "delta_v2_minus_v1": {
+        "steps": -2,
+        "visible_characters": 249,
+        "solver_completion_tokens": -118,
+        "solver_total_tokens": 111,
+        "evaluator_calls": -2,
+        "evaluator_completion_tokens": 4055
+      }
+    },
+    {
+      "sample_id": "math-test-intermediate_algebra-0308",
+      "level": "Level 5",
+      "subject": "Intermediate Algebra",
+      "v1": {
+        "inference_id": "3416898d-dc8a-425a-8d96-1806cb56f6d6",
+        "level": "Level 5",
+        "subject": "Intermediate Algebra",
+        "solver": {
+          "request_status": "success",
+          "generation_status": "complete",
+          "finish_reason": "stop",
+          "latency_ms": 122286.304,
+          "visible_characters": 1905,
+          "step_count": 8,
+          "step_parse_status": "success",
+          "structure_issues": [],
+          "usage": {
+            "prompt_tokens": 89,
+            "completion_tokens": 16996,
+            "reasoning_tokens": 16287,
+            "non_reasoning_completion_tokens": 709,
+            "total_tokens": 17085
+          }
+        },
+        "answer_verification": {
+          "verdict": "correct",
+          "format_mismatch_but_equivalent": false
+        },
+        "process": {
+          "evaluation_status": "complete",
+          "process_correct": true,
+          "needs_review": false,
+          "global_status": "valid",
+          "process_complete": true,
+          "final_answer_supported": true,
+          "first_error_step": null,
+          "answer_process_relation": "correct_answer_valid_process",
+          "local_statuses": {
+            "valid": 8
+          },
+          "local_importance": {
+            "high": 5,
+            "low": 1,
+            "medium": 2
+          },
+          "evaluator_calls": 9,
+          "complete_evaluator_calls": 9,
+          "evaluator_latency_ms": 86836,
+          "usage": {
+            "prompt_tokens": 10300,
+            "completion_tokens": 8029,
+            "reasoning_tokens": 7003,
+            "non_reasoning_completion_tokens": 1026,
+            "total_tokens": 18329
+          }
+        }
+      },
+      "v2": {
+        "inference_id": "dcda5f20-4f82-484c-a791-89cd0641fe92",
+        "level": "Level 5",
+        "subject": "Intermediate Algebra",
+        "solver": {
+          "request_status": "success",
+          "generation_status": "complete",
+          "finish_reason": "stop",
+          "latency_ms": 133357.873,
+          "visible_characters": 1227,
+          "step_count": 5,
+          "step_parse_status": "success",
+          "structure_issues": [],
+          "usage": {
+            "prompt_tokens": 318,
+            "completion_tokens": 14869,
+            "reasoning_tokens": 14416,
+            "non_reasoning_completion_tokens": 453,
+            "total_tokens": 15187
+          }
+        },
+        "answer_verification": {
+          "verdict": "correct",
+          "format_mismatch_but_equivalent": false
+        },
+        "process": {
+          "evaluation_status": "complete",
+          "process_correct": true,
+          "needs_review": false,
+          "global_status": "valid",
+          "process_complete": true,
+          "final_answer_supported": true,
+          "first_error_step": null,
+          "answer_process_relation": "correct_answer_valid_process",
+          "local_statuses": {
+            "valid": 5
+          },
+          "local_importance": {
+            "high": 4,
+            "medium": 1
+          },
+          "evaluator_calls": 6,
+          "complete_evaluator_calls": 6,
+          "evaluator_latency_ms": 80419,
+          "usage": {
+            "prompt_tokens": 6130,
+            "completion_tokens": 7384,
+            "reasoning_tokens": 6596,
+            "non_reasoning_completion_tokens": 788,
+            "total_tokens": 13514
+          }
+        }
+      },
+      "delta_v2_minus_v1": {
+        "steps": -3,
+        "visible_characters": -678,
+        "solver_completion_tokens": -2127,
+        "solver_total_tokens": -1898,
+        "evaluator_calls": -3,
+        "evaluator_completion_tokens": -645
+      }
+    },
+    {
+      "sample_id": "math-test-intermediate_algebra-0341",
+      "level": "Level 5",
+      "subject": "Intermediate Algebra",
+      "v1": {
+        "inference_id": "c1746f21-2d2a-4d85-85cc-7592a95ea047",
+        "level": "Level 5",
+        "subject": "Intermediate Algebra",
+        "solver": {
+          "request_status": "success",
+          "generation_status": "complete",
+          "finish_reason": "stop",
+          "latency_ms": 190245.679,
+          "visible_characters": 1239,
+          "step_count": 5,
+          "step_parse_status": "success",
+          "structure_issues": [],
+          "usage": {
+            "prompt_tokens": 128,
+            "completion_tokens": 18869,
+            "reasoning_tokens": 18432,
+            "non_reasoning_completion_tokens": 437,
+            "total_tokens": 18997
+          }
+        },
+        "answer_verification": {
+          "verdict": "correct",
+          "format_mismatch_but_equivalent": true
+        },
+        "process": {
+          "evaluation_status": "complete",
+          "process_correct": true,
+          "needs_review": false,
+          "global_status": "valid",
+          "process_complete": true,
+          "final_answer_supported": true,
+          "first_error_step": null,
+          "answer_process_relation": "correct_answer_valid_process",
+          "local_statuses": {
+            "valid": 5
+          },
+          "local_importance": {
+            "low": 1,
+            "high": 4
+          },
+          "evaluator_calls": 6,
+          "complete_evaluator_calls": 6,
+          "evaluator_latency_ms": 104742,
+          "usage": {
+            "prompt_tokens": 6178,
+            "completion_tokens": 10668,
+            "reasoning_tokens": 10058,
+            "non_reasoning_completion_tokens": 610,
+            "total_tokens": 16846
+          }
+        }
+      },
+      "v2": {
+        "inference_id": "8174ce7b-dcf5-484f-9444-69fbc30de4f7",
+        "level": "Level 5",
+        "subject": "Intermediate Algebra",
+        "solver": {
+          "request_status": "success",
+          "generation_status": "complete",
+          "finish_reason": "stop",
+          "latency_ms": 225042.927,
+          "visible_characters": 1726,
+          "step_count": 5,
+          "step_parse_status": "success",
+          "structure_issues": [],
+          "usage": {
+            "prompt_tokens": 357,
+            "completion_tokens": 24490,
+            "reasoning_tokens": 23880,
+            "non_reasoning_completion_tokens": 610,
+            "total_tokens": 24847
+          }
+        },
+        "answer_verification": {
+          "verdict": "correct",
+          "format_mismatch_but_equivalent": true
+        },
+        "process": {
+          "evaluation_status": "complete",
+          "process_correct": true,
+          "needs_review": false,
+          "global_status": "valid",
+          "process_complete": true,
+          "final_answer_supported": true,
+          "first_error_step": null,
+          "answer_process_relation": "correct_answer_valid_process",
+          "local_statuses": {
+            "valid": 5
+          },
+          "local_importance": {
+            "low": 1,
+            "high": 3,
+            "medium": 1
+          },
+          "evaluator_calls": 6,
+          "complete_evaluator_calls": 6,
+          "evaluator_latency_ms": 161693,
+          "usage": {
+            "prompt_tokens": 6772,
+            "completion_tokens": 14853,
+            "reasoning_tokens": 14195,
+            "non_reasoning_completion_tokens": 658,
+            "total_tokens": 21625
+          }
+        }
+      },
+      "delta_v2_minus_v1": {
+        "steps": 0,
+        "visible_characters": 487,
+        "solver_completion_tokens": 5621,
+        "solver_total_tokens": 5850,
+        "evaluator_calls": 0,
+        "evaluator_completion_tokens": 4185
+      }
+    },
+    {
+      "sample_id": "math-test-number_theory-0157",
+      "level": "Level 4",
+      "subject": "Number Theory",
+      "v1": {
+        "inference_id": "6e09cf0e-3b2b-42f7-a5b0-778395c87dfa",
+        "level": "Level 4",
+        "subject": "Number Theory",
+        "solver": {
+          "request_status": "success",
+          "generation_status": "complete",
+          "finish_reason": "stop",
+          "latency_ms": 22179.938,
+          "visible_characters": 1295,
+          "step_count": 8,
+          "step_parse_status": "success",
+          "structure_issues": [],
+          "usage": {
+            "prompt_tokens": 86,
+            "completion_tokens": 2344,
+            "reasoning_tokens": 1903,
+            "non_reasoning_completion_tokens": 441,
+            "total_tokens": 2430
+          }
+        },
+        "answer_verification": {
+          "verdict": "correct",
+          "format_mismatch_but_equivalent": false
+        },
+        "process": {
+          "evaluation_status": "complete",
+          "process_correct": true,
+          "needs_review": false,
+          "global_status": "valid",
+          "process_complete": true,
+          "final_answer_supported": true,
+          "first_error_step": null,
+          "answer_process_relation": "correct_answer_valid_process",
+          "local_statuses": {
+            "valid": 8
+          },
+          "local_importance": {
+            "high": 5,
+            "medium": 2,
+            "low": 1
+          },
+          "evaluator_calls": 9,
+          "complete_evaluator_calls": 9,
+          "evaluator_latency_ms": 91558,
+          "usage": {
+            "prompt_tokens": 8615,
+            "completion_tokens": 8887,
+            "reasoning_tokens": 7998,
+            "non_reasoning_completion_tokens": 889,
+            "total_tokens": 17502
+          }
+        }
+      },
+      "v2": {
+        "inference_id": "80ecf571-cc20-4db3-8673-b9cb07dc9af4",
+        "level": "Level 4",
+        "subject": "Number Theory",
+        "solver": {
+          "request_status": "success",
+          "generation_status": "complete",
+          "finish_reason": "stop",
+          "latency_ms": 73365.937,
+          "visible_characters": 1151,
+          "step_count": 4,
+          "step_parse_status": "success",
+          "structure_issues": [],
+          "usage": {
+            "prompt_tokens": 315,
+            "completion_tokens": 6061,
+            "reasoning_tokens": 5632,
+            "non_reasoning_completion_tokens": 429,
+            "total_tokens": 6376
+          }
+        },
+        "answer_verification": {
+          "verdict": "correct",
+          "format_mismatch_but_equivalent": false
+        },
+        "process": {
+          "evaluation_status": "complete",
+          "process_correct": true,
+          "needs_review": false,
+          "global_status": "valid",
+          "process_complete": true,
+          "final_answer_supported": true,
+          "first_error_step": null,
+          "answer_process_relation": "correct_answer_valid_process",
+          "local_statuses": {
+            "valid": 4
+          },
+          "local_importance": {
+            "high": 3,
+            "low": 1
+          },
+          "evaluator_calls": 5,
+          "complete_evaluator_calls": 5,
+          "evaluator_latency_ms": 50615,
+          "usage": {
+            "prompt_tokens": 4956,
+            "completion_tokens": 4960,
+            "reasoning_tokens": 4471,
+            "non_reasoning_completion_tokens": 489,
+            "total_tokens": 9916
+          }
+        }
+      },
+      "delta_v2_minus_v1": {
+        "steps": -4,
+        "visible_characters": -144,
+        "solver_completion_tokens": 3717,
+        "solver_total_tokens": 3946,
+        "evaluator_calls": -4,
+        "evaluator_completion_tokens": -3927
+      }
+    },
+    {
+      "sample_id": "math-test-number_theory-0264",
+      "level": "Level 5",
+      "subject": "Number Theory",
+      "v1": {
+        "inference_id": "bdbc06a2-2664-4ee0-b62f-de5abe4ddb69",
+        "level": "Level 5",
+        "subject": "Number Theory",
+        "solver": {
+          "request_status": "success",
+          "generation_status": "complete",
+          "finish_reason": "stop",
+          "latency_ms": 136334.622,
+          "visible_characters": 2192,
+          "step_count": 9,
+          "step_parse_status": "success",
+          "structure_issues": [],
+          "usage": {
+            "prompt_tokens": 93,
+            "completion_tokens": 17062,
+            "reasoning_tokens": 16214,
+            "non_reasoning_completion_tokens": 848,
+            "total_tokens": 17155
+          }
+        },
+        "answer_verification": {
+          "verdict": "correct",
+          "format_mismatch_but_equivalent": false
+        },
+        "process": {
+          "evaluation_status": "complete",
+          "process_correct": true,
+          "needs_review": false,
+          "global_status": "valid",
+          "process_complete": true,
+          "final_answer_supported": true,
+          "first_error_step": null,
+          "answer_process_relation": "correct_answer_valid_process",
+          "local_statuses": {
+            "valid": 9
+          },
+          "local_importance": {
+            "low": 2,
+            "high": 6,
+            "medium": 1
+          },
+          "evaluator_calls": 10,
+          "complete_evaluator_calls": 10,
+          "evaluator_latency_ms": 134881,
+          "usage": {
+            "prompt_tokens": 12216,
+            "completion_tokens": 12856,
+            "reasoning_tokens": 11609,
+            "non_reasoning_completion_tokens": 1247,
+            "total_tokens": 25072
+          }
+        }
+      },
+      "v2": {
+        "inference_id": "bd4cabb2-2507-44fd-98d4-847d71d33791",
+        "level": "Level 5",
+        "subject": "Number Theory",
+        "solver": {
+          "request_status": "success",
+          "generation_status": "complete",
+          "finish_reason": "stop",
+          "latency_ms": 71713.43,
+          "visible_characters": 1678,
+          "step_count": 6,
+          "step_parse_status": "success",
+          "structure_issues": [],
+          "usage": {
+            "prompt_tokens": 322,
+            "completion_tokens": 8319,
+            "reasoning_tokens": 7579,
+            "non_reasoning_completion_tokens": 740,
+            "total_tokens": 8641
+          }
+        },
+        "answer_verification": {
+          "verdict": "correct",
+          "format_mismatch_but_equivalent": false
+        },
+        "process": {
+          "evaluation_status": "complete",
+          "process_correct": true,
+          "needs_review": false,
+          "global_status": "valid",
+          "process_complete": true,
+          "final_answer_supported": true,
+          "first_error_step": null,
+          "answer_process_relation": "correct_answer_valid_process",
+          "local_statuses": {
+            "valid": 6
+          },
+          "local_importance": {
+            "high": 6
+          },
+          "evaluator_calls": 7,
+          "complete_evaluator_calls": 7,
+          "evaluator_latency_ms": 99406,
+          "usage": {
+            "prompt_tokens": 8348,
+            "completion_tokens": 9502,
+            "reasoning_tokens": 8727,
+            "non_reasoning_completion_tokens": 775,
+            "total_tokens": 17850
+          }
+        }
+      },
+      "delta_v2_minus_v1": {
+        "steps": -3,
+        "visible_characters": -514,
+        "solver_completion_tokens": -8743,
+        "solver_total_tokens": -8514,
+        "evaluator_calls": -3,
+        "evaluator_completion_tokens": -3354
+      }
+    },
+    {
+      "sample_id": "math-test-number_theory-0456",
+      "level": "Level 5",
+      "subject": "Number Theory",
+      "v1": {
+        "inference_id": "2136f5df-414f-4b22-96a1-212fcbc7a8e2",
+        "level": "Level 5",
+        "subject": "Number Theory",
+        "solver": {
+          "request_status": "success",
+          "generation_status": "complete",
+          "finish_reason": "stop",
+          "latency_ms": 34873.847,
+          "visible_characters": 1580,
+          "step_count": 7,
+          "step_parse_status": "success",
+          "structure_issues": [],
+          "usage": {
+            "prompt_tokens": 82,
+            "completion_tokens": 3651,
+            "reasoning_tokens": 2996,
+            "non_reasoning_completion_tokens": 655,
+            "total_tokens": 3733
+          }
+        },
+        "answer_verification": {
+          "verdict": "correct",
+          "format_mismatch_but_equivalent": false
+        },
+        "process": {
+          "evaluation_status": "complete",
+          "process_correct": true,
+          "needs_review": false,
+          "global_status": "valid",
+          "process_complete": true,
+          "final_answer_supported": true,
+          "first_error_step": null,
+          "answer_process_relation": "correct_answer_valid_process",
+          "local_statuses": {
+            "valid": 7
+          },
+          "local_importance": {
+            "high": 6,
+            "low": 1
+          },
+          "evaluator_calls": 8,
+          "complete_evaluator_calls": 8,
+          "evaluator_latency_ms": 72969,
+          "usage": {
+            "prompt_tokens": 8583,
+            "completion_tokens": 6072,
+            "reasoning_tokens": 5092,
+            "non_reasoning_completion_tokens": 980,
+            "total_tokens": 14655
+          }
+        }
+      },
+      "v2": {
+        "inference_id": "4b761f5b-1e97-47e4-a062-a70ee959a1f3",
+        "level": "Level 5",
+        "subject": "Number Theory",
+        "solver": {
+          "request_status": "success",
+          "generation_status": "complete",
+          "finish_reason": "stop",
+          "latency_ms": 29476.243,
+          "visible_characters": 1297,
+          "step_count": 5,
+          "step_parse_status": "success",
+          "structure_issues": [],
+          "usage": {
+            "prompt_tokens": 311,
+            "completion_tokens": 2896,
+            "reasoning_tokens": 2392,
+            "non_reasoning_completion_tokens": 504,
+            "total_tokens": 3207
+          }
+        },
+        "answer_verification": {
+          "verdict": "correct",
+          "format_mismatch_but_equivalent": false
+        },
+        "process": {
+          "evaluation_status": "complete",
+          "process_correct": true,
+          "needs_review": false,
+          "global_status": "valid",
+          "process_complete": true,
+          "final_answer_supported": true,
+          "first_error_step": null,
+          "answer_process_relation": "correct_answer_valid_process",
+          "local_statuses": {
+            "valid": 5
+          },
+          "local_importance": {
+            "high": 4,
+            "medium": 1
+          },
+          "evaluator_calls": 6,
+          "complete_evaluator_calls": 6,
+          "evaluator_latency_ms": 51694,
+          "usage": {
+            "prompt_tokens": 6074,
+            "completion_tokens": 4656,
+            "reasoning_tokens": 3949,
+            "non_reasoning_completion_tokens": 707,
+            "total_tokens": 10730
+          }
+        }
+      },
+      "delta_v2_minus_v1": {
+        "steps": -2,
+        "visible_characters": -283,
+        "solver_completion_tokens": -755,
+        "solver_total_tokens": -526,
+        "evaluator_calls": -2,
+        "evaluator_completion_tokens": -1416
+      }
+    },
+    {
+      "sample_id": "math-test-prealgebra-0053",
+      "level": "Level 2",
+      "subject": "Prealgebra",
+      "v1": {
+        "inference_id": "254932cc-0a32-48d9-8433-ddf077449395",
+        "level": "Level 2",
+        "subject": "Prealgebra",
+        "solver": {
+          "request_status": "success",
+          "generation_status": "complete",
+          "finish_reason": "stop",
+          "latency_ms": 20032.723,
+          "visible_characters": 930,
+          "step_count": 6,
+          "step_parse_status": "issues",
+          "structure_issues": [
+            "final_answer_missing"
+          ],
+          "usage": {
+            "prompt_tokens": 106,
+            "completion_tokens": 1602,
+            "reasoning_tokens": 1296,
+            "non_reasoning_completion_tokens": 306,
+            "total_tokens": 1708
+          }
+        },
+        "answer_verification": {
+          "verdict": "correct",
+          "format_mismatch_but_equivalent": false
+        },
+        "process": {
+          "evaluation_status": "complete",
+          "process_correct": true,
+          "needs_review": true,
+          "global_status": "valid",
+          "process_complete": true,
+          "final_answer_supported": true,
+          "first_error_step": null,
+          "answer_process_relation": "correct_answer_valid_process",
+          "local_statuses": {
+            "valid": 6
+          },
+          "local_importance": {
+            "high": 3,
+            "medium": 1,
+            "low": 2
+          },
+          "evaluator_calls": 7,
+          "complete_evaluator_calls": 7,
+          "evaluator_latency_ms": 49678,
+          "usage": {
+            "prompt_tokens": 6323,
+            "completion_tokens": 4337,
+            "reasoning_tokens": 3665,
+            "non_reasoning_completion_tokens": 672,
+            "total_tokens": 10660
+          }
+        }
+      },
+      "v2": {
+        "inference_id": "9892c966-6028-4974-b552-17fa17720396",
+        "level": "Level 2",
+        "subject": "Prealgebra",
+        "solver": {
+          "request_status": "success",
+          "generation_status": "complete",
+          "finish_reason": "stop",
+          "latency_ms": 27116.607,
+          "visible_characters": 884,
+          "step_count": 5,
+          "step_parse_status": "success",
+          "structure_issues": [],
+          "usage": {
+            "prompt_tokens": 335,
+            "completion_tokens": 2922,
+            "reasoning_tokens": 2623,
+            "non_reasoning_completion_tokens": 299,
+            "total_tokens": 3257
+          }
+        },
+        "answer_verification": {
+          "verdict": "correct",
+          "format_mismatch_but_equivalent": false
+        },
+        "process": {
+          "evaluation_status": "complete",
+          "process_correct": true,
+          "needs_review": false,
+          "global_status": "valid",
+          "process_complete": true,
+          "final_answer_supported": true,
+          "first_error_step": null,
+          "answer_process_relation": "correct_answer_valid_process",
+          "local_statuses": {
+            "valid": 5
+          },
+          "local_importance": {
+            "high": 4,
+            "medium": 1
+          },
+          "evaluator_calls": 6,
+          "complete_evaluator_calls": 6,
+          "evaluator_latency_ms": 56303,
+          "usage": {
+            "prompt_tokens": 5351,
+            "completion_tokens": 4803,
+            "reasoning_tokens": 4197,
+            "non_reasoning_completion_tokens": 606,
+            "total_tokens": 10154
+          }
+        }
+      },
+      "delta_v2_minus_v1": {
+        "steps": -1,
+        "visible_characters": -46,
+        "solver_completion_tokens": 1320,
+        "solver_total_tokens": 1549,
+        "evaluator_calls": -1,
+        "evaluator_completion_tokens": 466
+      }
+    },
+    {
+      "sample_id": "math-test-prealgebra-0058",
+      "level": "Level 2",
+      "subject": "Prealgebra",
+      "v1": {
+        "inference_id": "70cbd645-d2fc-42c7-a639-d72fdeb411be",
+        "level": "Level 2",
+        "subject": "Prealgebra",
+        "solver": {
+          "request_status": "success",
+          "generation_status": "complete",
+          "finish_reason": "stop",
+          "latency_ms": 7591.544,
+          "visible_characters": 666,
+          "step_count": 5,
+          "step_parse_status": "success",
+          "structure_issues": [],
+          "usage": {
+            "prompt_tokens": 184,
+            "completion_tokens": 673,
+            "reasoning_tokens": 408,
+            "non_reasoning_completion_tokens": 265,
+            "total_tokens": 857
+          }
+        },
+        "answer_verification": {
+          "verdict": "correct",
+          "format_mismatch_but_equivalent": true
+        },
+        "process": {
+          "evaluation_status": "complete",
+          "process_correct": true,
+          "needs_review": false,
+          "global_status": "valid",
+          "process_complete": true,
+          "final_answer_supported": true,
+          "first_error_step": null,
+          "answer_process_relation": "correct_answer_valid_process",
+          "local_statuses": {
+            "valid": 5
+          },
+          "local_importance": {
+            "low": 2,
+            "high": 3
+          },
+          "evaluator_calls": 6,
+          "complete_evaluator_calls": 6,
+          "evaluator_latency_ms": 50615,
+          "usage": {
+            "prompt_tokens": 5656,
+            "completion_tokens": 4026,
+            "reasoning_tokens": 3457,
+            "non_reasoning_completion_tokens": 569,
+            "total_tokens": 9682
+          }
+        }
+      },
+      "v2": {
+        "inference_id": "3206a799-4c9a-4d16-a96c-ca4ddbb73ccc",
+        "level": "Level 2",
+        "subject": "Prealgebra",
+        "solver": {
+          "request_status": "success",
+          "generation_status": "complete",
+          "finish_reason": "stop",
+          "latency_ms": 22108.47,
+          "visible_characters": 934,
+          "step_count": 5,
+          "step_parse_status": "success",
+          "structure_issues": [],
+          "usage": {
+            "prompt_tokens": 413,
+            "completion_tokens": 1951,
+            "reasoning_tokens": 1568,
+            "non_reasoning_completion_tokens": 383,
+            "total_tokens": 2364
+          }
+        },
+        "answer_verification": {
+          "verdict": "correct",
+          "format_mismatch_but_equivalent": true
+        },
+        "process": {
+          "evaluation_status": "complete",
+          "process_correct": true,
+          "needs_review": false,
+          "global_status": "valid",
+          "process_complete": true,
+          "final_answer_supported": true,
+          "first_error_step": null,
+          "answer_process_relation": "correct_answer_valid_process",
+          "local_statuses": {
+            "valid": 5
+          },
+          "local_importance": {
+            "high": 4,
+            "medium": 1
+          },
+          "evaluator_calls": 6,
+          "complete_evaluator_calls": 6,
+          "evaluator_latency_ms": 40158,
+          "usage": {
+            "prompt_tokens": 6083,
+            "completion_tokens": 3217,
+            "reasoning_tokens": 2608,
+            "non_reasoning_completion_tokens": 609,
+            "total_tokens": 9300
+          }
+        }
+      },
+      "delta_v2_minus_v1": {
+        "steps": 0,
+        "visible_characters": 268,
+        "solver_completion_tokens": 1278,
+        "solver_total_tokens": 1507,
+        "evaluator_calls": 0,
+        "evaluator_completion_tokens": -809
+      }
+    },
+    {
+      "sample_id": "math-test-prealgebra-0114",
+      "level": "Level 2",
+      "subject": "Prealgebra",
+      "v1": {
+        "inference_id": "13c8db70-2f33-430f-b82c-367883044007",
+        "level": "Level 2",
+        "subject": "Prealgebra",
+        "solver": {
+          "request_status": "success",
+          "generation_status": "complete",
+          "finish_reason": "stop",
+          "latency_ms": 5331.939,
+          "visible_characters": 859,
+          "step_count": 5,
+          "step_parse_status": "issues",
+          "structure_issues": [
+            "final_answer_missing"
+          ],
+          "usage": {
+            "prompt_tokens": 119,
+            "completion_tokens": 610,
+            "reasoning_tokens": 359,
+            "non_reasoning_completion_tokens": 251,
+            "total_tokens": 729
+          }
+        },
+        "answer_verification": {
+          "verdict": "correct",
+          "format_mismatch_but_equivalent": false
+        },
+        "process": {
+          "evaluation_status": "complete",
+          "process_correct": true,
+          "needs_review": true,
+          "global_status": "valid",
+          "process_complete": true,
+          "final_answer_supported": true,
+          "first_error_step": null,
+          "answer_process_relation": "correct_answer_valid_process",
+          "local_statuses": {
+            "valid": 5
+          },
+          "local_importance": {
+            "high": 3,
+            "low": 2
+          },
+          "evaluator_calls": 6,
+          "complete_evaluator_calls": 6,
+          "evaluator_latency_ms": 43325,
+          "usage": {
+            "prompt_tokens": 5274,
+            "completion_tokens": 3425,
+            "reasoning_tokens": 2912,
+            "non_reasoning_completion_tokens": 513,
+            "total_tokens": 8699
+          }
+        }
+      },
+      "v2": {
+        "inference_id": "51353945-fa1b-47ba-93e1-272ba319601e",
+        "level": "Level 2",
+        "subject": "Prealgebra",
+        "solver": {
+          "request_status": "success",
+          "generation_status": "complete",
+          "finish_reason": "stop",
+          "latency_ms": 9225.321,
+          "visible_characters": 960,
+          "step_count": 5,
+          "step_parse_status": "success",
+          "structure_issues": [],
+          "usage": {
+            "prompt_tokens": 348,
+            "completion_tokens": 669,
+            "reasoning_tokens": 371,
+            "non_reasoning_completion_tokens": 298,
+            "total_tokens": 1017
+          }
+        },
+        "answer_verification": {
+          "verdict": "correct",
+          "format_mismatch_but_equivalent": false
+        },
+        "process": {
+          "evaluation_status": "complete",
+          "process_correct": true,
+          "needs_review": false,
+          "global_status": "valid",
+          "process_complete": true,
+          "final_answer_supported": true,
+          "first_error_step": null,
+          "answer_process_relation": "correct_answer_valid_process",
+          "local_statuses": {
+            "valid": 5
+          },
+          "local_importance": {
+            "high": 4,
+            "low": 1
+          },
+          "evaluator_calls": 6,
+          "complete_evaluator_calls": 6,
+          "evaluator_latency_ms": 56893,
+          "usage": {
+            "prompt_tokens": 5571,
+            "completion_tokens": 4550,
+            "reasoning_tokens": 3958,
+            "non_reasoning_completion_tokens": 592,
+            "total_tokens": 10121
+          }
+        }
+      },
+      "delta_v2_minus_v1": {
+        "steps": 0,
+        "visible_characters": 101,
+        "solver_completion_tokens": 59,
+        "solver_total_tokens": 288,
+        "evaluator_calls": 0,
+        "evaluator_completion_tokens": 1125
+      }
+    },
+    {
+      "sample_id": "math-test-prealgebra-0249",
+      "level": "Level 3",
+      "subject": "Prealgebra",
+      "v1": {
+        "inference_id": "344035ff-3e28-4587-9733-cf592f6fdec4",
+        "level": "Level 3",
+        "subject": "Prealgebra",
+        "solver": {
+          "request_status": "success",
+          "generation_status": "complete",
+          "finish_reason": "stop",
+          "latency_ms": 10876.271,
+          "visible_characters": 1025,
+          "step_count": 6,
+          "step_parse_status": "success",
+          "structure_issues": [],
+          "usage": {
+            "prompt_tokens": 87,
+            "completion_tokens": 977,
+            "reasoning_tokens": 667,
+            "non_reasoning_completion_tokens": 310,
+            "total_tokens": 1064
+          }
+        },
+        "answer_verification": {
+          "verdict": "correct",
+          "format_mismatch_but_equivalent": false
+        },
+        "process": {
+          "evaluation_status": "complete",
+          "process_correct": true,
+          "needs_review": false,
+          "global_status": "valid",
+          "process_complete": true,
+          "final_answer_supported": true,
+          "first_error_step": null,
+          "answer_process_relation": "correct_answer_valid_process",
+          "local_statuses": {
+            "valid": 6
+          },
+          "local_importance": {
+            "high": 3,
+            "medium": 3
+          },
+          "evaluator_calls": 7,
+          "complete_evaluator_calls": 7,
+          "evaluator_latency_ms": 82931,
+          "usage": {
+            "prompt_tokens": 6114,
+            "completion_tokens": 7257,
+            "reasoning_tokens": 6588,
+            "non_reasoning_completion_tokens": 669,
+            "total_tokens": 13371
+          }
+        }
+      },
+      "v2": {
+        "inference_id": "8125aee6-1d37-4fc8-bc6b-c75681eab742",
+        "level": "Level 3",
+        "subject": "Prealgebra",
+        "solver": {
+          "request_status": "success",
+          "generation_status": "complete",
+          "finish_reason": "stop",
+          "latency_ms": 17553.32,
+          "visible_characters": 804,
+          "step_count": 4,
+          "step_parse_status": "success",
+          "structure_issues": [],
+          "usage": {
+            "prompt_tokens": 316,
+            "completion_tokens": 1220,
+            "reasoning_tokens": 1005,
+            "non_reasoning_completion_tokens": 215,
+            "total_tokens": 1536
+          }
+        },
+        "answer_verification": {
+          "verdict": "correct",
+          "format_mismatch_but_equivalent": false
+        },
+        "process": {
+          "evaluation_status": "complete",
+          "process_correct": true,
+          "needs_review": false,
+          "global_status": "valid",
+          "process_complete": true,
+          "final_answer_supported": true,
+          "first_error_step": null,
+          "answer_process_relation": "correct_answer_valid_process",
+          "local_statuses": {
+            "valid": 4
+          },
+          "local_importance": {
+            "high": 4
+          },
+          "evaluator_calls": 5,
+          "complete_evaluator_calls": 5,
+          "evaluator_latency_ms": 41870,
+          "usage": {
+            "prompt_tokens": 4058,
+            "completion_tokens": 3248,
+            "reasoning_tokens": 2821,
+            "non_reasoning_completion_tokens": 427,
+            "total_tokens": 7306
+          }
+        }
+      },
+      "delta_v2_minus_v1": {
+        "steps": -2,
+        "visible_characters": -221,
+        "solver_completion_tokens": 243,
+        "solver_total_tokens": 472,
+        "evaluator_calls": -2,
+        "evaluator_completion_tokens": -4009
+      }
+    },
+    {
+      "sample_id": "math-test-prealgebra-0443",
+      "level": "Level 1",
+      "subject": "Prealgebra",
+      "v1": {
+        "inference_id": "700d6431-ca55-45a2-a197-6ab621293115",
+        "level": "Level 1",
+        "subject": "Prealgebra",
+        "solver": {
+          "request_status": "success",
+          "generation_status": "complete",
+          "finish_reason": "stop",
+          "latency_ms": 9928.303,
+          "visible_characters": 964,
+          "step_count": 7,
+          "step_parse_status": "success",
+          "structure_issues": [],
+          "usage": {
+            "prompt_tokens": 67,
+            "completion_tokens": 917,
+            "reasoning_tokens": 607,
+            "non_reasoning_completion_tokens": 310,
+            "total_tokens": 984
+          }
+        },
+        "answer_verification": {
+          "verdict": "correct",
+          "format_mismatch_but_equivalent": false
+        },
+        "process": {
+          "evaluation_status": "complete",
+          "process_correct": true,
+          "needs_review": false,
+          "global_status": "valid",
+          "process_complete": true,
+          "final_answer_supported": true,
+          "first_error_step": null,
+          "answer_process_relation": "correct_answer_valid_process",
+          "local_statuses": {
+            "valid": 7
+          },
+          "local_importance": {
+            "low": 2,
+            "high": 5
+          },
+          "evaluator_calls": 8,
+          "complete_evaluator_calls": 8,
+          "evaluator_latency_ms": 56938,
+          "usage": {
+            "prompt_tokens": 6890,
+            "completion_tokens": 4843,
+            "reasoning_tokens": 4074,
+            "non_reasoning_completion_tokens": 769,
+            "total_tokens": 11733
+          }
+        }
+      },
+      "v2": {
+        "inference_id": "732b7ed1-12bc-4062-bc73-ba29f45b2313",
+        "level": "Level 1",
+        "subject": "Prealgebra",
+        "solver": {
+          "request_status": "success",
+          "generation_status": "complete",
+          "finish_reason": "stop",
+          "latency_ms": 17198.782,
+          "visible_characters": 753,
+          "step_count": 5,
+          "step_parse_status": "success",
+          "structure_issues": [],
+          "usage": {
+            "prompt_tokens": 296,
+            "completion_tokens": 1409,
+            "reasoning_tokens": 1153,
+            "non_reasoning_completion_tokens": 256,
+            "total_tokens": 1705
+          }
+        },
+        "answer_verification": {
+          "verdict": "correct",
+          "format_mismatch_but_equivalent": false
+        },
+        "process": {
+          "evaluation_status": "complete",
+          "process_correct": true,
+          "needs_review": false,
+          "global_status": "valid",
+          "process_complete": true,
+          "final_answer_supported": true,
+          "first_error_step": null,
+          "answer_process_relation": "correct_answer_valid_process",
+          "local_statuses": {
+            "valid": 5
+          },
+          "local_importance": {
+            "high": 5
+          },
+          "evaluator_calls": 6,
+          "complete_evaluator_calls": 6,
+          "evaluator_latency_ms": 37041,
+          "usage": {
+            "prompt_tokens": 4865,
+            "completion_tokens": 3055,
+            "reasoning_tokens": 2458,
+            "non_reasoning_completion_tokens": 597,
+            "total_tokens": 7920
+          }
+        }
+      },
+      "delta_v2_minus_v1": {
+        "steps": -2,
+        "visible_characters": -211,
+        "solver_completion_tokens": 492,
+        "solver_total_tokens": 721,
+        "evaluator_calls": -2,
+        "evaluator_completion_tokens": -1788
+      }
+    },
+    {
+      "sample_id": "math-test-prealgebra-0485",
+      "level": "Level 4",
+      "subject": "Prealgebra",
+      "v1": {
+        "inference_id": "d0339136-fe59-489e-83ff-ac0f4d3b7bf3",
+        "level": "Level 4",
+        "subject": "Prealgebra",
+        "solver": {
+          "request_status": "success",
+          "generation_status": "complete",
+          "finish_reason": "stop",
+          "latency_ms": 20660.523,
+          "visible_characters": 1527,
+          "step_count": 7,
+          "step_parse_status": "issues",
+          "structure_issues": [
+            "final_answer_missing"
+          ],
+          "usage": {
+            "prompt_tokens": 82,
+            "completion_tokens": 2574,
+            "reasoning_tokens": 2090,
+            "non_reasoning_completion_tokens": 484,
+            "total_tokens": 2656
+          }
+        },
+        "answer_verification": {
+          "verdict": "correct",
+          "format_mismatch_but_equivalent": false
+        },
+        "process": {
+          "evaluation_status": "complete",
+          "process_correct": true,
+          "needs_review": true,
+          "global_status": "valid",
+          "process_complete": true,
+          "final_answer_supported": true,
+          "first_error_step": null,
+          "answer_process_relation": "correct_answer_valid_process",
+          "local_statuses": {
+            "valid": 7
+          },
+          "local_importance": {
+            "low": 2,
+            "high": 5
+          },
+          "evaluator_calls": 8,
+          "complete_evaluator_calls": 8,
+          "evaluator_latency_ms": 62061,
+          "usage": {
+            "prompt_tokens": 7949,
+            "completion_tokens": 5490,
+            "reasoning_tokens": 4734,
+            "non_reasoning_completion_tokens": 756,
+            "total_tokens": 13439
+          }
+        }
+      },
+      "v2": {
+        "inference_id": "0212434f-1e6a-4d16-9d36-d9458b4a4d20",
+        "level": "Level 4",
+        "subject": "Prealgebra",
+        "solver": {
+          "request_status": "success",
+          "generation_status": "complete",
+          "finish_reason": "stop",
+          "latency_ms": 20414.316,
+          "visible_characters": 1282,
+          "step_count": 5,
+          "step_parse_status": "success",
+          "structure_issues": [],
+          "usage": {
+            "prompt_tokens": 311,
+            "completion_tokens": 1416,
+            "reasoning_tokens": 1043,
+            "non_reasoning_completion_tokens": 373,
+            "total_tokens": 1727
+          }
+        },
+        "answer_verification": {
+          "verdict": "correct",
+          "format_mismatch_but_equivalent": false
+        },
+        "process": {
+          "evaluation_status": "complete",
+          "process_correct": true,
+          "needs_review": false,
+          "global_status": "valid",
+          "process_complete": true,
+          "final_answer_supported": true,
+          "first_error_step": null,
+          "answer_process_relation": "correct_answer_valid_process",
+          "local_statuses": {
+            "valid": 5
+          },
+          "local_importance": {
+            "high": 5
+          },
+          "evaluator_calls": 6,
+          "complete_evaluator_calls": 6,
+          "evaluator_latency_ms": 37245,
+          "usage": {
+            "prompt_tokens": 5502,
+            "completion_tokens": 3043,
+            "reasoning_tokens": 2479,
+            "non_reasoning_completion_tokens": 564,
+            "total_tokens": 8545
+          }
+        }
+      },
+      "delta_v2_minus_v1": {
+        "steps": -2,
+        "visible_characters": -245,
+        "solver_completion_tokens": -1158,
+        "solver_total_tokens": -929,
+        "evaluator_calls": -2,
+        "evaluator_completion_tokens": -2447
+      }
+    },
+    {
+      "sample_id": "math-test-prealgebra-0759",
+      "level": "Level 2",
+      "subject": "Prealgebra",
+      "v1": {
+        "inference_id": "ee48b7ef-01b7-49e0-8649-e0a15f28c64a",
+        "level": "Level 2",
+        "subject": "Prealgebra",
+        "solver": {
+          "request_status": "success",
+          "generation_status": "complete",
+          "finish_reason": "stop",
+          "latency_ms": 9521.384,
+          "visible_characters": 1017,
+          "step_count": 6,
+          "step_parse_status": "success",
+          "structure_issues": [],
+          "usage": {
+            "prompt_tokens": 98,
+            "completion_tokens": 796,
+            "reasoning_tokens": 495,
+            "non_reasoning_completion_tokens": 301,
+            "total_tokens": 894
+          }
+        },
+        "answer_verification": {
+          "verdict": "correct",
+          "format_mismatch_but_equivalent": false
+        },
+        "process": {
+          "evaluation_status": "complete",
+          "process_correct": true,
+          "needs_review": false,
+          "global_status": "valid",
+          "process_complete": true,
+          "final_answer_supported": true,
+          "first_error_step": null,
+          "answer_process_relation": "correct_answer_valid_process",
+          "local_statuses": {
+            "valid": 6
+          },
+          "local_importance": {
+            "low": 2,
+            "high": 4
+          },
+          "evaluator_calls": 7,
+          "complete_evaluator_calls": 7,
+          "evaluator_latency_ms": 47659,
+          "usage": {
+            "prompt_tokens": 6064,
+            "completion_tokens": 4152,
+            "reasoning_tokens": 3499,
+            "non_reasoning_completion_tokens": 653,
+            "total_tokens": 10216
+          }
+        }
+      },
+      "v2": {
+        "inference_id": "7a9d9424-1d77-4422-94e7-bb447ea119a7",
+        "level": "Level 2",
+        "subject": "Prealgebra",
+        "solver": {
+          "request_status": "success",
+          "generation_status": "complete",
+          "finish_reason": "stop",
+          "latency_ms": 16910.555,
+          "visible_characters": 1177,
+          "step_count": 4,
+          "step_parse_status": "success",
+          "structure_issues": [],
+          "usage": {
+            "prompt_tokens": 327,
+            "completion_tokens": 1573,
+            "reasoning_tokens": 1238,
+            "non_reasoning_completion_tokens": 335,
+            "total_tokens": 1900
+          }
+        },
+        "answer_verification": {
+          "verdict": "correct",
+          "format_mismatch_but_equivalent": false
+        },
+        "process": {
+          "evaluation_status": "complete",
+          "process_correct": true,
+          "needs_review": false,
+          "global_status": "valid",
+          "process_complete": true,
+          "final_answer_supported": true,
+          "first_error_step": null,
+          "answer_process_relation": "correct_answer_valid_process",
+          "local_statuses": {
+            "valid": 4
+          },
+          "local_importance": {
+            "high": 3,
+            "low": 1
+          },
+          "evaluator_calls": 5,
+          "complete_evaluator_calls": 5,
+          "evaluator_latency_ms": 37316,
+          "usage": {
+            "prompt_tokens": 4554,
+            "completion_tokens": 3260,
+            "reasoning_tokens": 2792,
+            "non_reasoning_completion_tokens": 468,
+            "total_tokens": 7814
+          }
+        }
+      },
+      "delta_v2_minus_v1": {
+        "steps": -2,
+        "visible_characters": 160,
+        "solver_completion_tokens": 777,
+        "solver_total_tokens": 1006,
+        "evaluator_calls": -2,
+        "evaluator_completion_tokens": -892
+      }
+    },
+    {
+      "sample_id": "math-test-precalculus-0080",
+      "level": "Level 4",
+      "subject": "Precalculus",
+      "v1": {
+        "inference_id": "61f92ad0-aa48-43b7-956b-47905dbd27d9",
+        "level": "Level 4",
+        "subject": "Precalculus",
+        "solver": {
+          "request_status": "success",
+          "generation_status": "complete",
+          "finish_reason": "stop",
+          "latency_ms": 48902.653,
+          "visible_characters": 1643,
+          "step_count": 6,
+          "step_parse_status": "success",
+          "structure_issues": [],
+          "usage": {
+            "prompt_tokens": 85,
+            "completion_tokens": 4475,
+            "reasoning_tokens": 3877,
+            "non_reasoning_completion_tokens": 598,
+            "total_tokens": 4560
+          }
+        },
+        "answer_verification": {
+          "verdict": "correct",
+          "format_mismatch_but_equivalent": false
+        },
+        "process": {
+          "evaluation_status": "complete",
+          "process_correct": true,
+          "needs_review": false,
+          "global_status": "valid",
+          "process_complete": true,
+          "final_answer_supported": true,
+          "first_error_step": null,
+          "answer_process_relation": "correct_answer_valid_process",
+          "local_statuses": {
+            "valid": 6
+          },
+          "local_importance": {
+            "low": 2,
+            "high": 4
+          },
+          "evaluator_calls": 7,
+          "complete_evaluator_calls": 7,
+          "evaluator_latency_ms": 61366,
+          "usage": {
+            "prompt_tokens": 7302,
+            "completion_tokens": 5315,
+            "reasoning_tokens": 4574,
+            "non_reasoning_completion_tokens": 741,
+            "total_tokens": 12617
+          }
+        }
+      },
+      "v2": {
+        "inference_id": "12f9c640-f0d7-4a80-bbf4-1681bfbbdf67",
+        "level": "Level 4",
+        "subject": "Precalculus",
+        "solver": {
+          "request_status": "success",
+          "generation_status": "complete",
+          "finish_reason": "stop",
+          "latency_ms": 48092.752,
+          "visible_characters": 1763,
+          "step_count": 5,
+          "step_parse_status": "success",
+          "structure_issues": [],
+          "usage": {
+            "prompt_tokens": 314,
+            "completion_tokens": 4552,
+            "reasoning_tokens": 3915,
+            "non_reasoning_completion_tokens": 637,
+            "total_tokens": 4866
+          }
+        },
+        "answer_verification": {
+          "verdict": "correct",
+          "format_mismatch_but_equivalent": false
+        },
+        "process": {
+          "evaluation_status": "complete",
+          "process_correct": true,
+          "needs_review": false,
+          "global_status": "valid",
+          "process_complete": true,
+          "final_answer_supported": true,
+          "first_error_step": null,
+          "answer_process_relation": "correct_answer_valid_process",
+          "local_statuses": {
+            "valid": 5
+          },
+          "local_importance": {
+            "low": 2,
+            "high": 3
+          },
+          "evaluator_calls": 6,
+          "complete_evaluator_calls": 6,
+          "evaluator_latency_ms": 48582,
+          "usage": {
+            "prompt_tokens": 6599,
+            "completion_tokens": 4896,
+            "reasoning_tokens": 4198,
+            "non_reasoning_completion_tokens": 698,
+            "total_tokens": 11495
+          }
+        }
+      },
+      "delta_v2_minus_v1": {
+        "steps": -1,
+        "visible_characters": 120,
+        "solver_completion_tokens": 77,
+        "solver_total_tokens": 306,
+        "evaluator_calls": -1,
+        "evaluator_completion_tokens": -419
+      }
+    },
+    {
+      "sample_id": "math-test-precalculus-0167",
+      "level": "Level 1",
+      "subject": "Precalculus",
+      "v1": {
+        "inference_id": "990d288c-6659-4e72-aee8-8cd932d33529",
+        "level": "Level 1",
+        "subject": "Precalculus",
+        "solver": {
+          "request_status": "success",
+          "generation_status": "complete",
+          "finish_reason": "stop",
+          "latency_ms": 8895.074,
+          "visible_characters": 941,
+          "step_count": 6,
+          "step_parse_status": "success",
+          "structure_issues": [],
+          "usage": {
+            "prompt_tokens": 80,
+            "completion_tokens": 740,
+            "reasoning_tokens": 389,
+            "non_reasoning_completion_tokens": 351,
+            "total_tokens": 820
+          }
+        },
+        "answer_verification": {
+          "verdict": "correct",
+          "format_mismatch_but_equivalent": true
+        },
+        "process": {
+          "evaluation_status": "complete",
+          "process_correct": true,
+          "needs_review": false,
+          "global_status": "valid",
+          "process_complete": true,
+          "final_answer_supported": true,
+          "first_error_step": null,
+          "answer_process_relation": "correct_answer_valid_process",
+          "local_statuses": {
+            "valid": 6
+          },
+          "local_importance": {
+            "high": 5,
+            "low": 1
+          },
+          "evaluator_calls": 7,
+          "complete_evaluator_calls": 7,
+          "evaluator_latency_ms": 53584,
+          "usage": {
+            "prompt_tokens": 6392,
+            "completion_tokens": 4489,
+            "reasoning_tokens": 3839,
+            "non_reasoning_completion_tokens": 650,
+            "total_tokens": 10881
+          }
+        }
+      },
+      "v2": {
+        "inference_id": "2241b42f-3b47-40f5-ad76-49a5c32c6f3d",
+        "level": "Level 1",
+        "subject": "Precalculus",
+        "solver": {
+          "request_status": "success",
+          "generation_status": "complete",
+          "finish_reason": "stop",
+          "latency_ms": 16456.785,
+          "visible_characters": 741,
+          "step_count": 4,
+          "step_parse_status": "success",
+          "structure_issues": [],
+          "usage": {
+            "prompt_tokens": 309,
+            "completion_tokens": 1433,
+            "reasoning_tokens": 1138,
+            "non_reasoning_completion_tokens": 295,
+            "total_tokens": 1742
+          }
+        },
+        "answer_verification": {
+          "verdict": "correct",
+          "format_mismatch_but_equivalent": true
+        },
+        "process": {
+          "evaluation_status": "complete",
+          "process_correct": true,
+          "needs_review": false,
+          "global_status": "valid",
+          "process_complete": true,
+          "final_answer_supported": true,
+          "first_error_step": null,
+          "answer_process_relation": "correct_answer_valid_process",
+          "local_statuses": {
+            "valid": 4
+          },
+          "local_importance": {
+            "low": 2,
+            "high": 2
+          },
+          "evaluator_calls": 5,
+          "complete_evaluator_calls": 5,
+          "evaluator_latency_ms": 36181,
+          "usage": {
+            "prompt_tokens": 4395,
+            "completion_tokens": 2908,
+            "reasoning_tokens": 2407,
+            "non_reasoning_completion_tokens": 501,
+            "total_tokens": 7303
+          }
+        }
+      },
+      "delta_v2_minus_v1": {
+        "steps": -2,
+        "visible_characters": -200,
+        "solver_completion_tokens": 693,
+        "solver_total_tokens": 922,
+        "evaluator_calls": -2,
+        "evaluator_completion_tokens": -1581
+      }
+    },
+    {
+      "sample_id": "math-test-precalculus-0290",
+      "level": "Level 1",
+      "subject": "Precalculus",
+      "v1": {
+        "inference_id": "517439b4-d139-45f6-8cbd-ec9f01dc7ff0",
+        "level": "Level 1",
+        "subject": "Precalculus",
+        "solver": {
+          "request_status": "success",
+          "generation_status": "complete",
+          "finish_reason": "stop",
+          "latency_ms": 5832.239,
+          "visible_characters": 567,
+          "step_count": 4,
+          "step_parse_status": "success",
+          "structure_issues": [],
+          "usage": {
+            "prompt_tokens": 101,
+            "completion_tokens": 475,
+            "reasoning_tokens": 257,
+            "non_reasoning_completion_tokens": 218,
+            "total_tokens": 576
+          }
+        },
+        "answer_verification": {
+          "verdict": "correct",
+          "format_mismatch_but_equivalent": false
+        },
+        "process": {
+          "evaluation_status": "complete",
+          "process_correct": true,
+          "needs_review": false,
+          "global_status": "valid",
+          "process_complete": true,
+          "final_answer_supported": true,
+          "first_error_step": null,
+          "answer_process_relation": "correct_answer_valid_process",
+          "local_statuses": {
+            "valid": 4
+          },
+          "local_importance": {
+            "low": 2,
+            "high": 2
+          },
+          "evaluator_calls": 5,
+          "complete_evaluator_calls": 5,
+          "evaluator_latency_ms": 34575,
+          "usage": {
+            "prompt_tokens": 4176,
+            "completion_tokens": 2890,
+            "reasoning_tokens": 2407,
+            "non_reasoning_completion_tokens": 483,
+            "total_tokens": 7066
+          }
+        }
+      },
+      "v2": {
+        "inference_id": "49ec82a1-2b8a-480f-ac9a-567a927276a6",
+        "level": "Level 1",
+        "subject": "Precalculus",
+        "solver": {
+          "request_status": "success",
+          "generation_status": "complete",
+          "finish_reason": "stop",
+          "latency_ms": 10540.124,
+          "visible_characters": 587,
+          "step_count": 4,
+          "step_parse_status": "success",
+          "structure_issues": [],
+          "usage": {
+            "prompt_tokens": 330,
+            "completion_tokens": 643,
+            "reasoning_tokens": 427,
+            "non_reasoning_completion_tokens": 216,
+            "total_tokens": 973
+          }
+        },
+        "answer_verification": {
+          "verdict": "correct",
+          "format_mismatch_but_equivalent": false
+        },
+        "process": {
+          "evaluation_status": "complete",
+          "process_correct": true,
+          "needs_review": false,
+          "global_status": "valid",
+          "process_complete": true,
+          "final_answer_supported": true,
+          "first_error_step": null,
+          "answer_process_relation": "correct_answer_valid_process",
+          "local_statuses": {
+            "valid": 4
+          },
+          "local_importance": {
+            "low": 1,
+            "high": 3
+          },
+          "evaluator_calls": 5,
+          "complete_evaluator_calls": 5,
+          "evaluator_latency_ms": 30198,
+          "usage": {
+            "prompt_tokens": 4203,
+            "completion_tokens": 2615,
+            "reasoning_tokens": 2148,
+            "non_reasoning_completion_tokens": 467,
+            "total_tokens": 6818
+          }
+        }
+      },
+      "delta_v2_minus_v1": {
+        "steps": 0,
+        "visible_characters": 20,
+        "solver_completion_tokens": 168,
+        "solver_total_tokens": 397,
+        "evaluator_calls": 0,
+        "evaluator_completion_tokens": -275
+      }
+    }
+  ]
+}

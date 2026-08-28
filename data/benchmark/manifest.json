@@ -39,6 +39,23 @@
       "revision": "563bb8404243c5f09de6ec262f2db674fe5bce9b"
     }
   },
+  "variants": {
+    "math_text": {
+      "base_file": "math.jsonl",
+      "selection_rule": "retain selected records without literal '[asy]'; replace excluded records within the same level by ascending SHA-256 rank from text-only test records not present in math.jsonl",
+      "records": 250,
+      "problem_asymptote_records": 0,
+      "reference_solution_asymptote_records": 13,
+      "replacement_count": 20,
+      "levels": {
+        "Level 1": 50,
+        "Level 2": 50,
+        "Level 3": 50,
+        "Level 4": 50,
+        "Level 5": 50
+      }
+    }
+  },
   "files": {
     "gsm8k.jsonl": {
       "records": 100,
@@ -51,6 +68,10 @@
     "aime.jsonl": {
       "records": 50,
       "sha256": "04361043d1900287dadf73ee960b1e9c0fac1d193090bc1d4093de760b7b84a7"
+    },
+    "math_text.jsonl": {
+      "records": 250,
+      "sha256": "007b163e212272059562bff67e314ad19a6506d44c5799677b94cd9dafea40da"
     },
     "benchmark.jsonl": {
       "records": 400,
