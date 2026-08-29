@@ -1,0 +1,389 @@
+{
+  "schema_version": "1.0",
+  "experiment": "process-evaluator-error-injection-16",
+  "construction_status": "validated",
+  "records": 16,
+  "levels": {
+    "Level 1": 2,
+    "Level 2": 2,
+    "Level 3": 2,
+    "Level 4": 5,
+    "Level 5": 5
+  },
+  "error_types": {
+    "answer_extraction_or_format_error": 1,
+    "calculation_error": 2,
+    "case_omission": 2,
+    "concept_or_theorem_error": 3,
+    "condition_omission": 3,
+    "insufficient_justification": 1,
+    "invalid_derivation": 3,
+    "problem_misinterpretation": 1
+  },
+  "solver_parser_warning_records": 0,
+  "process_structure_issue_records": 0,
+  "answer_expectation_matches": 16,
+  "answer_verdicts": {
+    "correct": 3,
+    "incorrect": 13
+  },
+  "correct_answer_invalid_process_cases": [
+    "l3-algebra-0422-unsupported-maximum",
+    "l4-algebra-0442-correct-answer-invalid-bound",
+    "l5-number-0456-correct-answer-invalid-exponents"
+  ],
+  "process_evaluator_status": "not_run",
+  "cases": [
+    {
+      "case_id": "l1-algebra-0024-power-rule",
+      "sample_id": "math-test-algebra-0024",
+      "difficulty": "Level 1",
+      "subject": "Algebra",
+      "error_type": "concept_or_theorem_error",
+      "first_error_step": 2,
+      "step_ids": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "solver_parser_warnings": [],
+      "process_parse_status": "success",
+      "process_structure_issues": [],
+      "expected_answer_correct": false,
+      "actual_answer_verdict": "incorrect",
+      "answer_expectation_matches": true,
+      "answer_process_relation": "wrong_answer_invalid_process"
+    },
+    {
+      "case_id": "l1-precalculus-0167-midpoint-arithmetic",
+      "sample_id": "math-test-precalculus-0167",
+      "difficulty": "Level 1",
+      "subject": "Precalculus",
+      "error_type": "calculation_error",
+      "first_error_step": 3,
+      "step_ids": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "solver_parser_warnings": [],
+      "process_parse_status": "success",
+      "process_structure_issues": [],
+      "expected_answer_correct": false,
+      "actual_answer_verdict": "incorrect",
+      "answer_expectation_matches": true,
+      "answer_process_relation": "wrong_answer_invalid_process"
+    },
+    {
+      "case_id": "l2-algebra-1050-composition-order",
+      "sample_id": "math-test-algebra-1050",
+      "difficulty": "Level 2",
+      "subject": "Algebra",
+      "error_type": "problem_misinterpretation",
+      "first_error_step": 2,
+      "step_ids": [
+        1,
+        2,
+        3
+      ],
+      "solver_parser_warnings": [],
+      "process_parse_status": "success",
+      "process_structure_issues": [],
+      "expected_answer_correct": false,
+      "actual_answer_verdict": "incorrect",
+      "answer_expectation_matches": true,
+      "answer_process_relation": "wrong_answer_invalid_process"
+    },
+    {
+      "case_id": "l2-prealgebra-0058-choice-format",
+      "sample_id": "math-test-prealgebra-0058",
+      "difficulty": "Level 2",
+      "subject": "Prealgebra",
+      "error_type": "answer_extraction_or_format_error",
+      "first_error_step": null,
+      "step_ids": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "solver_parser_warnings": [],
+      "process_parse_status": "success",
+      "process_structure_issues": [],
+      "expected_answer_correct": false,
+      "actual_answer_verdict": "incorrect",
+      "answer_expectation_matches": true,
+      "answer_process_relation": "wrong_answer_invalid_process"
+    },
+    {
+      "case_id": "l3-counting-0280-nonempty-condition",
+      "sample_id": "math-test-counting_and_probability-0280",
+      "difficulty": "Level 3",
+      "subject": "Counting & Probability",
+      "error_type": "condition_omission",
+      "first_error_step": 3,
+      "step_ids": [
+        1,
+        2,
+        3
+      ],
+      "solver_parser_warnings": [],
+      "process_parse_status": "success",
+      "process_structure_issues": [],
+      "expected_answer_correct": false,
+      "actual_answer_verdict": "incorrect",
+      "answer_expectation_matches": true,
+      "answer_process_relation": "wrong_answer_invalid_process"
+    },
+    {
+      "case_id": "l3-algebra-0422-unsupported-maximum",
+      "sample_id": "math-test-algebra-0422",
+      "difficulty": "Level 3",
+      "subject": "Algebra",
+      "error_type": "insufficient_justification",
+      "first_error_step": 3,
+      "step_ids": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "solver_parser_warnings": [],
+      "process_parse_status": "success",
+      "process_structure_issues": [],
+      "expected_answer_correct": true,
+      "actual_answer_verdict": "correct",
+      "answer_expectation_matches": true,
+      "answer_process_relation": "correct_answer_invalid_process"
+    },
+    {
+      "case_id": "l4-counting-0187-binomial-coefficient",
+      "sample_id": "math-test-counting_and_probability-0187",
+      "difficulty": "Level 4",
+      "subject": "Counting & Probability",
+      "error_type": "calculation_error",
+      "first_error_step": 3,
+      "step_ids": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "solver_parser_warnings": [],
+      "process_parse_status": "success",
+      "process_structure_issues": [],
+      "expected_answer_correct": false,
+      "actual_answer_verdict": "incorrect",
+      "answer_expectation_matches": true,
+      "answer_process_relation": "wrong_answer_invalid_process"
+    },
+    {
+      "case_id": "l4-geometry-0261-inradius-formula",
+      "sample_id": "math-test-geometry-0261",
+      "difficulty": "Level 4",
+      "subject": "Geometry",
+      "error_type": "concept_or_theorem_error",
+      "first_error_step": 5,
+      "step_ids": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "solver_parser_warnings": [],
+      "process_parse_status": "success",
+      "process_structure_issues": [],
+      "expected_answer_correct": false,
+      "actual_answer_verdict": "incorrect",
+      "answer_expectation_matches": true,
+      "answer_process_relation": "wrong_answer_invalid_process"
+    },
+    {
+      "case_id": "l4-intermediate-0298-negative-roots",
+      "sample_id": "math-test-intermediate_algebra-0298",
+      "difficulty": "Level 4",
+      "subject": "Intermediate Algebra",
+      "error_type": "case_omission",
+      "first_error_step": 2,
+      "step_ids": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "solver_parser_warnings": [],
+      "process_parse_status": "success",
+      "process_structure_issues": [],
+      "expected_answer_correct": false,
+      "actual_answer_verdict": "incorrect",
+      "answer_expectation_matches": true,
+      "answer_process_relation": "wrong_answer_invalid_process"
+    },
+    {
+      "case_id": "l4-precalculus-0028-excluded-vertex",
+      "sample_id": "math-test-precalculus-0028",
+      "difficulty": "Level 4",
+      "subject": "Precalculus",
+      "error_type": "condition_omission",
+      "first_error_step": 4,
+      "step_ids": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "solver_parser_warnings": [],
+      "process_parse_status": "success",
+      "process_structure_issues": [],
+      "expected_answer_correct": false,
+      "actual_answer_verdict": "incorrect",
+      "answer_expectation_matches": true,
+      "answer_process_relation": "wrong_answer_invalid_process"
+    },
+    {
+      "case_id": "l4-algebra-0442-correct-answer-invalid-bound",
+      "sample_id": "math-test-algebra-0442",
+      "difficulty": "Level 4",
+      "subject": "Algebra",
+      "error_type": "invalid_derivation",
+      "first_error_step": 5,
+      "step_ids": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "solver_parser_warnings": [],
+      "process_parse_status": "success",
+      "process_structure_issues": [],
+      "expected_answer_correct": true,
+      "actual_answer_verdict": "correct",
+      "answer_expectation_matches": true,
+      "answer_process_relation": "correct_answer_invalid_process"
+    },
+    {
+      "case_id": "l5-counting-0273-de-morgan",
+      "sample_id": "math-test-counting_and_probability-0273",
+      "difficulty": "Level 5",
+      "subject": "Counting & Probability",
+      "error_type": "concept_or_theorem_error",
+      "first_error_step": 2,
+      "step_ids": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "solver_parser_warnings": [],
+      "process_parse_status": "success",
+      "process_structure_issues": [],
+      "expected_answer_correct": false,
+      "actual_answer_verdict": "incorrect",
+      "answer_expectation_matches": true,
+      "answer_process_relation": "wrong_answer_invalid_process"
+    },
+    {
+      "case_id": "l5-intermediate-0308-missing-complex-branch",
+      "sample_id": "math-test-intermediate_algebra-0308",
+      "difficulty": "Level 5",
+      "subject": "Intermediate Algebra",
+      "error_type": "case_omission",
+      "first_error_step": 4,
+      "step_ids": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "solver_parser_warnings": [],
+      "process_parse_status": "success",
+      "process_structure_issues": [],
+      "expected_answer_correct": false,
+      "actual_answer_verdict": "incorrect",
+      "answer_expectation_matches": true,
+      "answer_process_relation": "wrong_answer_invalid_process"
+    },
+    {
+      "case_id": "l5-intermediate-0082-power-sum-identity",
+      "sample_id": "math-test-intermediate_algebra-0082",
+      "difficulty": "Level 5",
+      "subject": "Intermediate Algebra",
+      "error_type": "invalid_derivation",
+      "first_error_step": 5,
+      "step_ids": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "solver_parser_warnings": [],
+      "process_parse_status": "success",
+      "process_structure_issues": [],
+      "expected_answer_correct": false,
+      "actual_answer_verdict": "incorrect",
+      "answer_expectation_matches": true,
+      "answer_process_relation": "wrong_answer_invalid_process"
+    },
+    {
+      "case_id": "l5-precalculus-0488-negative-radius",
+      "sample_id": "math-test-precalculus-0488",
+      "difficulty": "Level 5",
+      "subject": "Precalculus",
+      "error_type": "condition_omission",
+      "first_error_step": 9,
+      "step_ids": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "solver_parser_warnings": [],
+      "process_parse_status": "success",
+      "process_structure_issues": [],
+      "expected_answer_correct": false,
+      "actual_answer_verdict": "incorrect",
+      "answer_expectation_matches": true,
+      "answer_process_relation": "wrong_answer_invalid_process"
+    },
+    {
+      "case_id": "l5-number-0456-correct-answer-invalid-exponents",
+      "sample_id": "math-test-number_theory-0456",
+      "difficulty": "Level 5",
+      "subject": "Number Theory",
+      "error_type": "invalid_derivation",
+      "first_error_step": 3,
+      "step_ids": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "solver_parser_warnings": [],
+      "process_parse_status": "success",
+      "process_structure_issues": [],
+      "expected_answer_correct": true,
+      "actual_answer_verdict": "correct",
+      "answer_expectation_matches": true,
+      "answer_process_relation": "correct_answer_invalid_process"
+    }
+  ]
+}

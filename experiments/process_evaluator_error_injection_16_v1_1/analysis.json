@@ -1,0 +1,362 @@
+{
+  "schema_version": "1.1",
+  "experiment": "process-evaluator-error-injection-16-v1.1",
+  "construction_status": "validated",
+  "review_scope": "evaluator-visible response.content for all 16 cases",
+  "records": 16,
+  "levels": {
+    "Level 1": 2,
+    "Level 2": 2,
+    "Level 3": 2,
+    "Level 4": 5,
+    "Level 5": 5
+  },
+  "self_revealing_phrase_records": 0,
+  "manual_semantic_review_passes": 16,
+  "missing_expected_step_records": 0,
+  "solver_parser_warning_records": 0,
+  "process_structure_issue_records": 0,
+  "answer_expectation_matches": 16,
+  "answer_verdicts": {
+    "correct": 3,
+    "incorrect": 13
+  },
+  "process_evaluator_status": "complete",
+  "cases": [
+    {
+      "case_id": "l1-algebra-0024-power-rule",
+      "difficulty": "Level 1",
+      "error_type": "concept_or_theorem_error",
+      "first_error_step": 2,
+      "step_ids": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "expected_step_present": true,
+      "solver_parser_warnings": [],
+      "process_parse_status": "success",
+      "process_structure_issues": [],
+      "self_revealing_hits": [],
+      "manual_semantic_review": "pass",
+      "answer_verdict": "incorrect",
+      "answer_expectation_matches": true
+    },
+    {
+      "case_id": "l1-precalculus-0167-midpoint-arithmetic",
+      "difficulty": "Level 1",
+      "error_type": "calculation_error",
+      "first_error_step": 3,
+      "step_ids": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "expected_step_present": true,
+      "solver_parser_warnings": [],
+      "process_parse_status": "success",
+      "process_structure_issues": [],
+      "self_revealing_hits": [],
+      "manual_semantic_review": "pass",
+      "answer_verdict": "incorrect",
+      "answer_expectation_matches": true
+    },
+    {
+      "case_id": "l2-algebra-1050-composition-order",
+      "difficulty": "Level 2",
+      "error_type": "problem_misinterpretation",
+      "first_error_step": 2,
+      "step_ids": [
+        1,
+        2,
+        3
+      ],
+      "expected_step_present": true,
+      "solver_parser_warnings": [],
+      "process_parse_status": "success",
+      "process_structure_issues": [],
+      "self_revealing_hits": [],
+      "manual_semantic_review": "pass",
+      "answer_verdict": "incorrect",
+      "answer_expectation_matches": true
+    },
+    {
+      "case_id": "l2-prealgebra-0058-choice-format",
+      "difficulty": "Level 2",
+      "error_type": "answer_extraction_or_format_error",
+      "first_error_step": null,
+      "step_ids": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "expected_step_present": true,
+      "solver_parser_warnings": [],
+      "process_parse_status": "success",
+      "process_structure_issues": [],
+      "self_revealing_hits": [],
+      "manual_semantic_review": "pass",
+      "answer_verdict": "incorrect",
+      "answer_expectation_matches": true
+    },
+    {
+      "case_id": "l3-counting-0280-nonempty-condition",
+      "difficulty": "Level 3",
+      "error_type": "condition_omission",
+      "first_error_step": 3,
+      "step_ids": [
+        1,
+        2,
+        3
+      ],
+      "expected_step_present": true,
+      "solver_parser_warnings": [],
+      "process_parse_status": "success",
+      "process_structure_issues": [],
+      "self_revealing_hits": [],
+      "manual_semantic_review": "pass",
+      "answer_verdict": "incorrect",
+      "answer_expectation_matches": true
+    },
+    {
+      "case_id": "l3-algebra-0422-unsupported-maximum",
+      "difficulty": "Level 3",
+      "error_type": "insufficient_justification",
+      "first_error_step": 3,
+      "step_ids": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "expected_step_present": true,
+      "solver_parser_warnings": [],
+      "process_parse_status": "success",
+      "process_structure_issues": [],
+      "self_revealing_hits": [],
+      "manual_semantic_review": "pass",
+      "answer_verdict": "correct",
+      "answer_expectation_matches": true
+    },
+    {
+      "case_id": "l4-counting-0187-binomial-coefficient",
+      "difficulty": "Level 4",
+      "error_type": "calculation_error",
+      "first_error_step": 3,
+      "step_ids": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "expected_step_present": true,
+      "solver_parser_warnings": [],
+      "process_parse_status": "success",
+      "process_structure_issues": [],
+      "self_revealing_hits": [],
+      "manual_semantic_review": "pass",
+      "answer_verdict": "incorrect",
+      "answer_expectation_matches": true
+    },
+    {
+      "case_id": "l4-geometry-0261-inradius-formula",
+      "difficulty": "Level 4",
+      "error_type": "concept_or_theorem_error",
+      "first_error_step": 5,
+      "step_ids": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "expected_step_present": true,
+      "solver_parser_warnings": [],
+      "process_parse_status": "success",
+      "process_structure_issues": [],
+      "self_revealing_hits": [],
+      "manual_semantic_review": "pass",
+      "answer_verdict": "incorrect",
+      "answer_expectation_matches": true
+    },
+    {
+      "case_id": "l4-intermediate-0298-negative-roots",
+      "difficulty": "Level 4",
+      "error_type": "case_omission",
+      "first_error_step": 2,
+      "step_ids": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "expected_step_present": true,
+      "solver_parser_warnings": [],
+      "process_parse_status": "success",
+      "process_structure_issues": [],
+      "self_revealing_hits": [],
+      "manual_semantic_review": "pass",
+      "answer_verdict": "incorrect",
+      "answer_expectation_matches": true
+    },
+    {
+      "case_id": "l4-precalculus-0028-excluded-vertex",
+      "difficulty": "Level 4",
+      "error_type": "condition_omission",
+      "first_error_step": 4,
+      "step_ids": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "expected_step_present": true,
+      "solver_parser_warnings": [],
+      "process_parse_status": "success",
+      "process_structure_issues": [],
+      "self_revealing_hits": [],
+      "manual_semantic_review": "pass",
+      "answer_verdict": "incorrect",
+      "answer_expectation_matches": true
+    },
+    {
+      "case_id": "l4-algebra-0442-correct-answer-invalid-bound",
+      "difficulty": "Level 4",
+      "error_type": "invalid_derivation",
+      "first_error_step": 5,
+      "step_ids": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "expected_step_present": true,
+      "solver_parser_warnings": [],
+      "process_parse_status": "success",
+      "process_structure_issues": [],
+      "self_revealing_hits": [],
+      "manual_semantic_review": "pass",
+      "answer_verdict": "correct",
+      "answer_expectation_matches": true
+    },
+    {
+      "case_id": "l5-counting-0273-de-morgan",
+      "difficulty": "Level 5",
+      "error_type": "concept_or_theorem_error",
+      "first_error_step": 2,
+      "step_ids": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "expected_step_present": true,
+      "solver_parser_warnings": [],
+      "process_parse_status": "success",
+      "process_structure_issues": [],
+      "self_revealing_hits": [],
+      "manual_semantic_review": "pass",
+      "answer_verdict": "incorrect",
+      "answer_expectation_matches": true
+    },
+    {
+      "case_id": "l5-intermediate-0308-missing-complex-branch",
+      "difficulty": "Level 5",
+      "error_type": "case_omission",
+      "first_error_step": 4,
+      "step_ids": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "expected_step_present": true,
+      "solver_parser_warnings": [],
+      "process_parse_status": "success",
+      "process_structure_issues": [],
+      "self_revealing_hits": [],
+      "manual_semantic_review": "pass",
+      "answer_verdict": "incorrect",
+      "answer_expectation_matches": true
+    },
+    {
+      "case_id": "l5-intermediate-0082-power-sum-identity",
+      "difficulty": "Level 5",
+      "error_type": "invalid_derivation",
+      "first_error_step": 5,
+      "step_ids": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "expected_step_present": true,
+      "solver_parser_warnings": [],
+      "process_parse_status": "success",
+      "process_structure_issues": [],
+      "self_revealing_hits": [],
+      "manual_semantic_review": "pass",
+      "answer_verdict": "incorrect",
+      "answer_expectation_matches": true
+    },
+    {
+      "case_id": "l5-precalculus-0488-negative-radius",
+      "difficulty": "Level 5",
+      "error_type": "condition_omission",
+      "first_error_step": 9,
+      "step_ids": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "expected_step_present": true,
+      "solver_parser_warnings": [],
+      "process_parse_status": "success",
+      "process_structure_issues": [],
+      "self_revealing_hits": [],
+      "manual_semantic_review": "pass",
+      "answer_verdict": "incorrect",
+      "answer_expectation_matches": true
+    },
+    {
+      "case_id": "l5-number-0456-correct-answer-invalid-exponents",
+      "difficulty": "Level 5",
+      "error_type": "invalid_derivation",
+      "first_error_step": 3,
+      "step_ids": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "expected_step_present": true,
+      "solver_parser_warnings": [],
+      "process_parse_status": "success",
+      "process_structure_issues": [],
+      "self_revealing_hits": [],
+      "manual_semantic_review": "pass",
+      "answer_verdict": "correct",
+      "answer_expectation_matches": true
+    }
+  ]
+}

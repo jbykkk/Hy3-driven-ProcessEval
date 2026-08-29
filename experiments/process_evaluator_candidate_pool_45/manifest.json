@@ -1,0 +1,33 @@
+{
+  "schema_version": "1.0",
+  "dataset": "process-evaluator-candidate-pool-45",
+  "purpose": "Frozen v2 Solver outputs available for controlled error injection and Process Evaluator development; not an accuracy benchmark without independent labels.",
+  "records": 45,
+  "source_groups": {
+    "v1v2-25-v2": 25,
+    "level45-20-v2": 20
+  },
+  "levels": {
+    "Level 1": 5,
+    "Level 2": 5,
+    "Level 3": 5,
+    "Level 4": 15,
+    "Level 5": 15
+  },
+  "subjects": {
+    "Algebra": 8,
+    "Counting & Probability": 4,
+    "Geometry": 2,
+    "Intermediate Algebra": 7,
+    "Number Theory": 6,
+    "Prealgebra": 11,
+    "Precalculus": 7
+  },
+  "prompt_versions": [
+    "math-solver-v2"
+  ],
+  "complete_generations": 45,
+  "correct_answers": 45,
+  "index": "experiments/process_evaluator_candidate_pool_45/index.jsonl",
+  "evidence_boundary": "The index stores inference references only. Visible solutions and internal reasoning remain in ignored local outputs and are not copied into Git."
+}

@@ -6,7 +6,7 @@
 
 本项目是“犀牛鸟开源实战任务”的数学方向作品。开发分支为 `develop`，远程仓库为 `origin`。不要直接在 `main` 上开发。
 
-当前进入阶段 2：Solver、最终答案验证与Process Evaluator v1已经跑通，并完成MATH Level 1-5各5题的Solver prompt v1/v2分层对照及首个Level 4受控错误探针。现有记录足以审计可见解答、逐步/全局判断与聚合结果，但仍需要独立人工标准标注才能检验Evaluator准确率。因API额度成本，已取消MATH 250题全量评测方案；后续只做少量、有明确问题和额度上限的实验。
+当前进入阶段 2：Solver、最终答案验证与Process Evaluator v1已经跑通。旧25题的v2 inference与新增20题已整理为45题过程评估候选池；从中选择的16例受控错误v1已完成首轮95次Evaluator调用。含自我揭示措辞的v1结果保持为历史行为探针；去提示化v1.1也已完成独立的95次Evaluator调用。两轮输出、分析和统计严格分开。因API额度成本，已取消固定100题和MATH 250题全量评测方案；后续只做少量、有明确问题和额度上限的受控错误实验。
 
 已整理的数据池和纯文字变体均完整保留，但不代表需要全量运行：
 
@@ -88,6 +88,14 @@ Local/Global不读取Solver内部`reasoning_content`、参考解答或`answer_co
 
 首个Level 4受控概念错误探针已经完成：复用同题v1/v2正确解答，把1错误地作为合数并分别搭配正确答案1518和错误答案18。4条均检测为错误过程，首错、概念错误类型、`current_step/inherited`来源和答案—过程关系全部符合预设。实验后已明确`final_answer_supported`只有在可见过程数学有效、信息充分并能推出最终答案时才为true，Global prompt升为v1.1。详见`docs/experiments/PROCESS_EVALUATOR_ERROR_INJECTION_LEVEL4.md`。
 
+为后续受控错误扩展，已从纯文字MATH中确定性选择与旧25题不重合的Level 4/5各10题，优先覆盖每层所有可用官方学科，并统一使用v2生成。20/20均`stop`、parser无警告、最终答案正确，总tokens 183,742。旧25题v2与新增20题现组成45题候选池，索引见`experiments/process_evaluator_candidate_pool_45/`，完整解答与内部reasoning仍只在本地`outputs/`。实验结论见`docs/experiments/PROCESS_EVALUATOR_CANDIDATE_POOL_45.md`。
+
+已从45题池中选择16道不同源题注入受控错误：Level 1-3各2题，Level 4-5各5题，其中Level 4/5各有1个额外的正确答案但错误过程案例。共覆盖除`other`外的8种固定类型；构造与离线答案验证通过。首轮Process Evaluator共95次调用，全部完整且严格JSON有效；过程错误16/16、首错14/16、类型11/16、Global状态与答案—过程关系16/16，3例进入复核。完整结果见`docs/experiments/PROCESS_EVALUATOR_ERROR_INJECTION_16.md`。
+
+首轮结果存在明确限制：多个注入步骤使用会主动揭示错误的措辞，两个案例因此被Local当作“正确指出错误”，另有一个负半径案例出现Local虚假早错与Global首错冲突；`process_complete`仅9/16符合人工预期。因此不能把16/16检出率解释为自然错误准确率。若制作清理措辞的v1.1并重跑，预计仍需约95次调用，必须重新确认额度。
+
+旧`math-test-prealgebra-0485` Level 4概念错误探针没有重复占用新16道题的名额，但其4个已评估变体已纳入`experiments/process_evaluator_controlled_error_pool/`统一索引。当前统一池共20个案例、17道不同源题，20例均已有首轮Evaluator结果；旧实验的Global支持度历史差异继续保留。
+
 ## 3. 已完成的真实 Hy3 验证
 
 早期smoke test、跨数据集调用和答案格式验证已经证明solver与验证链路可用。50题high/4096 baseline的关键结果是27题完整、23题截断，端到端可验证答案产出率54%；全部HTTP请求均成功，因此主要瓶颈是生成预算而非API稳定性。
@@ -160,8 +168,8 @@ uv run python -m evaluation.runner
 
 ## 6. 下一步建议顺序
 
-1. 在严格的`final_answer_supported`定义下，用少量样本把受控错误扩展到计算错误、非法推导、关键证据缺口、条件/case遗漏；首个概念错误探针已经通过。当前不要引入voting、ensemble或正式validity benchmark。
-2. 根据25题结果确定Solver/Process Evaluator批次、额度、temperature/seed和重试策略；默认不自动重试。
+1. 复核v1.1的3条`needs_review`样本及9/16错误类型准确率，决定是否调整固定类型边界；不要把v1与v1.1合并为单一准确率。当前不要引入voting、ensemble或正式validity benchmark。
+2. 新增20题已验证stream/high/32000/300秒下20/20一次完整；后续仍按实验单独声明额度，默认不自动重试，并继续评估temperature/seed与长尾成本。
 3. 冻结生成完成率、完成后正确率、端到端产出率、parser成功率、过程评估完整率和成本口径。
 4. 给参考答案和预测答案增加答案类型分类，逐类实现多答案、集合、区间、坐标、矩阵、单位、选择题标签和复数校验。
 5. 不运行纯文字MATH 250题全量实验；后续每项API实验必须单独声明小样本选择和额度上限。AIME保持暂停，GSM8K和原图形题只在明确补充实验时使用。
@@ -199,6 +207,12 @@ uv run python -m evaluation.runner
 - `experiments/baseline_50/`：固定选择、manifest、聚合分析和问题 JSONL。
 - `experiments/baseline_50/high_16000_partial_analysis.json`：已中止的16000对照聚合、样本ID与本地输出校验和。
 - `experiments/process_evaluator_v1v2_25/`：25题选择、manifest、输出哈希和无reasoning聚合统计。
+- `experiments/process_evaluator_v2_level45_20/`：新增Level 4/5各10题的选择、配置与聚合结果。
+- `experiments/process_evaluator_candidate_pool_45/`：旧25题v2与新增20题的统一inference索引。
+- `docs/experiments/PROCESS_EVALUATOR_CANDIDATE_POOL_45.md`：45题候选池的构成、生成结果、成本与使用边界。
+- `experiments/process_evaluator_error_injection_16/`：16例受控错误的来源、人工预期标签和构造校验。
+- `experiments/process_evaluator_controlled_error_pool/`：旧4例与16例v1的历史受控错误索引；v1.1单独保存且尚未评估。
+- `docs/experiments/PROCESS_EVALUATOR_ERROR_INJECTION_16.md`：16例选择、逐例注入设计、标签边界与下一步。
 - `solver/runner.py`：调用入口、选择、resume、重试和落盘。
 - `solver/client.py`：独立 Hy3 API client 与安全持久化配置。
 - `solver/parser.py`：当前答案/步骤 parser。
@@ -210,3 +224,8 @@ uv run python -m evaluation.runner
 ## 9. 当前验证状态
 
 当前本地验证目标为：完整单元测试通过，Python compileall通过，`git diff --check`无错误；具体测试数量以最近一次`PROJECT_LOG.md`记录为准。若新会话观察到不同结果，应先检查依赖锁文件、Python版本和工作区状态，不要直接批量重跑API。
+# 2026-08-29 补充：受控错误集 v1.1
+
+- 已保留完成评估的16例v1及全部结果，另建并完成评估去除自我揭示措辞的`experiments/process_evaluator_error_injection_16_v1_1/`。
+- v1.1逐条把错误改写为自然的错误数学陈述、计算或分支选择；评估器可见文本的显式提示扫描为0条，16/16完成人工语义复核。
+- 本地步骤解析、结构检查和答案核验已通过；13条错误答案、3条正确答案但过程错误。v1.1已完成95次有效Evaluator调用；原始记录另含16次沙箱连接失败，未产生模型响应或token。结果与v1严格分开。

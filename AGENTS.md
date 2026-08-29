@@ -75,6 +75,11 @@
 | 查询机器可读实验配置、汇总统计或异常样本 | `experiments/baseline_50/` | 先读`README.md`和manifest/analysis；issues与selection按ID定点读取 |
 | 查询v1/v2 25题对照的选择、配置、哈希或逐样本聚合 | `experiments/process_evaluator_v1v2_25/` | 先读`README.md`和manifest/analysis；不读取被忽略的原始reasoning |
 | 查询Level 4受控错误探针的预期标签、调用量或逐例对照 | `experiments/process_evaluator_error_injection_level4/` | 先读`README.md`与`analysis.json`；按需读取`cases.jsonl`，不读取内部reasoning |
+| 查询新增Level 4/5 20题的选择、Solver结果或成本 | `docs/experiments/PROCESS_EVALUATOR_CANDIDATE_POOL_45.md`、`experiments/process_evaluator_v2_level45_20/` | 先看报告结论与`analysis.json`；逐题ID再查manifest，不批量读取本地reasoning |
+| 查询后续受控错误可用的45题、来源批次或inference引用 | `experiments/process_evaluator_candidate_pool_45/` | 先读manifest；只按目标sample读取index与本地输出 |
+| 查询16例分层受控错误的题目选择、注入方式、预期类型或构造校验 | `docs/experiments/PROCESS_EVALUATOR_ERROR_INJECTION_16.md`、`experiments/process_evaluator_error_injection_16/` | 先读报告与analysis；逐例标签再查cases，不批量读取本地解答或reasoning |
+| 查询去除自我揭示措辞的16例v1.1构造、完整评估或失败重试记录 | `experiments/process_evaluator_error_injection_16_v1_1/` | 先读README、analysis和evaluation_analysis；按case_id定点读取被忽略的聚合/原始响应，不与v1结果合并 |
+| 查询全部受控错误案例、旧Level 4是否纳入或哪些案例已经评估 | `experiments/process_evaluator_controlled_error_pool/` | 先读manifest区分案例数与源题数，再按evaluation_status读取index和来源实验 |
 | 查询原始数据来源、许可或上游revision | `data/SOURCES.md`、`data/benchmark/manifest.json` | 不读取原始数据正文，除非需要核对指定样本 |
 | 查询某次模型原始响应、reasoning、请求ID、token或耗时 | `outputs/*.jsonl` | 仅按sample/inference读取目标行；不得批量展示reasoning |
 | 追溯历史决策、实施顺序或某日发生的工作 | `PROJECT_LOG.md` | 用日期或关键词定位后读取局部范围 |

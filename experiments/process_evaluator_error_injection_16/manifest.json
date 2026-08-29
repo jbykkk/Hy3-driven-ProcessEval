@@ -1,0 +1,38 @@
+{
+  "schema_version": "1.0",
+  "experiment": "process-evaluator-error-injection-16",
+  "source_pool": "experiments/process_evaluator_candidate_pool_45/index.jsonl",
+  "records": 16,
+  "unique_source_samples": 16,
+  "levels": {
+    "Level 1": 2,
+    "Level 2": 2,
+    "Level 3": 2,
+    "Level 4": 5,
+    "Level 5": 5
+  },
+  "subjects": {
+    "Algebra": 4,
+    "Counting & Probability": 3,
+    "Geometry": 1,
+    "Intermediate Algebra": 3,
+    "Number Theory": 1,
+    "Prealgebra": 1,
+    "Precalculus": 3
+  },
+  "error_types": {
+    "answer_extraction_or_format_error": 1,
+    "calculation_error": 2,
+    "case_omission": 2,
+    "concept_or_theorem_error": 3,
+    "condition_omission": 3,
+    "insufficient_justification": 1,
+    "invalid_derivation": 3,
+    "problem_misinterpretation": 1
+  },
+  "correct_answer_invalid_process_cases": 3,
+  "tracked_cases": "experiments/process_evaluator_error_injection_16/cases.jsonl",
+  "synthetic_solver_output": "outputs/process_evaluator_error_injection_16_solver.jsonl",
+  "answer_verification_output": "outputs/process_evaluator_error_injection_16_answer_verification.jsonl",
+  "process_evaluator_status": "not_run"
+}

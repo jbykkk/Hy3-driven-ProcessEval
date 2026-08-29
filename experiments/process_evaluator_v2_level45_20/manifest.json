@@ -1,0 +1,117 @@
+{
+  "schema_version": "1.0",
+  "experiment": "process-evaluator-v2-level45-20",
+  "seed": 20260829,
+  "selection_rule": "Exclude the earlier v1/v2 25 samples. For each of Level 4 and Level 5, shuffle candidates deterministically within each official subject, take one per available subject before taking a second from any subject, and stop at 10.",
+  "source": "data/benchmark/math_text.jsonl",
+  "excluded_selection": "experiments/process_evaluator_v1v2_25/selection.jsonl",
+  "records": 20,
+  "levels": {
+    "Level 4": [
+      {
+        "id": "math-test-algebra-0442",
+        "subject": "Algebra"
+      },
+      {
+        "id": "math-test-precalculus-0166",
+        "subject": "Precalculus"
+      },
+      {
+        "id": "math-test-prealgebra-0007",
+        "subject": "Prealgebra"
+      },
+      {
+        "id": "math-test-number_theory-0050",
+        "subject": "Number Theory"
+      },
+      {
+        "id": "math-test-intermediate_algebra-0100",
+        "subject": "Intermediate Algebra"
+      },
+      {
+        "id": "math-test-geometry-0261",
+        "subject": "Geometry"
+      },
+      {
+        "id": "math-test-counting_and_probability-0187",
+        "subject": "Counting & Probability"
+      },
+      {
+        "id": "math-test-precalculus-0028",
+        "subject": "Precalculus"
+      },
+      {
+        "id": "math-test-prealgebra-0415",
+        "subject": "Prealgebra"
+      },
+      {
+        "id": "math-test-intermediate_algebra-0112",
+        "subject": "Intermediate Algebra"
+      }
+    ],
+    "Level 5": [
+      {
+        "id": "math-test-algebra-0715",
+        "subject": "Algebra"
+      },
+      {
+        "id": "math-test-precalculus-0488",
+        "subject": "Precalculus"
+      },
+      {
+        "id": "math-test-prealgebra-0257",
+        "subject": "Prealgebra"
+      },
+      {
+        "id": "math-test-intermediate_algebra-0082",
+        "subject": "Intermediate Algebra"
+      },
+      {
+        "id": "math-test-counting_and_probability-0273",
+        "subject": "Counting & Probability"
+      },
+      {
+        "id": "math-test-number_theory-0046",
+        "subject": "Number Theory"
+      },
+      {
+        "id": "math-test-prealgebra-0650",
+        "subject": "Prealgebra"
+      },
+      {
+        "id": "math-test-number_theory-0007",
+        "subject": "Number Theory"
+      },
+      {
+        "id": "math-test-algebra-0665",
+        "subject": "Algebra"
+      },
+      {
+        "id": "math-test-precalculus-0123",
+        "subject": "Precalculus"
+      }
+    ]
+  },
+  "subjects": {
+    "Algebra": 3,
+    "Counting & Probability": 2,
+    "Geometry": 1,
+    "Intermediate Algebra": 3,
+    "Number Theory": 3,
+    "Prealgebra": 4,
+    "Precalculus": 4
+  },
+  "solver_config": {
+    "prompt_version": "math-solver-v2",
+    "model": "hy3",
+    "temperature": 0.9,
+    "top_p": 1.0,
+    "max_tokens": 32000,
+    "thinking": "enabled",
+    "reasoning_effort": "high",
+    "timeout_seconds": 300,
+    "max_retries": 0
+  },
+  "selection": "experiments/process_evaluator_v2_level45_20/selection.jsonl",
+  "planned_output": "outputs/process_v2_level45_20_solver.jsonl"
+}
