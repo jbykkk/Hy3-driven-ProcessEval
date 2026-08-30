@@ -21,7 +21,7 @@ solver response.content
 ## 模块与版本
 
 - `process_evaluation/step_parser.py`：`process-step-parser-v1`，确定性保留步骤原文、完整`response.content`和结构问题。
-- `process_evaluation/prompt.py`：`math-process-evaluator-v1`与`math-global-evaluator-v1.1`；Global v1.1冻结最终答案支持度的严格数学语义。
+- `process_evaluation/prompt.py`：当前为`math-process-evaluator-v1.1`与`math-global-evaluator-v1.2`。两者共享“先定位最早主要错误事件、再分类”的错误类型定义；Global继续使用严格的最终答案支持度语义。历史实验仍按各自记录的旧prompt版本统计，不回写结果。
 - `process_evaluation/schema.py`：严格解析Local/Global可见JSON；Markdown围栏、缺字段、多余字段、非法枚举或错误step ID均失败，不做静默修复。
 - `process_evaluation/aggregator.py`：`process-evaluation-aggregator-v1`，无LLM聚合与保守首错定位。
 - `process_evaluation/runner.py`：读取Solver inference、逐次调用、增量保存原始响应并输出最终记录。
@@ -61,19 +61,23 @@ Parser识别行首的`Step N`，兼容v1的`Step 1:`、Markdown加粗，以及v2
 - `inherited`：当前操作在沿用此前错误值时局部成立，不构成新的源头错误。
 - `uncertain`：无法可靠定位来源。
 
-错误类型固定为：
+错误类型枚举保持固定：
 
 | 类型 | 定义 |
 | --- | --- |
-| `problem_misinterpretation` | 误解问题、已知条件或所求对象 |
-| `concept_or_theorem_error` | 数学概念、定理陈述或适用方式错误 |
-| `invalid_derivation` | 代数或逻辑变换不合法、结论不随前提成立 |
-| `calculation_error` | 算术、代数计算、化简或抄写错误 |
-| `condition_omission` | 遗漏定义域、边界、符号或适用条件 |
-| `case_omission` | 遗漏必要分支、候选根或解族 |
-| `insufficient_justification` | 关键结论缺少足够可见依据 |
-| `answer_extraction_or_format_error` | 最终陈述与推导结果或题目格式不一致 |
+| `problem_misinterpretation` | 可见解答把任务、已知信息、所求对象或操作表示错误 |
+| `condition_omission` | 没有执行定义域、符号、边界、非零性、整数性、不同性或定理适用条件 |
+| `case_omission` | 在丢弃其他可能或声称完整前，没有覆盖必要分支、候选根或解族 |
+| `concept_or_theorem_error` | 明确陈述或直接依赖错误的一般定义、定理、恒等式、概念或规则 |
+| `invalid_derivation` | 当前具体逻辑或代数结论不由可见前提推出 |
+| `calculation_error` | 运算形式有效，但具体计算、化简、代入、符号或抄写执行错误 |
+| `insufficient_justification` | 没有确定错误或可识别遗漏，但关键结论缺少必要可见依据 |
+| `answer_extraction_or_format_error` | 前述实质推导正确、完整、充分，唯一错误位于最终答案提取、选择、抄写或格式 |
 | `other` | 明确存在但无法归入上述类别的问题 |
+
+分类不按类别表的排列顺序搜索错误。Evaluator必须先定位与当前评价目标相关的最早主要错误事件，排除继承错误和下游症状，然后才使用定义、排他边界与诊断问题选择唯一标签。所有判断只依据可见文本，不推测Solver内心是否理解某条规则。
+
+主要排他边界为：缺失替代分支或候选属于`case_omission`，没有执行可接受性限制属于`condition_omission`；明确错误的一般规则属于`concept_or_theorem_error`，具体不成立的推导属于`invalid_derivation`，合法运算的具体执行失误属于`calculation_error`。如果非法变换先导致解丢失，主要错误是该处`invalid_derivation`，后续少解只是症状。只有前述数学过程已经正确且充分时，才使用`answer_extraction_or_format_error`。
 
 输出字段严格为`step_id/status/importance/purpose/error_type/error_origin/evidence`，不含概率或置信度。`purpose`与`evidence`要求简洁可审计，不要求模型输出详细内部思考。
 

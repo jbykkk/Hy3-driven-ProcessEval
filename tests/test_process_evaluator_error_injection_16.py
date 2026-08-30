@@ -6,7 +6,15 @@ from collections import Counter
 from scripts.build_process_evaluator_error_injection_16 import CASE_SPECS, inject_content
 from scripts.build_process_evaluator_error_injection_16_v1_1 import (
     CLEAN_INJECTIONS,
+    HUMAN_GOLD_OVERRIDES,
     cleaned_specs,
+)
+from scripts.build_process_evaluator_error_injection_16_v1_2_labels import (
+    ANNOTATION_VERSION,
+    SOURCE_CASES,
+    TYPE_REVISIONS,
+    build_cases,
+    load_jsonl,
 )
 from scripts.analyze_process_evaluator_error_injection_16_v1_1 import (
     SELF_REVEAL_PATTERNS,
@@ -57,6 +65,59 @@ class ControlledError16Tests(unittest.TestCase):
                 for match in pattern.finditer(visible_injection)
             ]
             self.assertEqual(hits, [], spec["case_id"])
+
+    def test_v1_1_human_gold_revision_does_not_modify_v1(self) -> None:
+        case_id = "l5-intermediate-0308-missing-complex-branch"
+        v1 = next(spec for spec in CASE_SPECS if spec["case_id"] == case_id)
+        v1_1 = next(spec for spec in cleaned_specs() if spec["case_id"] == case_id)
+
+        self.assertEqual(HUMAN_GOLD_OVERRIDES[case_id]["first_error_step"], 5)
+        self.assertEqual(v1["expected"]["first_error_step"], 4)
+        self.assertTrue(v1["expected"]["process_complete"])
+        self.assertEqual(v1_1["expected"]["first_error_step"], 5)
+        self.assertFalse(v1_1["expected"]["process_complete"])
+
+    def test_v1_2_taxonomy_review_relabels_only_three_types(self) -> None:
+        v1_1_cases = load_jsonl(SOURCE_CASES)
+        v1_2_cases = build_cases(v1_1_cases)
+        old_by_id = {case["case_id"]: case for case in v1_1_cases}
+        new_by_id = {case["case_id"]: case for case in v1_2_cases}
+
+        self.assertEqual(len(v1_2_cases), 16)
+        self.assertEqual(len(TYPE_REVISIONS), 3)
+        self.assertTrue(
+            all(
+                case["annotation_version"] == ANNOTATION_VERSION
+                for case in v1_2_cases
+            )
+        )
+        changed = {
+            case_id
+            for case_id in new_by_id
+            if old_by_id[case_id]["injection"]["first_error_type"]
+            != new_by_id[case_id]["injection"]["first_error_type"]
+        }
+        self.assertEqual(changed, set(TYPE_REVISIONS))
+        for case_id, (old_type, new_type) in TYPE_REVISIONS.items():
+            self.assertEqual(
+                old_by_id[case_id]["injection"]["first_error_type"], old_type
+            )
+            self.assertEqual(
+                new_by_id[case_id]["injection"]["first_error_type"], new_type
+            )
+
+        self.assertEqual(
+            new_by_id["l4-algebra-0442-correct-answer-invalid-bound"]["injection"][
+                "first_error_type"
+            ],
+            "invalid_derivation",
+        )
+        self.assertEqual(
+            new_by_id["l5-precalculus-0488-negative-radius"]["injection"][
+                "first_error_type"
+            ],
+            "condition_omission",
+        )
 
 
 if __name__ == "__main__":

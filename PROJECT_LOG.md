@@ -130,3 +130,37 @@
 - 初始沙箱网络失败产生16次无响应连接错误，随后使用`--retry-incomplete`完成全部95次有效调用；失败尝试保留在v1.1原始响应与流事件中，不计入成功评估分母。
 - v1.1结果：过程错误检出15/16、首错Step15/16、错误类型9/16、Local状态14/15、Local类型7/15、Local来源14/15、Global状态16/16、答案支持度16/16、答案—过程关系15/16，3条需要复核。
 - 成功调用使用214,530 total tokens（110,592 reasoning），累计有效调用延迟约1,056.7秒。错误类型偏差属于自然错误文本下的邻近类别边界，后续应单独复核，不与v1结果合并。
+
+## 2026-08-30：完成 v1.1 三条人工复核与指标修订
+
+- 对v1.1的3条`needs_review`逐一复核Solver可见过程、Local/Global判断与聚合结果，并新增结构化裁决`experiments/process_evaluator_error_injection_16_v1_1/human_review.json`；未重新调用API，也未修改任何模型输出。
+- 选择题案例的数学推理正确且完整，但最终输出`34`而不是choice `C`，保留为真实`answer_extraction_or_format_error`；Evaluator实质判断正确，复核主要暴露当前schema不能把`final_answer`表示为错误位置。
+- 复数遗漏分支案例的Step 4仅合法分析`y=0`分支，首个致命错误实际在Step 5宣称唯一解时发生。v1.1人工gold由Step 4修正为Step 5，`process_complete`由true修正为false；旧v1的Step 4原文明示遗漏分支，因此旧标签和历史结果不变。
+- 负半径案例的Step 7两式数学等价，Local的计算错误判断属于假阳性；Global正确恢复Step 9，但与Local冲突且类型仍偏离人工`condition_omission`标签，聚合器保守进入复核。
+- 按修正后gold重算v1.1：过程错误检出15/16、首错14/16、错误类型9/16、Local状态15/15、Local重要性15/15、Local类型8/15、Local来源14/15、Global状态16/16、`process_complete` 13/16、答案支持度16/16、答案—过程关系15/16。复核前首错15/16不再作为最终结果。
+- 本地重建构造与派生分析后，自我揭示命中仍为0条、步骤结构异常0条、答案预期匹配16/16；旧v1与v1.1继续分开保存和统计。
+
+## 2026-08-30：更新错误类型分类边界
+
+- 将共享错误类型提示词升级为“先定位最早主要错误事件，再分类”：明确排除继承错误与下游症状，只允许依据可见文本判断，诊断问题不作为搜索错误的绝对优先级列表。
+- 为9个固定类型补充定义与排他边界，重点区分任务表示错误与条件未执行、分支遗漏与可接受性条件遗漏、错误一般规则与具体非法推导、非法推导与合法运算的执行失误，以及关键依据不足与可识别的具体遗漏。
+- 明确仅分析一个分支本身不构成`case_omission`；非法变换先导致解丢失时，首因归为`invalid_derivation`；只有前述数学过程正确、完整且充分时才使用`answer_extraction_or_format_error`。
+- Local prompt版本升为`math-process-evaluator-v1.1`，Global prompt版本升为`math-global-evaluator-v1.2`。本次未修改schema、Local/Global调用流程、首错聚合器或历史实验结果，也未调用API。
+
+## 2026-08-30：新版错误分类 prompt v1.2 重跑
+
+- 在实验前审计确认`process_evaluation/`中仅分类prompt及其版本号变化；`schema.py`、`step_parser.py`、`aggregator.py`、`runner.py`和调用流程未修改。旧v1/v1.1输出未覆盖。
+- 使用新版分类定义对同一16例、同一人工gold和同一Solver可见解答运行Process Evaluator。首轮16次连接失败不含模型响应；14道目标首轮完整，2道目标显式重试后完整，共106次成功响应（105 Local、17 Global），原始响应122条。
+- v1.2结果：过程错误检出16/16、首错16/16、错误类型11/16、Local状态15/15、Local重要性15/15、Local类型10/15、Local来源15/15、Global状态16/16、`process_complete` 13/16、答案支持度16/16、过程正确16/16、答案—过程关系16/16、`needs_review` 1/16。
+- 相比人工复核后的v1.1，错误检出由15/16提升至16/16，首错由14/16提升至16/16，错误类型由9/16提升至11/16，Local来源由14/15提升至15/15，`needs_review`由3/16降至1/16。题意误解、候选根遗漏、排除条件和复数首错等边界得到改善。
+- 仍有5例类型偏差：`invalid_derivation`与`calculation_error`/`concept_or_theorem_error`之间，以及末端条件遗漏与`answer_extraction_or_format_error`之间仍有混淆。唯一复核案例仍为选择题格式，主要是`final_answer`无法由当前Step schema表示，不属于数学过程判断失败。
+- 汇总记录见`experiments/process_evaluator_error_injection_16_v1_2/evaluation_analysis.json`，运行说明和独立manifest见同目录；v1/v1.1/v1.2三轮结果严格分开。
+- 本轮使用353,599 total tokens（134,182 reasoning tokens），累计调用延迟约1,387.4秒；指标均相对冻结的v1.1人工gold，没有新增人工标签修订。
+
+## 2026-08-30：v1.2分类标签人工复核与指标修正
+
+- 发现v1.2初始11/16是新版Prompt预测直接对照v1.1旧版分类标签的过渡统计；由于预测与人工标签必须使用同一版定义，该数字不再作为v1.2最终分类指标。原API响应保持不变，本次仅离线重建标签与汇总。
+- 按新版“先定位首因，再依据定义和排他边界分类”的规则复核全部16例：13条标签保持不变，3条修订。德摩根实例由`concept_or_theorem_error`改为`invalid_derivation`；错误幂和恒等式及错误奇素数指数一般规则由`invalid_derivation`改为`concept_or_theorem_error`。
+- 修正奇素数指数案例中已与去提示化可见解答不一致的旧注入说明；不修改题目、Solver可见解答、Evaluator输出或v1/v1.1实验记录。
+- 复核后的v1.2最终结果为错误类型14/16、Local类型13/15；过程错误16/16、首错16/16及其余指标不变。标签修订并非迁就预测，仍保留2条Evaluator分类错误：不等式变号的`invalid_derivation`被判为`calculation_error`，负半径的`condition_omission`被判为`answer_extraction_or_format_error`。
+- 唯一`needs_review`仍是选择题输出格式案例：Evaluator识别了`final_answer`错误，但当前编号Step schema无法表示该特殊位置。完整复核见`experiments/process_evaluator_error_injection_16_v1_2/taxonomy_review.json`，最终统计见同目录`evaluation_analysis.json`。

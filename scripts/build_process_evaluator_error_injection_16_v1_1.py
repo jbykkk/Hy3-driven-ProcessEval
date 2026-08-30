@@ -31,6 +31,17 @@ ANSWER_OUTPUT = (
     ROOT / "outputs" / "process_evaluator_error_injection_16_v1_1_answer_verification.jsonl"
 )
 EVALUATION_ANALYSIS = OUTPUT_DIR / "evaluation_analysis.json"
+HUMAN_REVIEW = OUTPUT_DIR / "human_review.json"
+
+
+# Human adjudication applies only to the de-cued v1.1 wording. In the original
+# v1 text, Step 4 explicitly says to omit the x=-1 branch, so its label remains.
+HUMAN_GOLD_OVERRIDES: dict[str, dict[str, Any]] = {
+    "l5-intermediate-0308-missing-complex-branch": {
+        "first_error_step": 5,
+        "process_complete": False,
+    }
+}
 
 
 CLEAN_INJECTIONS: dict[str, dict[str, Any]] = {
@@ -223,12 +234,14 @@ def cleaned_specs() -> tuple[dict[str, Any], ...]:
     specs = deepcopy(CASE_SPECS)
     for spec in specs:
         override = CLEAN_INJECTIONS.get(str(spec["case_id"]))
-        if override is None:
-            continue
-        if "steps" in override:
-            spec["steps"] = override["steps"]
-        if "span" in override:
-            spec["span"] = override["span"]
+        if override is not None:
+            if "steps" in override:
+                spec["steps"] = override["steps"]
+            if "span" in override:
+                spec["span"] = override["span"]
+        gold_override = HUMAN_GOLD_OVERRIDES.get(str(spec["case_id"]))
+        if gold_override is not None:
+            spec["expected"].update(gold_override)
     return specs
 
 
@@ -304,6 +317,9 @@ def main() -> int:
             str(EVALUATION_ANALYSIS.relative_to(ROOT))
             if EVALUATION_ANALYSIS.is_file()
             else None
+        ),
+        "human_review": (
+            str(HUMAN_REVIEW.relative_to(ROOT)) if HUMAN_REVIEW.is_file() else None
         ),
     }
     MANIFEST_PATH.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")

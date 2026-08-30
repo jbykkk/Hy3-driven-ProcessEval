@@ -168,7 +168,7 @@ uv run python -m evaluation.runner
 
 ## 6. 下一步建议顺序
 
-1. 复核v1.1的3条`needs_review`样本及9/16错误类型准确率，决定是否调整固定类型边界；不要把v1与v1.1合并为单一准确率。当前不要引入voting、ensemble或正式validity benchmark。
+1. v1.1的3条`needs_review`已完成人工复核，复数遗漏分支首错由Step 4修正为Step 5。新版taxonomy已完成v1.2重跑：106次成功API响应、过程错误16/16、首错16/16；16条人工标签按新版边界复核后类型14/16、`needs_review` 1/16，复核前沿用旧标签的11/16不作最终指标。Local/Global流程未改。下一步优先支持`final_answer`错误位置，并用通用样本继续验证两条剩余分类边界；不要回写或混合旧实验准确率。当前不要引入voting、ensemble或正式validity benchmark。
 2. 新增20题已验证stream/high/32000/300秒下20/20一次完整；后续仍按实验单独声明额度，默认不自动重试，并继续评估temperature/seed与长尾成本。
 3. 冻结生成完成率、完成后正确率、端到端产出率、parser成功率、过程评估完整率和成本口径。
 4. 给参考答案和预测答案增加答案类型分类，逐类实现多答案、集合、区间、坐标、矩阵、单位、选择题标签和复数校验。
@@ -211,7 +211,7 @@ uv run python -m evaluation.runner
 - `experiments/process_evaluator_candidate_pool_45/`：旧25题v2与新增20题的统一inference索引。
 - `docs/experiments/PROCESS_EVALUATOR_CANDIDATE_POOL_45.md`：45题候选池的构成、生成结果、成本与使用边界。
 - `experiments/process_evaluator_error_injection_16/`：16例受控错误的来源、人工预期标签和构造校验。
-- `experiments/process_evaluator_controlled_error_pool/`：旧4例与16例v1的历史受控错误索引；v1.1单独保存且尚未评估。
+- `experiments/process_evaluator_controlled_error_pool/`：旧4例与16例v1的历史受控错误索引；v1.1在独立目录中保存，已完成评估与人工复核，不并入该历史索引统计。
 - `docs/experiments/PROCESS_EVALUATOR_ERROR_INJECTION_16.md`：16例选择、逐例注入设计、标签边界与下一步。
 - `solver/runner.py`：调用入口、选择、resume、重试和落盘。
 - `solver/client.py`：独立 Hy3 API client 与安全持久化配置。
@@ -229,3 +229,6 @@ uv run python -m evaluation.runner
 - 已保留完成评估的16例v1及全部结果，另建并完成评估去除自我揭示措辞的`experiments/process_evaluator_error_injection_16_v1_1/`。
 - v1.1逐条把错误改写为自然的错误数学陈述、计算或分支选择；评估器可见文本的显式提示扫描为0条，16/16完成人工语义复核。
 - 本地步骤解析、结构检查和答案核验已通过；13条错误答案、3条正确答案但过程错误。v1.1已完成95次有效Evaluator调用；原始记录另含16次沙箱连接失败，未产生模型响应或token。结果与v1严格分开。
+- 3条`needs_review`人工裁决已保存到`experiments/process_evaluator_error_injection_16_v1_1/human_review.json`：选择题主要是`final_answer`位置的schema限制，复数题是gold修正兼Evaluator起点分歧，负半径是Local假阳性兼Local/Global冲突。
+- 复数题v1.1的首错gold已从Step 4改为Step 5，`process_complete`改为false；按修正标签重算后首错14/16、Local状态15/15、Local类型8/15、Local来源14/15、`process_complete` 13/16。旧v1原文及历史指标不变。
+- v1.2独立结果保存在`experiments/process_evaluator_error_injection_16_v1_2/`及被忽略的`outputs/process_evaluator_error_injection_16_v1_2_*.jsonl`：新版分类prompt将首错提升至16/16；全部16例按新版边界人工复核后类型为14/16，3条标签修订、2条模型分类错误保留。唯一`needs_review`仍为选择题的`final_answer` schema位置限制；负半径题不再产生Local/Global位置冲突，但类型仍错判为`answer_extraction_or_format_error`。

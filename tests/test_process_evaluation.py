@@ -7,7 +7,13 @@ from pathlib import Path
 from typing import Any, Callable
 
 from process_evaluation.aggregator import aggregate_process_evaluation
-from process_evaluation.prompt import build_global_messages, build_local_messages
+from process_evaluation.prompt import (
+    GLOBAL_PROMPT_VERSION,
+    LOCAL_PROMPT_VERSION,
+    TAXONOMY,
+    build_global_messages,
+    build_local_messages,
+)
 from process_evaluation.runner import (
     EvaluationTarget,
     completed_inference_ids,
@@ -120,6 +126,34 @@ class EvaluatorSchemaTests(unittest.TestCase):
 
 
 class ProcessPromptTests(unittest.TestCase):
+    def test_taxonomy_locates_primary_error_before_classification(self) -> None:
+        self.assertEqual(LOCAL_PROMPT_VERSION, "math-process-evaluator-v1.1")
+        self.assertEqual(GLOBAL_PROMPT_VERSION, "math-global-evaluator-v1.2")
+        self.assertIn("First locate the earliest primary error event", TAXONOMY)
+        self.assertIn("not a later consequence", TAXONOMY)
+        self.assertIn("Use only visible\nevidence", TAXONOMY)
+        self.assertIn("An inherited error is not a new primary error", TAXONOMY)
+        self.assertIn("they are not an\ninstruction to search", TAXONOMY)
+
+    def test_taxonomy_states_key_exclusive_boundaries(self) -> None:
+        for error_type in (
+            "problem_misinterpretation",
+            "condition_omission",
+            "case_omission",
+            "concept_or_theorem_error",
+            "invalid_derivation",
+            "calculation_error",
+            "insufficient_justification",
+            "answer_extraction_or_format_error",
+            "other",
+        ):
+            self.assertIn(error_type, TAXONOMY)
+        self.assertIn("Examining one branch is not itself an error", TAXONOMY)
+        self.assertIn("earlier illegal operation", TAXONOMY)
+        self.assertIn("incorrect general rule", TAXONOMY)
+        self.assertIn("valid operation executed\n  incorrectly", TAXONOMY)
+        self.assertIn("only when no earlier substantive mathematical error", TAXONOMY)
+
     def test_prompts_use_visible_evidence_without_answer_correctness(self) -> None:
         steps = [ProcessStep(1, "Set $x=2$."), ProcessStep(2, "Then $x+1=3$.")]
         local_messages = build_local_messages(

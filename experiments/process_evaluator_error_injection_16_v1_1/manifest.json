@@ -26,6 +26,10 @@
   "tracked_cases": "experiments/process_evaluator_error_injection_16_v1_1/cases.jsonl",
   "synthetic_solver_output": "outputs/process_evaluator_error_injection_16_v1_1_solver.jsonl",
   "answer_verification_output": "outputs/process_evaluator_error_injection_16_v1_1_answer_verification.jsonl",
+  "evaluation_output": "outputs/process_evaluator_error_injection_16_v1_1_evaluations.jsonl",
+  "raw_evaluator_output": "outputs/process_evaluator_error_injection_16_v1_1_responses.jsonl",
+  "stream_events_output": "outputs/process_evaluator_error_injection_16_v1_1_stream_events.jsonl",
   "process_evaluator_status": "complete",
-  "process_evaluator_analysis": "experiments/process_evaluator_error_injection_16_v1_1/evaluation_analysis.json"
+  "process_evaluator_analysis": "experiments/process_evaluator_error_injection_16_v1_1/evaluation_analysis.json",
+  "human_review": "experiments/process_evaluator_error_injection_16_v1_1/human_review.json"
 }

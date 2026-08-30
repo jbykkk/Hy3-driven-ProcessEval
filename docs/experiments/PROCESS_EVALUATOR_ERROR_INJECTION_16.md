@@ -88,7 +88,7 @@ Level 3关键依据不足案例预期Local状态为`insufficient`、Global状态
 
 ## 去提示化版本 v1.1
 
-已另建`experiments/process_evaluator_error_injection_16_v1_1/`，不覆盖首轮v1及其评估结果。v1.1保留相同16道源题、错误位置、错误类型和答案—过程关系，但将错误直接写成解题者会给出的数学陈述、计算或选择，删除“incorrect”“overlooks”“omit”“erroneous”等自我诊断措辞以及承认推导无效的元叙述。
+已另建`experiments/process_evaluator_error_injection_16_v1_1/`，不覆盖首轮v1及其评估结果。v1.1保留相同16道源题和整体错误设计，将错误直接写成解题者会给出的数学陈述、计算或选择，删除“incorrect”“overlooks”“omit”“erroneous”等自我诊断措辞以及承认推导无效的元叙述。后续人工复核仅修正了复数遗漏分支案例在v1.1自然措辞下的首错位置；v1原文及其标签不变。
 
 全部16条评估器可见解答已经逐例语义复核并通过本地短语扫描：自我揭示命中0条，Solver解析警告0条，过程结构异常0条，离线答案预期匹配16/16（13条错误答案、3条正确答案但过程错误）。
 
@@ -103,13 +103,14 @@ Level 3关键依据不足案例预期Local状态为`insufficient`、Global状态
 | 计划成功调用 | 95/95 |
 | Local / Global | 79 / 16 |
 | 过程错误检出 | 15/16 |
-| 首错Step exact match | 15/16 |
+| 首错Step exact match | 14/16 |
 | 错误类型 exact match | 9/16 |
-| Local状态 exact match | 14/15 |
-| Local错误类型 exact match | 7/15 |
+| Local状态 exact match | 15/15 |
+| Local重要性 exact match | 15/15 |
+| Local错误类型 exact match | 8/15 |
 | Local错误来源 exact match | 14/15 |
 | Global状态 exact match | 16/16 |
-| `process_complete` exact match | 12/16 |
+| `process_complete` exact match | 13/16 |
 | `final_answer_supported` exact match | 16/16 |
 | `process_correct` exact match | 15/16 |
 | 答案—过程关系 exact match | 15/16 |
@@ -119,4 +120,55 @@ Level 3关键依据不足案例预期Local状态为`insufficient`、Global状态
 
 runner的聚合JSONL采用追加式续跑，因此包含16条首次不完整记录和随后16条完整记录；分析脚本按`inference_id`取最后的完整记录，最终样本数仍为16，不能按聚合JSONL物理行数重复计数。
 
-三条复核样本为选择题格式错误、复数方程遗漏分支和负半径条件遗漏。错误类型9/16反映了`problem_misinterpretation`、`condition_omission`、`case_omission`、`concept_or_theorem_error`及`invalid_derivation`之间的边界，不能再归因于v1的自我揭示措辞。逐案例预测、原始评估prompt、可见JSON、内部reasoning和流事件分别通过`experiments/process_evaluator_error_injection_16_v1_1/evaluation_analysis.json`及对应被忽略的`outputs/process_evaluator_error_injection_16_v1_1_*.jsonl`关联。
+表中数值已按人工复核后的gold重算。复核前报告的首错15/16不再作为最终结果；修正复数案例的首错Step和完整性标签后，首错为14/16，同时Local状态、重要性、类型及`process_complete`指标相应变化。错误类型9/16不变，仍反映`problem_misinterpretation`、`condition_omission`、`case_omission`、`concept_or_theorem_error`及`invalid_derivation`之间的边界。
+
+### 6.1 三条人工复核结论
+
+| 案例 | 主要错误来源 | 是否属于Evaluator实质失败 |
+| --- | --- | --- |
+| 选择题格式 | Solver最终输出不符合A–E要求，且schema不能把`final_answer`表示成错误位置 | 基本不是；Evaluator判断正确 |
+| 复数遗漏分支 | 原人工gold首错位置不准确，同时Evaluator对遗漏何时成为错误存在分歧 | 部分是 |
+| 负半径 | Local假阳性以及Local/Global首错冲突 | 是 |
+
+选择题案例的数学推理完整且正确，也明确得到约34美元及choice C；但最终输出为`34`而不是要求的`C`。它继续作为真实的`answer_extraction_or_format_error`案例，人工位置记为特殊位置`final_answer`。Evaluator已正确判断过程完整、最终答案不受支持并识别错误类型；进入复核主要源于当前schema只能表示编号Step。
+
+复数案例中，Step 4只分析合法分支`y=0`，直到Step 5声称唯一解为0时才真正排除尚未检查的`x=-1`分支。因此v1.1人工gold从Step 4修正为Step 5，`process_complete`从true修正为false。Local在Step 5识别出`case_omission`，但将来源写成`inherited`；Global又把首错提前到Step 4，说明两阶段对错误生效边界仍不一致。旧v1的Step 4原文明确要求遗漏该分支，其历史gold不作修改。
+
+负半径案例中，Step 7的两个方程数学等价，Local将其判作计算错误属于明确假阳性。Global正确把首错恢复到Step 9，但类型仍判为`problem_misinterpretation`而非人工预设的`condition_omission`；聚合器面对Step 7与Step 9冲突采用保守复核策略。该案例是本轮最明确的Evaluator实质失败样本，也展示了Global能纠正Local位置误判、但现有聚合器无法自动消解冲突的边界。
+
+结构化人工裁决保存在`experiments/process_evaluator_error_injection_16_v1_1/human_review.json`。逐案例预测、原始评估prompt、可见JSON、内部reasoning和流事件分别通过`evaluation_analysis.json`及对应被忽略的`outputs/process_evaluator_error_injection_16_v1_1_*.jsonl`关联。
+
+## 7. 分类 prompt v1.2 重跑结果
+
+在不改变题目、Solver可见解答、Step Parser、Local/Global调用流程或聚合器的前提下，使用新版分类定义重新评估同一16例。新版要求先定位最早主要错误事件，再排除继承错误和下游症状，最后用定义、排他边界和诊断问题选择类型；诊断问题不作为搜索首错的绝对优先级。模型调用完成后，16例人工类型标签也按同一版分类边界逐条复核；否则新版预测与旧版标签并不处在同一判断口径下。
+
+v1.2使用Local `math-process-evaluator-v1.1`和Global `math-global-evaluator-v1.2`。首轮有16次连接失败，随后14道目标首轮完成，2道目标显式重试后完成；共106次成功API响应（105次Local、17次Global），原始响应122条。失败尝试不含模型响应或token，按`inference_id`取最后完整记录进行16题统计。本轮使用353,599 total tokens（134,182 reasoning tokens），累计调用延迟约1,387.4秒。完整机器可读结果见`experiments/process_evaluator_error_injection_16_v1_2/evaluation_analysis.json`，独立运行说明见该目录README和manifest。
+
+| 指标 | v1.1 | v1.2 |
+| --- | ---: | ---: |
+| 过程错误检出 | 15/16 | 16/16 |
+| 首错Step exact match | 14/16 | 16/16 |
+| 错误类型 exact match | 9/16 | 14/16 |
+| Local状态 exact match | 15/15 | 15/15 |
+| Local重要性 exact match | 15/15 | 15/15 |
+| Local错误类型 exact match | 8/15 | 13/15 |
+| Local错误来源 exact match | 14/15 | 15/15 |
+| Global状态 exact match | 16/16 | 16/16 |
+| `process_complete` exact match | 13/16 | 13/16 |
+| `final_answer_supported` exact match | 16/16 | 16/16 |
+| `process_correct` exact match | 15/16 | 16/16 |
+| 答案—过程关系 exact match | 15/16 | 16/16 |
+| `needs_review` | 3/16 | 1/16 |
+
+新版 prompt 修正或稳定了多个此前的邻近分类：题意操作顺序归为`problem_misinterpretation`，候选根和排除条件分别归为`case_omission`与`condition_omission`，复数题首错稳定在Step 5；首错定位达到16/16，Local来源达到15/15，且负半径题不再出现Step 7的Local假阳性与Local/Global位置冲突。
+
+初始11/16是新版预测直接对照v1.1旧标签的复核前统计，不作为v1.2最终结论。按新版定义复核全部16例后，13条标签保持不变，3条修订：德摩根案例从`concept_or_theorem_error`改为`invalid_derivation`，因为可见步骤只做了具体实例上的非法补集变换；幂和恒等式及奇素数指数案例从`invalid_derivation`改为`concept_or_theorem_error`，因为它们明确陈述并使用了错误的一般规则。标签复核独立于模型预测，仍保留以下2条模型分类错误：
+
+| 案例 | 新版人工标签 | 模型预测 | 复核结论 |
+| --- | --- | --- | --- |
+| `l4-algebra-0442-correct-answer-invalid-bound` | `invalid_derivation` | `calculation_error` | 未翻转不等号是保持关系失败的非法推导，不只是算术符号或誊写失误 |
+| `l5-precalculus-0488-negative-radius` | `condition_omission` | `answer_extraction_or_format_error` | Step 9在筛选候选根时忽略`r>0`，Final Answer只是重复该数学选择错误 |
+
+因此v1.2最终错误类型为14/16，Local类型为13/15。v1.1与v1.2使用各自版本的人工标签，不能把9/16到14/16的全部差异都归因于Prompt提升；可直接归因于模型行为的结论仍应结合逐例变化报告。完整标签修订与保留分歧见`experiments/process_evaluator_error_injection_16_v1_2/taxonomy_review.json`。
+
+三个正确答案但错误过程案例仍全部得到`correct_answer_invalid_process`，`final_answer_supported`为16/16。v1.2的唯一`needs_review`仍是选择题格式案例，原因是当前schema无法将特殊位置`final_answer`表示为编号Step；它不是数学过程判断失败。v1.2结果与v1、v1.1严格分开，不回写历史结果。

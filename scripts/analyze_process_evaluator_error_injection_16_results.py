@@ -33,6 +33,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--responses", type=Path, default=RESPONSES_PATH)
     parser.add_argument("--analysis", type=Path, default=ANALYSIS_PATH)
     parser.add_argument("--experiment", default="process-evaluator-error-injection-16")
+    parser.add_argument("--expected-successful", type=int, default=95)
+    parser.add_argument("--local-prompt", default="math-process-evaluator-v1")
+    parser.add_argument("--global-prompt", default="math-global-evaluator-v1.1")
+    parser.add_argument("--annotation-version")
+    parser.add_argument("--taxonomy-review")
     return parser.parse_args()
 
 
@@ -152,6 +157,12 @@ def main() -> int:
             "The case_omission, condition_omission, and invalid_derivation labels are human construction labels. The evaluator may reasonably choose a neighboring fixed category when the same mathematical symptom admits multiple descriptions.",
             "A connection-failure retry occurred before the successful run. Failed attempts contain no model usage or reasoning; they remain in the raw response and stream-event files and are excluded from successful-call metrics.",
         ]
+    elif args.experiment.endswith("v1.2"):
+        known_limitations = [
+            "The v1.1 visible solutions are manually constructed controlled probes, not naturally generated error solutions; results measure evaluator behavior on these probes.",
+            "The case_omission, condition_omission, and invalid_derivation labels are human construction labels. The evaluator may reasonably choose a neighboring fixed category when the same mathematical symptom admits multiple descriptions.",
+            "The run includes explicit retries for two initially incomplete targets. Failed connection attempts contain no model usage or reasoning; all attempts remain in the raw response and stream-event files, while only complete per-inference records are used for case metrics.",
+        ]
     else:
         known_limitations = [
             "Several injected steps contain self-revealing wording such as incorrect, overlooks, or erroneous, which makes detection and classification easier than natural errors.",
@@ -162,9 +173,11 @@ def main() -> int:
         "schema_version": "1.0",
         "experiment": args.experiment,
         "evaluation_status": "complete",
+        "annotation_version": args.annotation_version,
+        "taxonomy_review": args.taxonomy_review,
         "config": {
-            "local_prompt": "math-process-evaluator-v1",
-            "global_prompt": "math-global-evaluator-v1.1",
+            "local_prompt": args.local_prompt,
+            "global_prompt": args.global_prompt,
             "model": "hy3",
             "temperature": 0.1,
             "top_p": 1.0,
@@ -175,7 +188,7 @@ def main() -> int:
             "max_retries": 0,
         },
         "calls": {
-            "expected_successful": 95,
+            "expected_successful": args.expected_successful,
             "raw_records": len(responses),
             "recorded_successful": sum(
                 row.get("request_status") == "success" for row in responses
@@ -229,9 +242,12 @@ def main() -> int:
         "cases": details,
     }
     successful_responses = sum(row.get("request_status") == "success" for row in responses)
-    if len(details) != 16 or successful_responses != 95:
+    if len(details) != 16 or successful_responses != args.expected_successful:
         raise ValueError("Incomplete evaluation evidence")
-    if analysis["calls"]["request_success"] != 95 or analysis["calls"]["generation_complete"] != 95:
+    if (
+        analysis["calls"]["request_success"] != args.expected_successful
+        or analysis["calls"]["generation_complete"] != args.expected_successful
+    ):
         raise ValueError("Evaluator calls were not all successful and complete")
     args.analysis.write_text(
         json.dumps(analysis, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"

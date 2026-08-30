@@ -1,0 +1,69 @@
+{
+  "schema_version": "1.0",
+  "experiment": "process-evaluator-error-injection-16-v1.2",
+  "annotation_version": "error-taxonomy-v1.2-human-reviewed",
+  "review_date": "2026-08-30",
+  "review_status": "complete",
+  "reviewed_cases": 16,
+  "source_labels": "experiments/process_evaluator_error_injection_16_v1_1/cases.jsonl",
+  "prior_human_review": "experiments/process_evaluator_error_injection_16_v1_1/human_review.json",
+  "summary": {
+    "unchanged_labels": 13,
+    "revised_labels": 3,
+    "remaining_evaluator_type_mismatches": 2,
+    "error_type_exact_before_review": 11,
+    "error_type_exact_after_review": 14,
+    "denominator": 16,
+    "local_error_type_exact_before_review": 10,
+    "local_error_type_exact_after_review": 13,
+    "local_denominator": 15
+  },
+  "label_revisions": [
+    {
+      "case_id": "l5-counting-0273-de-morgan",
+      "old_type": "concept_or_theorem_error",
+      "revised_type": "invalid_derivation",
+      "reason": "The visible step does not state a false general form of De Morgan's law; it makes an invalid instance-level complement transformation."
+    },
+    {
+      "case_id": "l5-intermediate-0082-power-sum-identity",
+      "old_type": "invalid_derivation",
+      "revised_type": "concept_or_theorem_error",
+      "reason": "The visible step explicitly states and applies an incorrect general power-sum identity."
+    },
+    {
+      "case_id": "l5-number-0456-correct-answer-invalid-exponents",
+      "old_type": "invalid_derivation",
+      "revised_type": "concept_or_theorem_error",
+      "reason": "The visible step uses the false general rule that an odd prime exponent prevents that prime from appearing in n. The conclusion b=0 is correct for exponent 1, but the stated general justification is not. The old injection description no longer matched the de-cued visible solution and is revised in the v1.2 cases file."
+    }
+  ],
+  "retained_mismatches": [
+    {
+      "case_id": "l4-algebra-0442-correct-answer-invalid-bound",
+      "human_type": "invalid_derivation",
+      "evaluator_type": "calculation_error",
+      "reason": "Failing to reverse an inequality is an invalid relation-preserving transition, not merely an arithmetic sign or transcription slip."
+    },
+    {
+      "case_id": "l5-precalculus-0488-negative-radius",
+      "human_type": "condition_omission",
+      "evaluator_type": "answer_extraction_or_format_error",
+      "reason": "Step 9 performs mathematical candidate filtering while ignoring the explicit r>0 condition. The Final Answer only repeats that substantive selection error."
+    }
+  ],
+  "carried_forward_adjudications": [
+    {
+      "case_id": "l2-prealgebra-0058-choice-format",
+      "result": "Keep answer_extraction_or_format_error at the special final_answer location; needs_review is caused by the numbered-step schema limitation."
+    },
+    {
+      "case_id": "l5-intermediate-0308-missing-complex-branch",
+      "result": "Keep first error at Step 5 with case_omission; merely examining the y=0 branch in Step 4 is valid."
+    },
+    {
+      "case_id": "l5-precalculus-0488-negative-radius",
+      "result": "Keep first error at Step 9 with condition_omission; Step 7 is mathematically valid."
+    }
+  ]
+}

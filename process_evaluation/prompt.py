@@ -8,19 +8,125 @@ from process_evaluation.schema import LocalStepResult
 from process_evaluation.step_parser import ProcessStep
 
 
-LOCAL_PROMPT_VERSION = "math-process-evaluator-v1"
-GLOBAL_PROMPT_VERSION = "math-global-evaluator-v1.1"
+LOCAL_PROMPT_VERSION = "math-process-evaluator-v1.1"
+GLOBAL_PROMPT_VERSION = "math-global-evaluator-v1.2"
 
-TAXONOMY = """Error taxonomy:
-- problem_misinterpretation: the step misunderstands the task, givens, or requested quantity.
-- concept_or_theorem_error: a mathematical concept or theorem is stated or applied incorrectly.
-- invalid_derivation: an algebraic or logical transition does not follow legally.
-- calculation_error: arithmetic, algebraic computation, simplification, or transcription is wrong.
-- condition_omission: a required domain, boundary, sign, definition, or applicability condition is omitted.
-- case_omission: a necessary case, branch, candidate, root, or solution family is omitted.
-- insufficient_justification: a conclusion may be true, but essential visible support is missing.
-- answer_extraction_or_format_error: the final stated answer is inconsistent with the derived result or required format.
-- other: a clear problem that does not fit the categories above."""
+TAXONOMY = """Error taxonomy and classification rules:
+
+General rules
+
+First locate the earliest primary error event relevant to the evaluation target.
+Classify that event, not a later consequence such as a wrong final answer,
+missing solution, or inconsistent downstream calculation. Use only visible
+evidence; do not infer what the solver privately understood or intended.
+
+An inherited error is not a new primary error. If a later step is locally valid
+given an earlier erroneous value or premise, do not assign the downstream
+symptom a new error category. For a step-level evaluation, classify only an
+error introduced by the current step. For a complete-solution evaluation,
+classify the earliest primary cause that makes the solution invalid or
+incomplete. Choose exactly one category.
+
+Category definitions and exclusive boundaries
+
+1. problem_misinterpretation
+   The visible solution represents the task, given information, requested
+   object, or requested operation incorrectly.
+   Do not use this when the task is represented correctly but a required
+   restriction is not enforced later; use condition_omission.
+
+2. condition_omission
+   The solution fails to enforce a required admissibility or applicability
+   condition, such as a domain, sign, boundary, nonzero, integrality,
+   distinctness, or theorem-applicability condition.
+   Do not use this for an unexamined alternative branch, candidate, root, or
+   solution family; use case_omission.
+
+3. case_omission
+   The solution fails to examine a necessary branch, case, candidate, root, or
+   solution family before discarding it or claiming completeness.
+   Examining one branch is not itself an error. The error occurs when another
+   necessary branch is discarded or a complete conclusion is made without it.
+   If cases are lost because of an earlier illegal operation, classify that
+   earlier operation as invalid_derivation.
+
+4. concept_or_theorem_error
+   The step explicitly states or directly relies on an incorrect general
+   mathematical definition, theorem, identity, concept, or rule.
+   Do not use this as a generic label for an isolated transition that fails to
+   follow from its premises; use invalid_derivation.
+
+5. invalid_derivation
+   A specific logical or algebraic transition does not follow from the visible
+   premises, although no incorrect general rule needs to be attributed to the
+   solver.
+   Do not use this for an isolated arithmetic, simplification, substitution,
+   sign-copying, or transcription execution error; use calculation_error.
+
+6. calculation_error
+   The mathematical operation being carried out is valid, but its concrete
+   arithmetic, algebraic execution, simplification, substitution, sign, or
+   transcription is incorrect.
+   Do not use this when the transition itself is invalid in principle.
+
+7. insufficient_justification
+   No definite false statement, illegal transition, or identifiable omitted
+   condition or case has been established, but essential visible support is
+   missing.
+   Use this primarily with status=insufficient. If a specific invalid step,
+   omitted case, or omitted condition is identifiable, use that more specific
+   category.
+
+8. answer_extraction_or_format_error
+   The preceding visible reasoning is correct, complete, and sufficient, but
+   the final answer is copied, selected, extracted, or formatted incorrectly.
+   Use this only when no earlier substantive mathematical error explains the
+   final-answer problem.
+
+9. other
+   A clear primary process error exists but does not reasonably fit any
+   category above. Use this only after the defined categories are considered.
+
+Ambiguity-resolution rules
+
+- Classify the earliest causal failure, not its downstream symptom.
+- Missing an alternative case or candidate is case_omission; failing to apply
+  an admissibility restriction is condition_omission.
+- An explicitly incorrect general rule is concept_or_theorem_error; an invalid
+  instance-level transition is invalid_derivation; a valid operation executed
+  incorrectly is calculation_error.
+- A specifically identifiable missing case or condition is not merely
+  insufficient_justification.
+- If an illegal transformation causes solutions to be lost, the transformation
+  is the primary invalid_derivation; the later missing solutions are a
+  consequence.
+- A final-answer error is answer_extraction_or_format_error only when the
+  preceding substantive reasoning is already valid and sufficient.
+
+Diagnostic classification questions
+
+After locating the earliest primary error event, use the following questions to
+assign one label. They classify the already-located event; they are not an
+instruction to search the solution in this order.
+
+A. Does the event represent the task, givens, requested object, or requested
+   operation incorrectly? -> problem_misinterpretation
+B. Does it fail to enforce an admissibility or applicability condition?
+   -> condition_omission
+C. Does it discard or fail to cover a necessary branch, candidate, root, or
+   solution family? -> case_omission
+D. Does it state or directly rely on an incorrect general mathematical rule,
+   definition, theorem, identity, or concept? -> concept_or_theorem_error
+E. Is it a specific logical or algebraic transition that does not follow?
+   -> invalid_derivation
+F. Is the operation valid but its concrete execution incorrect?
+   -> calculation_error
+G. Is no definite error identifiable while essential visible support is
+   missing? -> insufficient_justification
+H. Is the substantive reasoning already correct and sufficient, with the only
+   error in final-answer extraction, selection, copying, or required format?
+   -> answer_extraction_or_format_error
+I. Does a clear primary error remain outside all defined categories? -> other"""
 
 LOCAL_SYSTEM = f"""You are a mathematical process evaluator. Evaluate only the visible solver text supplied by the user. Do not infer or reconstruct hidden reasoning. A correct final answer is not evidence that a step is valid. A solver may use any mathematically correct method and need not match a reference solution.
 

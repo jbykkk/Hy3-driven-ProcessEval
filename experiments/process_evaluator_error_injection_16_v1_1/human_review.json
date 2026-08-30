@@ -1,0 +1,112 @@
+{
+  "schema_version": "1.0",
+  "experiment": "process-evaluator-error-injection-16-v1.1",
+  "review_date": "2026-08-30",
+  "review_status": "complete",
+  "reviewed_cases": 3,
+  "scope": "Human adjudication of the three needs_review cases; no model outputs were changed and no API calls were made.",
+  "metric_revisions": {
+    "first_error_step_exact": {
+      "before_review": 15,
+      "after_review": 14,
+      "denominator": 16
+    },
+    "local_status_exact": {
+      "before_review": 14,
+      "after_review": 15,
+      "denominator": 15
+    },
+    "local_importance_exact": {
+      "before_review": 14,
+      "after_review": 15,
+      "denominator": 15
+    },
+    "local_error_type_exact": {
+      "before_review": 7,
+      "after_review": 8,
+      "denominator": 15
+    },
+    "process_complete_exact": {
+      "before_review": 12,
+      "after_review": 13,
+      "denominator": 16
+    }
+  },
+  "cases": [
+    {
+      "case_id": "l2-prealgebra-0058-choice-format",
+      "primary_source": "solver_final_output_and_schema_location_limit",
+      "substantive_evaluator_failure": "no",
+      "solver_review": {
+        "mathematical_reasoning": "correct",
+        "process_complete": true,
+        "required_output": "choice_label_C",
+        "actual_final_answer": "34",
+        "final_output_valid": false
+      },
+      "evaluator_review": {
+        "judgment": "correct",
+        "identified_type": "answer_extraction_or_format_error",
+        "identified_process_complete": true,
+        "identified_final_answer_supported": false,
+        "review_trigger": "The schema can represent numbered steps only, not final_answer as an error location."
+      },
+      "human_adjudication": {
+        "error_location": "final_answer",
+        "first_error_step": null,
+        "error_type": "answer_extraction_or_format_error",
+        "gold_changed": false
+      }
+    },
+    {
+      "case_id": "l5-intermediate-0308-missing-complex-branch",
+      "primary_source": "human_gold_correction_and_evaluator_onset_disagreement",
+      "substantive_evaluator_failure": "partial",
+      "solver_review": {
+        "step_4": "valid_partial_analysis_of_y_equals_0_branch",
+        "step_5": "first_fatal_error_when_uniqueness_is_claimed_without_checking_x_equals_minus_1",
+        "omitted_solutions": "-1 plus or minus i*sqrt(3)",
+        "correct_sum": "-2"
+      },
+      "evaluator_review": {
+        "local_step_5": "Correctly identified case_omission but marked the origin as inherited.",
+        "global": "Moved the first error to Step 4.",
+        "remaining_issue": "Local and Global use inconsistent boundaries for when an unexamined branch becomes an actual error."
+      },
+      "human_adjudication": {
+        "old_first_error_step": 4,
+        "revised_first_error_step": 5,
+        "first_error_status": "invalid",
+        "first_error_importance": "high",
+        "first_error_type": "case_omission",
+        "first_error_origin": "current_step",
+        "process_complete": false,
+        "gold_changed": true
+      }
+    },
+    {
+      "case_id": "l5-precalculus-0488-negative-radius",
+      "primary_source": "local_false_positive_and_local_global_conflict",
+      "substantive_evaluator_failure": "yes",
+      "solver_review": {
+        "step_7": "mathematically_valid_equivalent_equations",
+        "first_fatal_error_step": 9,
+        "first_fatal_error": "A negative algebraic root is retained as a radius."
+      },
+      "evaluator_review": {
+        "local_step_7": "False-positive calculation_error.",
+        "global": "Correctly restored Step 9 as the first error location.",
+        "aggregator": "Conservatively returned needs_review because Local and Global disagreed.",
+        "classification_issue": "The evaluator used problem_misinterpretation instead of condition_omission."
+      },
+      "human_adjudication": {
+        "first_error_step": 9,
+        "first_error_status": "invalid",
+        "first_error_importance": "high",
+        "first_error_type": "condition_omission",
+        "first_error_origin": "current_step",
+        "gold_changed": false
+      }
+    }
+  ]
+}
