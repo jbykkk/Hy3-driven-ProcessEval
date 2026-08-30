@@ -1,0 +1,128 @@
+{
+  "schema_version": "1.0",
+  "experiment": "process-evaluator-low-level45-20",
+  "selected_samples": 20,
+  "configuration_audit": {
+    "solver_records": 20,
+    "solver_reasoning_efforts": [
+      "low"
+    ],
+    "solver_non_low_records": 0,
+    "evaluator_calls": 136,
+    "evaluator_reasoning_efforts": [
+      "low"
+    ],
+    "evaluator_non_low_records": 0
+  },
+  "solver": {
+    "api_successes": 20,
+    "complete_generations": 20,
+    "parser_warning_records": 0,
+    "answer_verdicts": {
+      "correct": 20
+    },
+    "format_mismatch_but_equivalent": 1,
+    "manual_review_recommended": 1,
+    "visible_steps": 116,
+    "visible_characters": 27758,
+    "usage": {
+      "prompt_tokens": 6817,
+      "completion_tokens": 53889,
+      "reasoning_tokens": 43550,
+      "total_tokens": 60706,
+      "reasoning_share_of_total": 0.717381
+    }
+  },
+  "same_sample_high_solver_comparison": {
+    "high_complete_generations": 20,
+    "high_answer_correct": 20,
+    "high_total_tokens": 183742,
+    "high_reasoning_tokens": 166318,
+    "high_visible_steps": 110,
+    "high_visible_characters": 29649,
+    "low_complete_generations": 20,
+    "low_answer_correct": 20,
+    "low_total_tokens": 60706,
+    "low_reasoning_tokens": 43550,
+    "low_visible_steps": 116,
+    "low_visible_characters": 27758,
+    "total_token_reduction": 123036,
+    "total_token_reduction_rate": 0.669613,
+    "reasoning_token_reduction_rate": 0.738152,
+    "note": "Both are single temperature-0.9 generations. The high natural solutions were not process-evaluated as a 20-sample batch, so process correctness is not a paired high/low comparison."
+  },
+  "process_evaluator": {
+    "targets": 20,
+    "complete_evaluations": 20,
+    "local_calls": 116,
+    "global_calls": 20,
+    "successful_complete_calls": 136,
+    "process_correct": 19,
+    "process_incorrect": 1,
+    "needs_review": 0,
+    "answer_process_relations": {
+      "correct_answer_valid_process": 19,
+      "correct_answer_invalid_process": 1
+    },
+    "usage": {
+      "prompt_tokens": 281116,
+      "completion_tokens": 84673,
+      "reasoning_tokens": 69610,
+      "total_tokens": 365789
+    }
+  },
+  "by_level": {
+    "Level 4": {
+      "samples": 10,
+      "answer_correct": 10,
+      "process_correct": 10,
+      "process_incorrect": 0,
+      "low_solver_total_tokens": 28905,
+      "high_solver_total_tokens": 78426,
+      "solver_total_token_reduction_rate": 0.631436
+    },
+    "Level 5": {
+      "samples": 10,
+      "answer_correct": 10,
+      "process_correct": 9,
+      "process_incorrect": 1,
+      "low_solver_total_tokens": 31801,
+      "high_solver_total_tokens": 105316,
+      "solver_total_token_reduction_rate": 0.698042
+    }
+  },
+  "batches": {
+    "first10": {
+      "samples": 10,
+      "solver_total_tokens": 31506,
+      "solver_reasoning_tokens": 22865,
+      "evaluator_calls": 71,
+      "evaluator_total_tokens": 194262,
+      "process_correct": 9
+    },
+    "remaining10": {
+      "samples": 10,
+      "solver_total_tokens": 29200,
+      "solver_reasoning_tokens": 20685,
+      "evaluator_calls": 65,
+      "evaluator_total_tokens": 171527,
+      "process_correct": 10
+    }
+  },
+  "natural_error": {
+    "sample_id": "math-test-precalculus-0488",
+    "inference_id": "227c4059-478b-44a3-8880-4b5456a1fbfa",
+    "level": "Level 5",
+    "subject": "Precalculus",
+    "answer_correct": true,
+    "first_error_step": 7,
+    "error_type": "calculation_error",
+    "process_complete": true,
+    "final_answer_supported": false,
+    "answer_process_relation": "correct_answer_invalid_process",
+    "needs_review": false,
+    "human_spot_check": "confirmed_visible_inconsistency",
+    "summary": "Step 7 displays 0 = 1 + 11r/3 + 23r^2/36, but the correct rearrangement has constant -1. The next line switches to the correct polynomial 23r^2 + 132r - 36 = 0 without a valid transition, and the final answer is nevertheless correct."
+  },
+  "interpretation_boundary": "This is a small natural-error probe. Only the flagged error was manually spot-checked; the other 19 valid predictions are not frozen human process labels, so 19/20 is not Process Evaluator accuracy or a false-positive-rate estimate."
+}

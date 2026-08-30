@@ -4,7 +4,7 @@
 
 阶段 2：在已跑通的Hy3分步解答与最终答案验证之后，实现可见数学过程评估。
 
-当前状态：Solver、最终答案验证与Process Evaluator v1已独立跑通；旧25题v2与新增20题已整理为45题过程评估候选池，并完成16例分层受控错误集及三轮独立Evaluator调用。含自我揭示措辞的v1和去提示化v1.1结果均保留；新版分类 prompt v1.2完成106次有效调用及显式失败重试，过程错误检出16/16、首错16/16。全部16例按新版边界人工复核后，类型为14/16、答案支持度16/16、`needs_review` 1/16；复核前沿用旧标签得到的11/16不作为最终指标。错误分类只改变 prompt，不改变评估流程；历史三轮结果不回写、不混合统计。下一关键目标是支持`final_answer`错误位置，并用通用样本验证剩余两类分类边界。
+当前状态：Solver、最终答案验证与Process Evaluator v1已独立跑通；旧25题v2与新增20题已整理为45题过程评估候选池，并完成16例分层受控错误集及三轮独立Evaluator调用。新版分类prompt v1.2在复核后得到过程错误16/16、首错16/16、类型14/16。新增Level 4/5各10题也已完成low自然错误实验：20/20答案正确、Evaluator预测19/20过程有效，人工确认1例Level 5为正确答案但Step 7计算符号错误；同题Solver总tokens较high减少67.0%。下一关键目标是分层人工抽检其余19条valid预测，同时继续支持`final_answer`错误位置与验证分类边界。
 
 ## Benchmark 方案
 
@@ -66,5 +66,6 @@
 - [x] 将错误类型定义改为“定义＋排他边界＋诊断问题”：先定位最早主要错误事件，排除继承错误和下游症状，再基于可见证据选择唯一标签；Local/Global流程与聚合原理不变
 - [ ] 支持`final_answer`作为错误位置，小规模验证新taxonomy的邻近类型区分，并评估Local/Global冲突的聚合策略；暂不扩展为正式Evaluator validity benchmark
 - [x] 使用新版分类prompt对同一16例受控错误集完成独立v1.2重跑并按新版边界复核全部人工标签：106次成功API响应、16次失败尝试；过程错误16/16、首错16/16、类型14/16、`needs_review` 1/16，旧v1/v1.1未覆盖
+- [x] 将原Level 4/5各10题的Solver与Process Evaluator均改为low并完成全部20题：20/20答案正确、过程预测19/20有效；人工确认1例正确答案但过程存在Step 7计算符号错误，同题Solver总tokens较high减少67.0%
 - [ ] 支持`final_answer`作为错误位置，继续用不针对现有16题的通用样本验证`invalid_derivation`、`concept_or_theorem_error`、`calculation_error`及末端条件遗漏边界；暂不扩展为正式Evaluator validity benchmark
 - [x] 取消MATH 250题、每Level 50题的全量API评测方案；数据池保留，后续实验单独确定小样本数量

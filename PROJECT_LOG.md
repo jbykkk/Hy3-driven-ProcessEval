@@ -164,3 +164,23 @@
 - 修正奇素数指数案例中已与去提示化可见解答不一致的旧注入说明；不修改题目、Solver可见解答、Evaluator输出或v1/v1.1实验记录。
 - 复核后的v1.2最终结果为错误类型14/16、Local类型13/15；过程错误16/16、首错16/16及其余指标不变。标签修订并非迁就预测，仍保留2条Evaluator分类错误：不等式变号的`invalid_derivation`被判为`calculation_error`，负半径的`condition_omission`被判为`answer_extraction_or_format_error`。
 - 唯一`needs_review`仍是选择题输出格式案例：Evaluator识别了`final_answer`错误，但当前编号Step schema无法表示该特殊位置。完整复核见`experiments/process_evaluator_error_injection_16_v1_2/taxonomy_review.json`，最终统计见同目录`evaluation_analysis.json`。
+
+## 2026-08-30：Level 4/5 low自然错误探针
+
+- 核对确认新增Level 4/5共20题此前只完成high Solver与最终答案验证，20/20正确；自然可见解答未作为一批运行Process Evaluator，已完成的是另行构造的受控错误评估。
+- 从原确定性选择中每层按顺序取前5题，共10题；Solver与Process Evaluator只把`reasoning_effort`从high改为low，其余prompt、temperature、token上限、stream、timeout和0次自动重试保持不变，输出使用独立路径。
+- 10次Solver调用全部`stop`、parser无警告，最终答案10/10正确；共使用31,506 total tokens和22,865 reasoning tokens。对应10题high Solver为108,288 total tokens和99,521 reasoning tokens，low分别减少70.9%和约77.0%。
+- Process Evaluator对61步执行Local、对10题执行Global，共71次调用；全部请求成功、生成完整且严格JSON有效，使用194,262 total tokens和38,713 reasoning tokens。
+- Evaluator预测9/10过程有效；Level 5样本`math-test-precalculus-0488`得到正确答案`6/23`，但Step 7把常数项写成`+1`后无有效过渡地切换到含`-36`的正确二次方程。Local与Global均定位Step 7并分类为`calculation_error`，人工定点核对确认是真实可见错误，聚合为`correct_answer_invalid_process`。
+- 其余9条valid预测尚未逐步人工标注，本轮只作为自然错误探针，不报告Evaluator准确率或误报率；下一步先人工抽检，再决定是否运行剩余10题。
+- 实验材料JSON校验、`git diff --check`、Python compileall及51项单元测试全部通过；密钥模式扫描无命中。
+
+## 2026-08-30：完成剩余10题并汇总low 20题
+
+- 从原Level 4/5各10题固定选择中计算首批补集，得到剩余Level 4与Level 5各5题；与首批合并后覆盖20/20且无重复。第二批使用独立`remaining10`输出路径，未覆盖首批或high结果。
+- 第二批10次Solver请求逐条审计均为`reasoning_effort=low`，全部`stop`、parser无警告、最终答案10/10正确；其中三元坐标答案只是LaTeX空格格式不同，数学等价但保留结构化答案人工复核建议。
+- 第二批55次Local与10次Global共65次Evaluator调用全部为low、请求成功、生成完整并通过严格JSON，10/10预测过程有效且无需复核。
+- 合并审计确认20条Solver请求和136次Evaluator调用的reasoning强度唯一值均为low，非low记录数为0。整体20/20答案正确，Evaluator预测19/20过程有效；唯一错误仍是已人工确认的`math-test-precalculus-0488` Step 7符号错误。
+- low Solver 20题共60,706 total tokens、43,550 reasoning tokens；对应high为183,742与166,318，分别减少67.0%和73.8%。Level 4 total tokens减少63.1%，Level 5减少69.8%。low可见步骤116，高于high的110，因此成本下降主要来自内部reasoning而非减少步骤。
+- low Evaluator共使用365,789 total tokens，其中69,610 reasoning tokens；由于没有high Evaluator同题批量结果，不报告Evaluator high/low成本降幅。完整实验已收敛到`PROCESS_EVALUATOR_LOW_LEVEL45_20.md`与`experiments/process_evaluator_low_level45_20/`，不保留重复的10题临时报告。
+- 最终机器可读JSON、仓库引用、密钥模式和`git diff --check`均通过，当前完整51项单元测试再次全部通过。

@@ -6,7 +6,7 @@
 
 本项目是“犀牛鸟开源实战任务”的数学方向作品。开发分支为 `develop`，远程仓库为 `origin`。不要直接在 `main` 上开发。
 
-当前进入阶段 2：Solver、最终答案验证与Process Evaluator v1已经跑通。旧25题的v2 inference与新增20题已整理为45题过程评估候选池；从中选择的16例受控错误v1已完成首轮95次Evaluator调用。含自我揭示措辞的v1结果保持为历史行为探针；去提示化v1.1也已完成独立的95次Evaluator调用。两轮输出、分析和统计严格分开。因API额度成本，已取消固定100题和MATH 250题全量评测方案；后续只做少量、有明确问题和额度上限的受控错误实验。
+当前进入阶段 2：Solver、最终答案验证与Process Evaluator v1已经跑通。旧25题的v2 inference与新增20题已整理为45题过程评估候选池；从中选择的16例受控错误已完成v1、去提示化v1.1和新版分类v1.2三轮独立评估。新增Level 4/5各10题现已完成low自然错误实验：20/20答案正确，Evaluator预测19/20过程有效，人工确认1例正确答案但Step 7计算符号错误；low Solver同题总tokens较high减少67.0%。因API额度成本，已取消固定100题和MATH 250题全量评测方案；后续只做少量、有明确问题和额度上限的实验。
 
 已整理的数据池和纯文字变体均完整保留，但不代表需要全量运行：
 
@@ -168,12 +168,13 @@ uv run python -m evaluation.runner
 
 ## 6. 下一步建议顺序
 
-1. v1.1的3条`needs_review`已完成人工复核，复数遗漏分支首错由Step 4修正为Step 5。新版taxonomy已完成v1.2重跑：106次成功API响应、过程错误16/16、首错16/16；16条人工标签按新版边界复核后类型14/16、`needs_review` 1/16，复核前沿用旧标签的11/16不作最终指标。Local/Global流程未改。下一步优先支持`final_answer`错误位置，并用通用样本继续验证两条剩余分类边界；不要回写或混合旧实验准确率。当前不要引入voting、ensemble或正式validity benchmark。
-2. 新增20题已验证stream/high/32000/300秒下20/20一次完整；后续仍按实验单独声明额度，默认不自动重试，并继续评估temperature/seed与长尾成本。
-3. 冻结生成完成率、完成后正确率、端到端产出率、parser成功率、过程评估完整率和成本口径。
-4. 给参考答案和预测答案增加答案类型分类，逐类实现多答案、集合、区间、坐标、矩阵、单位、选择题标签和复数校验。
-5. 不运行纯文字MATH 250题全量实验；后续每项API实验必须单独声明小样本选择和额度上限。AIME保持暂停，GSM8K和原图形题只在明确补充实验时使用。
-6. 实现固定revision下载脚本。
+1. low自然错误实验已完成Level 4/5各10题：先分层人工抽检其余19条`process_correct=true`预测；不要把当前19/20解释为Evaluator准确率、误报率或真实过程正确率。详细结果见`docs/experiments/PROCESS_EVALUATOR_LOW_LEVEL45_20.md`。
+2. v1.1的3条`needs_review`已完成人工复核，复数遗漏分支首错由Step 4修正为Step 5。新版taxonomy已完成v1.2重跑：106次成功API响应、过程错误16/16、首错16/16；16条人工标签按新版边界复核后类型14/16、`needs_review` 1/16，复核前沿用旧标签的11/16不作最终指标。Local/Global流程未改。下一步优先支持`final_answer`错误位置，并用通用样本继续验证两条剩余分类边界；不要回写或混合旧实验准确率。当前不要引入voting、ensemble或正式validity benchmark。
+3. 新增20题已验证stream/high/32000/300秒下20/20一次完整；后续仍按实验单独声明额度，默认不自动重试，并继续评估temperature/seed与长尾成本。
+4. 冻结生成完成率、完成后正确率、端到端产出率、parser成功率、过程评估完整率和成本口径。
+5. 给参考答案和预测答案增加答案类型分类，逐类实现多答案、集合、区间、坐标、矩阵、单位、选择题标签和复数校验。
+6. 不运行纯文字MATH 250题全量实验；后续每项API实验必须单独声明小样本选择和额度上限。AIME保持暂停，GSM8K和原图形题只在明确补充实验时使用。
+7. 实现固定revision下载脚本。
 
 ## 7. 已知风险与安全边界
 
@@ -208,6 +209,8 @@ uv run python -m evaluation.runner
 - `experiments/baseline_50/high_16000_partial_analysis.json`：已中止的16000对照聚合、样本ID与本地输出校验和。
 - `experiments/process_evaluator_v1v2_25/`：25题选择、manifest、输出哈希和无reasoning聚合统计。
 - `experiments/process_evaluator_v2_level45_20/`：新增Level 4/5各10题的选择、配置与聚合结果。
+- `docs/experiments/PROCESS_EVALUATOR_LOW_LEVEL45_20.md`：Level 4/5 low自然错误实验、配置审计、同题high/low成本与结论边界。
+- `experiments/process_evaluator_low_level45_20/`：low实验选择、两批运行配置、调用量与机器可读汇总。
 - `experiments/process_evaluator_candidate_pool_45/`：旧25题v2与新增20题的统一inference索引。
 - `docs/experiments/PROCESS_EVALUATOR_CANDIDATE_POOL_45.md`：45题候选池的构成、生成结果、成本与使用边界。
 - `experiments/process_evaluator_error_injection_16/`：16例受控错误的来源、人工预期标签和构造校验。

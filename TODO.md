@@ -63,6 +63,7 @@ Final Answer: \boxed{...}
 - [x] 清理注入文本中会主动暴露错误的措辞，重新核对唯一源头错误与`process_complete`人工口径，并完成独立v1.1评估。
 - [x] 将旧Level 4的4个已评估变体纳入统一受控错误池，同时保留其独立实验记录和历史Global口径差异。
 - [ ] 官方`reference_answer`仅验证最终结果；`reference_solution`只作为标注者核对条件和覆盖面的辅助，不做逐步标准答案，也不进入当前Local/Global prompt。
+- [ ] low自然错误实验已完成Level 4/5各10题：先分层人工抽检19条`process_correct=true`预测；不要把当前19/20直接作为Evaluator准确率、误报率或真实过程正确率。
 - [ ] 受控集验证通过后，再规划含自然错误解答和独立人工裁决的正式Evaluator validity benchmark；当前阶段不实现multi-agent voting或ensemble。
 - [ ] 同时报告最终答案正确率、生成完成率、步骤解析成功率、首错可定位性、reasoning/可见回答tokens、延迟和成本。
 - [ ] 人工抽检v2是否制造空步骤、遗漏必要推导，或让过程看似规范但无法支撑结论。
