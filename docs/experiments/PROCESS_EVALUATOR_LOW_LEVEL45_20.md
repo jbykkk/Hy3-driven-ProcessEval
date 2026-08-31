@@ -6,6 +6,8 @@
 
 实验按授权分两批运行，每批包含Level 4和Level 5各5题。两批合并后恰好覆盖原固定选择的20题，无重复或遗漏。具体ID、批次和本地输出索引见`experiments/process_evaluator_low_level45_20/manifest.json`。
 
+后续状态：这20题已并入low自然45题，并随45题全部完成单人过程复核；本报告原先关于19条valid尚未标注的阶段性限制已由后续复核解除。完整人审结果见`experiments/process_evaluator_low_natural_45/human_review.json`。
+
 ## 2. 配置与审计
 
 Solver继续使用`math-solver-v2`、temperature 0.9、top-p 1、stream、`max_tokens=32000`、300秒timeout和0次自动重试；Process Evaluator继续使用当前Local/Global prompt、temperature 0.1、stream、`max_tokens=8000`、300秒timeout和0次自动重试。两者仅将`reasoning_effort`从`high`改为`low`。
@@ -26,7 +28,7 @@ Solver继续使用`math-solver-v2`、temperature 0.9、top-p 1、stream、`max_t
 
 唯一结构化答案人工复核建议是`math-test-precalculus-0028`的三元坐标；预测与参考答案均为`(5/3,5/3,5/3)`，只是LaTeX空格格式不同，数学等价验证为正确。
 
-按难度看，Level 4为10/10答案正确、10/10过程有效；Level 5为10/10答案正确、9/10过程有效。样本量仍很小，且19条valid预测尚无完整人工过程标签，不能把95%直接解释为真实过程正确率，也不能据此确定模型从Level 5开始显著下降。
+按难度看，Level 4为10/10答案正确、10/10过程有效；Level 5为10/10答案正确、9/10过程有效。后续全量过程复核确认这20条Evaluator判断均正确，因此本组真实过程正确率为19/20；样本量仍很小，不能据此确定模型从Level 5开始显著下降。
 
 ## 4. 同题high/low Solver对照
 
@@ -63,4 +65,4 @@ Evaluator总tokens高于Solver，主要因为每个Local调用都会携带题目
 
 在这20道Level 4/5题上，low把Solver总tokens降低约三分之二，同时仍保持20/20最终答案正确；过程评估进一步暴露1个答案正确但过程错误的自然样本。因此，降低推理强度对成本分析和自然错误收集都有价值，但这批题仍未使最终答案准确率下降。
 
-当前只人工确认了Evaluator标出的1个错误，其余19条valid预测尚未逐步标注。因此本轮不报告Evaluator准确率或误报率。下一步应先对19条valid预测做分层人工抽检，尤其检查条件、分支和关键依据遗漏；若仍需寻找最终答案错误，再以明确调用上限设计重复生成或更高难样本，而不是直接扩大为全量实验。
+后续low自然45题全量复核已覆盖本组20题，19条valid预测均确认有效，唯一invalid也确认属实。因此本组Evaluator与人工标签20/20一致；被标记样本中的真实问题为1/1、误报0/1。该正例分母仍然过小；若仍需寻找最终答案错误，应以明确调用上限设计重复生成或更高难样本，而不是直接扩大为全量实验。

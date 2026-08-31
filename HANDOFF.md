@@ -6,7 +6,7 @@
 
 本项目是“犀牛鸟开源实战任务”的数学方向作品。开发分支为 `develop`，远程仓库为 `origin`。不要直接在 `main` 上开发。
 
-当前进入阶段 2收敛期：high与low自然Solver已形成完全同题45题，low 45答案全部正确、过程预测44/45有效；唯一过程错误及4条答案格式提示均已人工复核，0条过程记录要求复核。新版Evaluator也已在冻结受控16例上完成high/low单变量对照。全实验地图与口径见`docs/experiments/PROJECT_RESULTS_READINESS.md`，强度对照见`docs/experiments/PROCESS_EVALUATOR_REASONING_EFFORT_COMPARISON.md`。下一步优先抽检44条自然valid预测并整理统一结果报告，不恢复250题全量调用。
+当前进入阶段 2收敛期：high与low自然Solver已形成完全同题45题，low 45答案全部正确；45条可见过程经单人复核为44条有效、1条无效，与Evaluator逐条一致。新版Evaluator也已在冻结受控16例上完成high/low单变量对照。“完整结果”和“有效性验证结果”正式报告已分别形成，综合分析报告尚未撰写。全实验地图与口径见`docs/experiments/PROJECT_RESULTS_READINESS.md`，强度对照见`docs/experiments/PROCESS_EVALUATOR_REASONING_EFFORT_COMPARISON.md`。下一步优先整理公开结果索引和分析报告，不恢复250题全量调用。
 
 已整理的数据池和纯文字变体均完整保留，但不代表需要全量运行：
 
@@ -169,8 +169,8 @@ uv run python -m evaluation.runner
 ## 6. 下一步建议顺序
 
 1. 按`docs/experiments/PROJECT_RESULTS_READINESS.md`冻结统一指标与人工过程复核方案。
-2. 对low自然45题的44条预测有效解答做分层人工复核；不要把44/45直接解释为准确率、误报率或真实过程正确率。
-3. 将Solver 45题和受控Evaluator 16例的high/low单变量结果纳入统一报告，旧版25题high Evaluator只作结构与正确过程接受证据。
+2. 使用已完成的自然45题单人过程标签：真实过程正确率44/45，Evaluator逐条一致；误报0/1必须伴随小分母限制，不外推。
+3. 以现有“完整结果”和“有效性验证”正式报告为依据撰写综合分析报告；旧版25题high Evaluator只作结构与正确过程接受证据。
 4. 为v1.2受控16例和已完成的low自然样本生成不含内部reasoning的公开逐样本结果索引。
 5. 支持`final_answer`错误位置，并继续验证剩余分类边界；旧v1/v1.1/v1.2结果不回写、不混算。
 6. 补齐复杂答案类型、固定revision下载脚本、开源许可证和demo；任何新增API实验继续单独声明样本数与额度上限。

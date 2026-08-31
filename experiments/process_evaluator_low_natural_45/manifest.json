@@ -11,5 +11,5 @@
     {"name": "level45-20", "records": 20, "manifest": "experiments/process_evaluator_low_level45_20/manifest.json"}
   ],
   "human_review": "experiments/process_evaluator_low_natural_45/human_review.json",
-  "evidence_boundary": "The 44 valid process results are evaluator predictions, not human process labels. Only the flagged natural error has been manually confirmed."
+  "evidence_boundary": "All 45 visible solutions have single-reviewer human process labels. The review may support descriptive results for this exploratory set, but the single natural process error and single reviewer do not support broad population-level claims."
 }

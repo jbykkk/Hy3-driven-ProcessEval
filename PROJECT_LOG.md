@@ -218,3 +218,20 @@
 - 人工复核唯一过程错误`math-test-precalculus-0488`：Step 7常数项应为负号，却写成正号，下一行无有效过渡地使用正确多项式；确认Evaluator的Step 7 `calculation_error`和`correct_answer_invalid_process`裁决正确。
 - 复核答案验证层4条`manual_review_recommended`记录，均为坐标元组或LaTeX空格触发；逐坐标与参考答案一致，四面体案例也正确排除了与已知顶点重合的根，4/4确认答案正确。
 - 结构化人工裁决保存于`experiments/process_evaluator_low_natural_45/human_review.json`。该范围覆盖全部自动错误与复核提示，但不覆盖44条预测有效过程，不能据此计算完整误报率或漏报率。
+
+## 2026-08-31：完成自然过程复核与两份结果初版
+
+- 逐题复核low自然45题的全部可见解答，不读取Solver内部reasoning；标准答案用于核对最终结果，参考解答只作为检查条件和覆盖面的辅助。
+- 人工过程标签为44条有效、1条无效，真实过程正确率44/45；Evaluator预测逐条一致。唯一无效样本仍是`math-test-precalculus-0488`的Step 7符号错误。
+- 按任务书对“答案正确却被判过程有问题”的核验口径，唯一被标记样本确有问题，真实问题1/1、误报0/1；报告同时保留分母只有1和单人复核的限制。
+- 将44条有效记录的sample ID和inference ID、1条无效记录的首错与类型，以及汇总混淆结果写入`experiments/process_evaluator_low_natural_45/human_review.json`和`analysis.json`。
+- 新增`docs/experiments/COMPLETE_RESULTS_INITIAL.md`与`docs/experiments/EVALUATOR_VALIDITY_INITIAL.md`，分别对应任务书的完整结果和有效性验证结果；综合分析报告暂不撰写。
+- 明确Local四态的实际覆盖：`valid`、`invalid`、`insufficient`已经出现，`uncertain`尚未观察到；low漏检奇素数指数错误等案例和未决分析口径已集中记录到`TODO.md`。
+
+## 2026-08-31：将两份结果文档重构为正式交付报告
+
+- 按任务书交付指标重构完整结果报告，只保留自然Solver最终答案准确率、人工过程正确率、难度分层和自然/受控错误类型边界。
+- 重构Evaluator有效性报告，只保留受控错误检出与首错定位、错误类型、答案—过程关系、自然样本误报核验和简要人工复核记录。
+- 删除主体中的历史baseline、prompt演进、API失败、schema细节、Local/Global字段统计和Evaluator high/low技术对照；这些材料继续保存在原实验记录和后续分析TODO中。
+- 正式文件重命名为`docs/experiments/COMPLETE_RESULTS.md`与`docs/experiments/EVALUATOR_VALIDITY.md`，并同步更新当前文档导航和检索路由。
+- 按当前安排删除根目录`README.md`；实验目录内用于解释机器可读结果的README保持不变，最终提交前再决定是否补写精简根README。

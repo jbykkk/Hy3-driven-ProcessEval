@@ -77,8 +77,11 @@
 | 查询Level 4受控错误探针的预期标签、调用量或逐例对照 | `experiments/process_evaluator_error_injection_level4/` | 先读`README.md`与`analysis.json`；按需读取`cases.jsonl`，不读取内部reasoning |
 | 查询新增Level 4/5 20题的选择、Solver结果或成本 | `docs/experiments/PROCESS_EVALUATOR_CANDIDATE_POOL_45.md`、`experiments/process_evaluator_v2_level45_20/` | 先看报告结论与`analysis.json`；逐题ID再查manifest，不批量读取本地reasoning |
 | 查询Level 4/5 low推理20题的配置审计、成本、自然错误或high/low同题对照 | `docs/experiments/PROCESS_EVALUATOR_LOW_LEVEL45_20.md`、`experiments/process_evaluator_low_level45_20/` | 先看报告与`analysis.json`；只按异常sample读取本地可见解答，不批量读取reasoning |
-| 查询low自然45题、Solver high/low同题结果或新版Evaluator high/low受控对照 | `docs/experiments/PROCESS_EVALUATOR_REASONING_EFFORT_COMPARISON.md`、`experiments/process_evaluator_low_natural_45/`、`experiments/process_evaluator_error_injection_16_v1_2_low/` | 先看总报告与analysis；自然valid不视为人工真值，逐例只读取异常case |
+| 查询low自然45题、Solver high/low同题结果或新版Evaluator high/low受控对照 | `docs/experiments/PROCESS_EVALUATOR_REASONING_EFFORT_COMPARISON.md`、`experiments/process_evaluator_low_natural_45/`、`experiments/process_evaluator_error_injection_16_v1_2_low/` | 先看总报告与analysis；自然45题已有单人过程标签，逐例只读取异常case |
 | 查询全部实验地图、统一指标口径、最终报告准备度或交付缺口 | `docs/experiments/PROJECT_RESULTS_READINESS.md` | 先读结论、实验地图和P0清单；逐项证据再跳转对应实验目录 |
+| 查询任务书完整结果、自然过程正确率、难度分层或错误分布 | `docs/experiments/COMPLETE_RESULTS.md` | 先看自然45题主结果和结论边界；历史结果只作补充 |
+| 查询Evaluator定位准确率、误报核验或人工复核结果 | `docs/experiments/EVALUATOR_VALIDITY.md` | 先看受控16例与自然45题复核；案例证据再按ID定点读取 |
+| 查询Local四态覆盖或Evaluator high/low推理强度差异 | `docs/foundation/PROCESS_EVALUATOR.md`、`docs/experiments/PROCESS_EVALUATOR_REASONING_EFFORT_COMPARISON.md`、`TODO.md` | 先查稳定定义，再看强度对照或待验证状态 |
 | 查询后续受控错误可用的45题、来源批次或inference引用 | `experiments/process_evaluator_candidate_pool_45/` | 先读manifest；只按目标sample读取index与本地输出 |
 | 查询16例分层受控错误的题目选择、注入方式、预期类型或构造校验 | `docs/experiments/PROCESS_EVALUATOR_ERROR_INJECTION_16.md`、`experiments/process_evaluator_error_injection_16/` | 先读报告与analysis；逐例标签再查cases，不批量读取本地解答或reasoning |
 | 查询去除自我揭示措辞的16例v1.1构造、完整评估、人工复核或失败重试记录 | `experiments/process_evaluator_error_injection_16_v1_1/` | 先读README、human_review和evaluation_analysis；构造检查再读analysis，按case_id定点读取被忽略的聚合/原始响应，不与v1结果合并 |

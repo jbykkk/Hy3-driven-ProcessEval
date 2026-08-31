@@ -14,5 +14,15 @@
   },
   "natural_error": {"sample_id": "math-test-precalculus-0488", "level": "Level 5", "answer_correct": true, "first_error_step": 7, "error_type": "calculation_error", "human_spot_check": "confirmed_visible_inconsistency"},
   "flagged_record_human_review": {"process_incorrect_reviewed": 1, "process_incorrect_confirmed": 1, "process_needs_review_records": 0, "answer_manual_review_records": 4, "answer_manual_review_confirmed_correct": 4, "path": "experiments/process_evaluator_low_natural_45/human_review.json"},
-  "interpretation_boundary": "44/45 is an evaluator prediction distribution, not process accuracy or a false-positive-rate estimate. The 44 predicted-valid solutions still require independent human review."
+  "full_process_human_review": {
+    "reviewed": 45,
+    "human_valid": 44,
+    "human_invalid": 1,
+    "human_process_accuracy": 0.977778,
+    "evaluator_confusion": {"true_positive": 1, "true_negative": 44, "false_positive": 0, "false_negative": 0},
+    "evaluator_accuracy": 1.0,
+    "official_flagged_sample_review": {"flagged_answer_correct": 1, "confirmed_true_process_issue": 1, "confirmed_false_alarm": 0},
+    "path": "experiments/process_evaluator_low_natural_45/human_review.json"
+  },
+  "interpretation_boundary": "All 45 visible solutions have single-reviewer human process labels. Human process accuracy is 44/45 and evaluator agreement is 45/45 on this exploratory single-run set. The only evaluator-positive case is a true issue, so the official flagged-sample false-alarm result is 0/1; the denominator is too small for broad generalization."
 }
