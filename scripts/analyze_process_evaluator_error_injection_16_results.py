@@ -36,6 +36,9 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--expected-successful", type=int, default=95)
     parser.add_argument("--local-prompt", default="math-process-evaluator-v1")
     parser.add_argument("--global-prompt", default="math-global-evaluator-v1.1")
+    parser.add_argument(
+        "--reasoning-effort", choices=("low", "high", "max"), default="high"
+    )
     parser.add_argument("--annotation-version")
     parser.add_argument("--taxonomy-review")
     return parser.parse_args()
@@ -183,7 +186,7 @@ def main() -> int:
             "top_p": 1.0,
             "max_tokens": 8000,
             "thinking": "enabled",
-            "reasoning_effort": "high",
+            "reasoning_effort": args.reasoning_effort,
             "timeout_seconds": 300,
             "max_retries": 0,
         },

@@ -1,0 +1,15 @@
+{
+  "schema_version": "1.0",
+  "experiment": "process-evaluator-low-natural-45",
+  "records": 45,
+  "levels": {"Level 1": 5, "Level 2": 5, "Level 3": 5, "Level 4": 15, "Level 5": 15},
+  "selection": "experiments/process_evaluator_candidate_pool_45/index.jsonl",
+  "solver_config": {"prompt_version": "math-solver-v2", "model": "hy3", "temperature": 0.9, "top_p": 1.0, "max_tokens": 32000, "thinking": "enabled", "reasoning_effort": "low", "timeout_seconds": 300, "max_retries": 0},
+  "evaluator_config": {"local_prompt_version": "math-process-evaluator-v1.1", "global_prompt_version": "math-global-evaluator-v1.2", "model": "hy3", "temperature": 0.1, "top_p": 1.0, "max_tokens": 8000, "thinking": "enabled", "reasoning_effort": "low", "timeout_seconds": 300, "max_retries": 0},
+  "batches": [
+    {"name": "old-v1v2-25", "records": 25, "solver": "outputs/process_low_v1v2_25_solver.jsonl", "answer_verification": "outputs/process_low_v1v2_25_answer_verification.jsonl", "process_evaluations": "outputs/process_low_v1v2_25_process_evaluations.jsonl", "process_responses": "outputs/process_low_v1v2_25_process_responses.jsonl"},
+    {"name": "level45-20", "records": 20, "manifest": "experiments/process_evaluator_low_level45_20/manifest.json"}
+  ],
+  "human_review": "experiments/process_evaluator_low_natural_45/human_review.json",
+  "evidence_boundary": "The 44 valid process results are evaluator predictions, not human process labels. Only the flagged natural error has been manually confirmed."
+}

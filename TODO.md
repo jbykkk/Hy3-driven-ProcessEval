@@ -63,7 +63,9 @@ Final Answer: \boxed{...}
 - [x] 清理注入文本中会主动暴露错误的措辞，重新核对唯一源头错误与`process_complete`人工口径，并完成独立v1.1评估。
 - [x] 将旧Level 4的4个已评估变体纳入统一受控错误池，同时保留其独立实验记录和历史Global口径差异。
 - [ ] 官方`reference_answer`仅验证最终结果；`reference_solution`只作为标注者核对条件和覆盖面的辅助，不做逐步标准答案，也不进入当前Local/Global prompt。
-- [ ] low自然错误实验已完成Level 4/5各10题：先分层人工抽检19条`process_correct=true`预测；不要把当前19/20直接作为Evaluator准确率、误报率或真实过程正确率。
+- [x] 完成Level 4/5各10题的首轮low自然实验，并已进一步扩展为下述同题45题实验；原19/20只保留为阶段预测分布，不单独作为最终误报率分母。
+- [x] 将low自然实验扩展到与high相同的45道题：旧25题补充low Solver与新版low Process Evaluator，合并后Level 1-5为5/5/5/15/15，45/45答案正确、过程预测44/45有效。
+- [x] 将Solver强度与Evaluator强度作为两条分析轴：完成Solver同题45题high/low比较，并在冻结新版prompt和可见解答的受控16例上完成Evaluator high/low单变量对照。
 - [ ] 受控集验证通过后，再规划含自然错误解答和独立人工裁决的正式Evaluator validity benchmark；当前阶段不实现multi-agent voting或ensemble。
 - [ ] 同时报告最终答案正确率、生成完成率、步骤解析成功率、首错可定位性、reasoning/可见回答tokens、延迟和成本。
 - [ ] 人工抽检v2是否制造空步骤、遗漏必要推导，或让过程看似规范但无法支撑结论。
@@ -84,3 +86,13 @@ Final Answer: \boxed{...}
 
 - [ ] 为多答案、集合、区间、矩阵、单位及选择题标签增加分类型校验。
 - [ ] 实现固定上游 revision 的可复现下载脚本。
+
+## 统一口径与最终交付
+
+- [ ] 冻结请求成功率、生成完成率、完成后正确率、端到端答案产出率、parser无警告率、过程评估完整率、首错/类型准确率、复核率和成本字段的定义与分母。
+- [ ] 对low自然45题中44条`process_correct=true`解答做分层人工复核，形成自然过程标签与误报/漏报分析；当前44/45仍只表示Evaluator预测分布。
+- [ ] 生成不包含内部reasoning、密钥、响应头或provider私有信息的逐样本公开结果索引，至少覆盖v1.2受控16例与low自然45题。
+- [ ] 按`docs/experiments/PROJECT_RESULTS_READINESS.md`建议结构编写统一结果分析报告；历史配置、受控错误和自然错误严格分开。
+- [x] 新增根目录README，提供项目目标、当前结果、快速开始、数据边界和文档导航。
+- [ ] 选择并添加开源许可证。
+- [ ] 制作2分钟以内demo视频或GIF，展示Solver、答案验证、逐步评估和首错输出。

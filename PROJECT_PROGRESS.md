@@ -4,7 +4,7 @@
 
 阶段 2：在已跑通的Hy3分步解答与最终答案验证之后，实现可见数学过程评估。
 
-当前状态：Solver、最终答案验证与Process Evaluator v1已独立跑通；旧25题v2与新增20题已整理为45题过程评估候选池，并完成16例分层受控错误集及三轮独立Evaluator调用。新版分类prompt v1.2在复核后得到过程错误16/16、首错16/16、类型14/16。新增Level 4/5各10题也已完成low自然错误实验：20/20答案正确、Evaluator预测19/20过程有效，人工确认1例Level 5为正确答案但Step 7计算符号错误；同题Solver总tokens较high减少67.0%。下一关键目标是分层人工抽检其余19条valid预测，同时继续支持`final_answer`错误位置与验证分类边界。
+当前状态：high与low自然Solver已形成完全同题45题，Level 1-5为5/5/5/15/15，两种强度均45/45完整且答案正确；low Solver total tokens较high减少63.5%，新版low Evaluator预测44/45过程有效。全部自动标记记录已经复核：唯一过程错误确认属实、0条过程记录要求复核、答案层4条坐标元组格式提示均确认正确。新版Evaluator在冻结受控16例上完成严格high/low单变量对照：错误检出16/16降至13/16、首错16/16降至14/16、类型均14/16、复核1/16升至3/16。下一关键目标是抽检44条预测有效自然过程并统一整理最终结果报告。
 
 ## Benchmark 方案
 
@@ -67,5 +67,6 @@
 - [ ] 支持`final_answer`作为错误位置，小规模验证新taxonomy的邻近类型区分，并评估Local/Global冲突的聚合策略；暂不扩展为正式Evaluator validity benchmark
 - [x] 使用新版分类prompt对同一16例受控错误集完成独立v1.2重跑并按新版边界复核全部人工标签：106次成功API响应、16次失败尝试；过程错误16/16、首错16/16、类型14/16、`needs_review` 1/16，旧v1/v1.1未覆盖
 - [x] 将原Level 4/5各10题的Solver与Process Evaluator均改为low并完成全部20题：20/20答案正确、过程预测19/20有效；人工确认1例正确答案但过程存在Step 7计算符号错误，同题Solver总tokens较high减少67.0%
+- [x] 完成全实验与交付材料盘点，建立统一指标建议、总报告结构、证据使用边界和P0/P1准备清单，并新增根目录README作为项目入口
 - [ ] 支持`final_answer`作为错误位置，继续用不针对现有16题的通用样本验证`invalid_derivation`、`concept_or_theorem_error`、`calculation_error`及末端条件遗漏边界；暂不扩展为正式Evaluator validity benchmark
 - [x] 取消MATH 250题、每Level 50题的全量API评测方案；数据池保留，后续实验单独确定小样本数量

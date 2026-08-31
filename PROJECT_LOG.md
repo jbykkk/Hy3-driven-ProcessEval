@@ -184,3 +184,37 @@
 - low Solver 20题共60,706 total tokens、43,550 reasoning tokens；对应high为183,742与166,318，分别减少67.0%和73.8%。Level 4 total tokens减少63.1%，Level 5减少69.8%。low可见步骤116，高于high的110，因此成本下降主要来自内部reasoning而非减少步骤。
 - low Evaluator共使用365,789 total tokens，其中69,610 reasoning tokens；由于没有high Evaluator同题批量结果，不报告Evaluator high/low成本降幅。完整实验已收敛到`PROCESS_EVALUATOR_LOW_LEVEL45_20.md`与`experiments/process_evaluator_low_level45_20/`，不保留重复的10题临时报告。
 - 最终机器可读JSON、仓库引用、密钥模式和`git diff --check`均通过，当前完整51项单元测试再次全部通过。
+
+## 2026-08-31：全实验与结果报告准备度整理
+
+- 按任务交付要求盘点稳定设计、历史baseline、Prompt v1/v2对照、45题候选池、受控错误三轮评估和low自然错误实验；确认核心工程与阶段实验已经比较完整，可以进入统一口径与总报告阶段。
+- 新增`docs/experiments/PROJECT_RESULTS_READINESS.md`，将实验按用途分层，明确哪些数字可进入主结论、哪些只能作为历史配置或行为探针，并提出统一的生成、答案、过程、有效性、复核和成本指标定义。
+- 主要结论建议以v1.2受控16例与low Level 4/5各10题为核心；baseline、单题smoke、旧v1/v1.1和high候选池作为问题发现、路线演进或对照证据，不混合成一个总准确率。
+- 识别最终交付缺口：19条自然valid预测缺少系统人工抽检、`final_answer`错误位置未实现、缺公开逐样本结果索引、统一结果报告、demo、开源许可证和固定revision下载脚本；当前难度证据不足以声明明确能力下降临界点。
+- 新增根目录`README.md`，整理项目目标、核心链路、主要结果、数据边界、快速开始和文档导航；TODO、进展、交接与检索路由同步更新。
+- 整理后完整51项单元测试、Python compileall、文档链接目标检查和`git diff --check`均通过。
+
+## 2026-08-31：明确45题覆盖关系与low扩展方案
+
+- 核对45题候选池由旧25题v2和新增Level 4/5共20题组成，Level 1-5分布为5/5/5/15/15；45条high Solver自然解答均完整且答案正确。
+- 明确high自然过程评估当前只覆盖旧25题；新增20题只完成high Solver与答案验证。受控16例从45道源题派生并独立人工改写，不属于45条high自然解答，也不覆盖原输出。
+- low自然实验当前只覆盖新增20题，20条Solver与136次Evaluator调用均为low。计划复用旧25题v2选择补充low运行，合并为与high同题、同层级分布的45题自然实验。
+- 将low 45的用途限定为同题Solver准确率/成本、分层能力探索和自然过程样本扩充；最终答案正确不能代替过程人工真值，正式误报率和漏报率仍需分层人工复核。
+- 明确Solver推理强度和Evaluator推理强度是两条分析轴：同时改变两者只能比较整条流水线；Evaluator强度比较必须冻结同一可见解答，优先在受控16例和人工复核自然样本上做小规模对照。
+- 记录现有Evaluator配置差异：旧25题high使用Local/Global v1，low 20使用Local v1.1与Global v1.2，因此两批结果不能解释为只改变推理强度；正式Evaluator high/low对照还需固定prompt版本。
+
+## 2026-08-31：完成low自然45题与新版Evaluator强度对照
+
+- 对旧25题v2固定选择运行low Solver：25/25完整、无parser warning、答案25/25正确，使用52,888 total tokens和35,643 reasoning tokens；与既有low 20题合并后形成Level 1-5为5/5/5/15/15的low自然45题。
+- low自然45题Solver共113,594 total tokens与79,193 reasoning tokens，同题high分别为311,089与275,718，减少63.5%与71.3%；两种强度均45/45完整且答案正确。
+- 使用当前Local v1.1/Global v1.2 low评估新增25条自然解答，117次Local与25次Global共142次调用全部完整，25/25预测过程有效；合并low 20后共278次Evaluator调用，预测44/45有效，唯一错误仍为已人工确认的Level 5 Step 7符号错误。
+- 冻结同一16份人工错误解答、v1.2人工标签、新版prompt、schema和采样参数，仅将Evaluator推理强度从high改为low。首轮2个目标不完整，使用相同配置显式恢复，最终16/16有完整记录，共104次成功响应。
+- 受控low结果为错误检出13/16、首错14/16、类型14/16、复核3/16；high v1.2为16/16、16/16、14/16、1/16。low出现两例不确定聚合和一例完全漏检，说明降低评估器推理强度会损害错误检出与首错稳定性。
+- 旧25题high过程评估使用Local/Global v1，只保留为正确过程接受、结构遵从和v2步骤成本证据，不与新版low Evaluator作推理强度对照。
+
+## 2026-08-31：完成low自然45题自动标记记录人工复核
+
+- 审计确认low自然45题全部使用Local v1.1、Global v1.2与`reasoning_effort=low`；过程预测中只有1条`process_correct=false`，没有`process_correct=null`或`needs_review=true`。
+- 人工复核唯一过程错误`math-test-precalculus-0488`：Step 7常数项应为负号，却写成正号，下一行无有效过渡地使用正确多项式；确认Evaluator的Step 7 `calculation_error`和`correct_answer_invalid_process`裁决正确。
+- 复核答案验证层4条`manual_review_recommended`记录，均为坐标元组或LaTeX空格触发；逐坐标与参考答案一致，四面体案例也正确排除了与已知顶点重合的根，4/4确认答案正确。
+- 结构化人工裁决保存于`experiments/process_evaluator_low_natural_45/human_review.json`。该范围覆盖全部自动错误与复核提示，但不覆盖44条预测有效过程，不能据此计算完整误报率或漏报率。

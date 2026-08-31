@@ -1,0 +1,60 @@
+{
+  "schema_version": "1.0",
+  "experiment": "process-evaluator-low-natural-45",
+  "review_scope": {
+    "process_records": "All natural low-45 records with process_correct not true or needs_review true",
+    "answer_records": "All natural low-45 answer-verification records with manual_review_recommended true or verdict not correct"
+  },
+  "coverage": {
+    "process_incorrect": 1,
+    "process_uncertain": 0,
+    "process_needs_review": 0,
+    "answer_incorrect_or_unverified": 0,
+    "answer_manual_review_recommended": 4,
+    "distinct_inferences_reviewed": 5
+  },
+  "process_reviews": [
+    {
+      "sample_id": "math-test-precalculus-0488",
+      "inference_id": "227c4059-478b-44a3-8880-4b5456a1fbfa",
+      "human_process_label": "invalid",
+      "first_error_step": 7,
+      "error_type": "calculation_error",
+      "evaluator_decision_confirmed": true,
+      "answer_correct": true,
+      "answer_process_relation": "correct_answer_invalid_process",
+      "review_evidence": "Step 7 writes 0 = 1 + 11r/3 + 23r^2/36, but moving the expanded right side to the left gives constant -1. The next line uses 23r^2 + 132r - 36 = 0 without a valid transition."
+    }
+  ],
+  "answer_reviews": [
+    {
+      "sample_id": "math-test-precalculus-0167",
+      "inference_id": "717fa1d0-3e4d-4ae3-a58f-ca6ebc45b971",
+      "human_answer_label": "correct",
+      "review_reason": "coordinate_tuple",
+      "review_evidence": "The predicted midpoint (11/2, -1, 1) matches the reference coordinate by coordinate; only LaTeX spacing differs."
+    },
+    {
+      "sample_id": "math-test-precalculus-0290",
+      "inference_id": "c96519a3-f31d-42b6-a167-8b36182cec7f",
+      "human_answer_label": "correct",
+      "review_reason": "coordinate_tuple",
+      "review_evidence": "The predicted point (15, -29) exactly matches the reference tuple."
+    },
+    {
+      "sample_id": "math-test-precalculus-0080",
+      "inference_id": "fbd3bb5d-1746-4e7f-9d75-67636728fd8d",
+      "human_answer_label": "correct",
+      "review_reason": "coordinate_tuple",
+      "review_evidence": "The predicted reflected point (-13, -16, -18) exactly matches the reference tuple, and the visible midpoint and normal-direction checks are consistent."
+    },
+    {
+      "sample_id": "math-test-precalculus-0028",
+      "inference_id": "ba88628b-6c39-4ca7-963c-4a4bc4ff1086",
+      "human_answer_label": "correct",
+      "review_reason": "coordinate_tuple",
+      "review_evidence": "The predicted point (5/3, 5/3, 5/3) matches the reference coordinate by coordinate; the visible solution also excludes the other root because it equals the forbidden vertex D."
+    }
+  ],
+  "conclusion": "All automatically flagged natural low-45 records were reviewed. The sole process error is confirmed, all four answer-format review records are correct, and no process needs-review records exist."
+}
