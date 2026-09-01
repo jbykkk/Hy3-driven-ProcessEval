@@ -235,3 +235,9 @@
 - 删除主体中的历史baseline、prompt演进、API失败、schema细节、Local/Global字段统计和Evaluator high/low技术对照；这些材料继续保存在原实验记录和后续分析TODO中。
 - 正式文件重命名为`docs/experiments/COMPLETE_RESULTS.md`与`docs/experiments/EVALUATOR_VALIDITY.md`，并同步更新当前文档导航和检索路由。
 - 按当前安排删除根目录`README.md`；实验目录内用于解释机器可读结果的README保持不变，最终提交前再决定是否补写精简根README。
+
+## 2026-09-01：正式报告补充high/low推理强度对照
+
+- `COMPLETE_RESULTS.md`加入同题45题Solver high/low直接对照，报告完整生成、最终答案、total tokens和reasoning tokens；过程正确率仍只报告已有统一人工标签的low 45题，不构造high过程数值对照。
+- `EVALUATOR_VALIDITY.md`加入冻结16例受控错误的Evaluator high/low单变量对照，报告错误检出、首错定位、类型、`process_correct`、复核数和token开销；high继续作为主有效性结果。
+- 两条实验轴保持分离：Solver对照描述自然解题准确率—成本变化，Evaluator对照描述受控错误评估能力—成本变化；不同题集、不同过程口径和自然/受控错误不混合比较。
