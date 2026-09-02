@@ -79,6 +79,7 @@
 | 查询Level 4/5 low推理20题的配置审计、成本、自然错误或high/low同题对照 | `docs/experiments/PROCESS_EVALUATOR_LOW_LEVEL45_20.md`、`experiments/process_evaluator_low_level45_20/` | 先看报告与`analysis.json`；只按异常sample读取本地可见解答，不批量读取reasoning |
 | 查询low自然45题、Solver high/low同题结果或新版Evaluator high/low受控对照 | `docs/experiments/PROCESS_EVALUATOR_REASONING_EFFORT_COMPARISON.md`、`experiments/process_evaluator_low_natural_45/`、`experiments/process_evaluator_error_injection_16_v1_2_low/` | 先看总报告与analysis；自然45题已有单人过程标签，逐例只读取异常case |
 | 查询全部实验地图、统一指标口径、最终报告准备度或交付缺口 | `docs/experiments/PROJECT_RESULTS_READINESS.md` | 先读结论、实验地图和P0清单；逐项证据再跳转对应实验目录 |
+| 查询综合分析报告、Solver与Evaluator设计分析、典型案例或能力边界 | `reports/PROJECT_ANALYSIS_REPORT.md` | 先读对应正文小节；实验数字再跳转正式结果报告或专项实验文档 |
 | 查询任务书完整结果、自然过程正确率、难度分层或错误分布 | `docs/experiments/COMPLETE_RESULTS.md` | 先看自然45题主结果和结论边界；历史结果只作补充 |
 | 查询Evaluator定位准确率、误报核验或人工复核结果 | `docs/experiments/EVALUATOR_VALIDITY.md` | 先看受控16例与自然45题复核；案例证据再按ID定点读取 |
 | 查询Local四态覆盖或Evaluator high/low推理强度差异 | `docs/foundation/PROCESS_EVALUATOR.md`、`docs/experiments/PROCESS_EVALUATOR_REASONING_EFFORT_COMPARISON.md`、`TODO.md` | 先查稳定定义，再看强度对照或待验证状态 |
