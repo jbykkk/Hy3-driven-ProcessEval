@@ -1,19 +1,11 @@
-"""Build explicitly versioned mathematics-solving prompts."""
+"""Build the mathematics-solving prompt."""
 
 from __future__ import annotations
 
 from solver.dataset import SolverSample
 
 
-PROMPT_VERSION_V1 = "math-solver-v1"
-PROMPT_VERSION_V2 = "math-solver-v2"
-PROMPT_VERSION = PROMPT_VERSION_V1
-
-INSTRUCTION_V1 = (
-    "Solve the following mathematics problem. Provide a clear step-by-step solution. "
-    "Number the steps explicitly as Step 1, Step 2, Step 3, ... "
-    "Do not skip important reasoning or calculations."
-)
+PROMPT_VERSION = "math-solver-v2"
 
 INSTRUCTION_V2 = (
     "Solve the following mathematics problem and provide a clear step-by-step solution. "
@@ -39,10 +31,7 @@ INSTRUCTION_V2 = (
     "End with 'Final Answer: \\boxed{...}'."
 )
 
-INSTRUCTIONS = {
-    PROMPT_VERSION_V1: INSTRUCTION_V1,
-    PROMPT_VERSION_V2: INSTRUCTION_V2,
-}
+INSTRUCTIONS = {PROMPT_VERSION: INSTRUCTION_V2}
 
 
 def build_messages(

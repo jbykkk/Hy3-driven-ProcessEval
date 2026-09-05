@@ -15,7 +15,7 @@ data/benchmark/math_text.jsonl（默认纯文字候选池）
               |
               v
         Prompt Builder
-   math-solver-v1 / v2
+      math-solver-v2
               |
               v
           Hy3 Client
@@ -42,18 +42,7 @@ data/benchmark/math_text.jsonl（默认纯文字候选池）
 - `solver/parser.py`：从可见回答中提取编号步骤和候选最终答案；不修改原始响应。
 - `solver/runner.py`：负责样本选择、断点续跑、重试、计时和逐条追加 JSONL。
 
-## Prompt v1
-
-```text
-Solve the following mathematics problem. Provide a clear step-by-step solution. Number the steps explicitly as Step 1, Step 2, Step 3, ... Do not skip important reasoning or calculations.
-
-Problem:
-{problem}
-```
-
-prompt 中不包含 `reference_answer`、`reference_solution`、难度、学科或其他参考 metadata。
-
-## Prompt v2候选
+## Solver Prompt
 
 `math-solver-v2`面向后续过程评估，要求每个Step承担一个连贯数学阶段、给出后续会使用的关键中间依据、在必要时显式处理定理条件和case，并固定以`Final Answer: \boxed{...}`结尾。它不要求每步是单一原子操作，也不要求输出步骤类型或依赖字段。
 
@@ -68,17 +57,16 @@ v2要求可见`response.content`尽量提供以下数学信息：
 
 这些信息描述的是Solver愿意公开并用于支持结论的“可见解答”，不是模型内部思考的逐字转录。Process Evaluator判断的对象正是这份可见数学证据；如果关键依据没有写入`response.content`，即使模型可能在内部考虑过，也应按可见证据不足处理。
 
-当前v2仍有两个刻意保留的边界。第一，一个Step可以包含一小段连续推导，所以首错只能定位到`Step N`，不能保证定位到步骤内部的某个子推断。第二，Solver不输出`type`、`depends_on`、置信度或参考解答对齐字段；这些结构既不是数学正确性的真值，也不应由Solver自行宣称。
+当前 Prompt 有两个刻意保留的边界。第一，一个Step可以包含一小段连续推导，所以首错只能定位到`Step N`，不能保证定位到步骤内部的某个子推断。第二，Solver不输出`type`、`depends_on`、置信度或参考解答对齐字段；这些结构既不是数学正确性的真值，也不应由Solver自行宣称。
 
-v1仍是默认版本，以保留历史实验可复现性。使用v2必须显式指定：
+运行示例：
 
 ```bash
 uv run python -m solver.runner \
-  --prompt-version math-solver-v2 \
   --id math-test-algebra-0024
 ```
 
-两版都只包含题目与求解指令，不包含参考答案、参考解答或benchmark metadata。Level 1-5各5题的配对实验中，两版均25/25答案正确、过程正确；v2步骤与过程评估成本更低、结构告警更少，但Solver总tokens没有下降。当前仍保留v1为历史默认，完整结果见`docs/experiments/PROCESS_EVALUATOR_V1V2_25.md`。
+Prompt 只包含题目与求解指令，不包含参考答案、参考解答或 benchmark metadata。Prompt v1/v2 的最终对照指标见 [`results/analysis_metrics.json`](../../results/analysis_metrics.json)。
 
 runner 默认读取 `data/benchmark/math_text.jsonl` 的250道纯文字MATH题。原含图形子集的`math.jsonl`、GSM8K、AIME和400题合并数据仍保留，但只有显式传入相应`--input`时才使用；AIME当前暂停评测。
 
@@ -99,7 +87,7 @@ solver 使用腾讯云 TokenHub 的 OpenAI-compatible Chat Completions API。默
 | Timeout | `300s`网络读取超时 |
 | Runner retries | `0` |
 
-`4096`是早期smoke test默认值，50题baseline在high reasoning下出现23/50截断；随后16条high/16000对照仍有4条截断。当前默认候选因此改为stream/high/32000/300秒，且在重试策略冻结前默认不自动重试。32000只是上限，不保证所有样本完成，也不代表应直接启动250题全量调用。
+默认输出上限为32000 token，网络读取超时为300秒，且默认不自动重试。输出上限不保证所有样本完成，因此批量运行仍需检查 `finish_reason` 并单独处理截断结果。
 
 客户端使用SSE流式接收，分别累积`delta.reasoning_content`和`delta.content`，并通过`stream_options.include_usage=true`获取最后一个usage chunk。流式传输不改变`max_tokens`或计费；300秒timeout约束连续网络读取等待，而不是整次推理的总墙钟时间。
 

@@ -11,7 +11,7 @@ from solver.client import Hy3Response
 from solver.client import aggregate_stream_chunks
 from solver.dataset import SolverSample, load_samples
 from solver.parser import parse_solution
-from solver.prompt import PROMPT_VERSION_V2, build_messages
+from solver.prompt import PROMPT_VERSION, build_messages
 from solver.runner import ids_to_skip
 from solver.runner import run_sample
 
@@ -48,9 +48,9 @@ class PromptTests(unittest.TestCase):
         self.assertIn("Compute 2 + 3.", messages[0]["content"])
         self.assertIn("Step 1, Step 2, Step 3", messages[0]["content"])
 
-    def test_v2_requests_process_evaluable_visible_evidence(self) -> None:
+    def test_prompt_requests_process_evaluable_visible_evidence(self) -> None:
         sample = SolverSample(id="id", dataset="math", problem="Solve x+1=3.")
-        messages = build_messages(sample, prompt_version=PROMPT_VERSION_V2)
+        messages = build_messages(sample, prompt_version=PROMPT_VERSION)
         prompt = messages[0]["content"]
 
         self.assertIn("one coherent stage", prompt)

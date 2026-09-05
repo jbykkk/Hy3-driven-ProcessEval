@@ -1,4 +1,4 @@
-# Hy3 Process Evaluator v1
+# Hy3 Process Evaluator 设计与使用
 
 ## 目标与证据边界
 
@@ -16,12 +16,10 @@ solver response.content
 
 正式数学证据只包括题目、`response.content`及从它确定性切分出的步骤。Solver 的`reasoning_content`、Evaluator 自身的`reasoning_content`和benchmark的`reference_solution`均不参与过程判定。最终答案验证保持独立；`answer_correct`只在无LLM聚合阶段读取，不能作为Local或Global判断过程正确的证据。
 
-当前版本不包含人工标注有效性benchmark、multi-agent voting、ensemble、模型置信度、自动步骤类型或依赖关系。
-
 ## 模块与版本
 
 - `process_evaluation/step_parser.py`：`process-step-parser-v1`，确定性保留步骤原文、完整`response.content`和结构问题。
-- `process_evaluation/prompt.py`：当前为`math-process-evaluator-v1.1`与`math-global-evaluator-v1.2`。两者共享“先定位最早主要错误事件、再分类”的错误类型定义；Global继续使用严格的最终答案支持度语义。历史实验仍按各自记录的旧prompt版本统计，不回写结果。
+- `process_evaluation/prompt.py`：当前为`math-process-evaluator-v1.1`与`math-global-evaluator-v1.2`。两者共享“先定位最早主要错误事件、再分类”的错误类型定义；Global继续使用严格的最终答案支持度语义。
 - `process_evaluation/schema.py`：严格解析Local/Global可见JSON；Markdown围栏、缺字段、多余字段、非法枚举或错误step ID均失败，不做静默修复。
 - `process_evaluation/aggregator.py`：`process-evaluation-aggregator-v1`，无LLM聚合与保守首错定位。
 - `process_evaluation/runner.py`：读取Solver inference、逐次调用、增量保存原始响应并输出最终记录。
@@ -43,7 +41,7 @@ Parser识别行首的`Step N`，兼容v1的`Step 1:`、Markdown加粗，以及v2
 - `final_answer_missing`
 - `empty_final_answer`
 
-显式`Final Answer:`或`Answer:`正文会与最后一个Step分离。为兼容math-solver-v1，没有显式标签时允许把最后一个完整原始`\boxed{...}`片段记录为`final_answer_text`；两者都不存在才报告缺失。重复步骤号会使本次过程评估跳过，避免把LLM结果错误归到同一个step ID；其他结构问题完整保留并触发复核。
+显式`Final Answer:`或`Answer:`正文会与最后一个Step分离。没有显式标签时，解析器允许把最后一个完整原始`\boxed{...}`片段记录为`final_answer_text`；两者都不存在才报告缺失。重复步骤号会使本次过程评估跳过，避免把LLM结果错误归到同一个step ID；其他结构问题完整保留并触发复核。
 
 ## Local Step Evaluation
 
@@ -132,22 +130,7 @@ Global调用读取题目、完整可见解答和已验证的Local结果，检查
 2. benchmark的`reference_solution`是一条参考解法。它可以帮助标注者核对必要条件和计算，但数学题可能存在不同的正确方法，因此不能把文本或步骤对齐程度直接当作过程真值，也不应作为当前Evaluator的隐藏评分模板。
 3. Process Evaluator有效性需要独立的人工过程标注。标注必须绑定到一份冻结的`response.content`，并至少记录逐步状态、关键错误类型与来源、首个致命错误、全局完整性、最终答案是否被过程支持，以及需要复核的歧义。
 
-因此，当前Solver与Evaluator输出已经基本具备“预测侧”字段，但当前25题实验没有“真值侧”错误过程：50条解答最终答案均正确，322次Evaluator调用也全部判为valid。它能验证工程可运行、JSON遵从和正确过程上的结构稳定性，不能估计`invalid/insufficient`准确率、错误类型准确率或首错定位准确率。
-
-后续验证应先建立少量受控过程：从冻结的正确可见解答出发，每例只注入一个已知的计算错误、非法推导、关键证据缺口、条件遗漏或case遗漏，并保留下游继承步骤；同时包含“答案正确但过程错误/不充分”的样本。正式有效性实验再增加自然产生的错误解答和独立人工裁决。参考解答只作标注辅助，最终答案只作独立结论标准，二者都不能替代人工过程标注。
-
-建议后续人工过程标注至少包含：
-
-```text
-case_id / source_inference_id / solver_prompt_version
-visible_solution_version / annotation_version / adjudication_status
-steps[].step_id / annotated_status / annotated_importance
-steps[].annotated_error_type / annotated_error_origin / annotation_evidence
-annotated_first_error_step / annotated_global_status
-annotated_process_complete / annotated_final_answer_supported / annotated_process_correct
-```
-
-受控错误阶段仍属于小规模基础行为验证，不在当前阶段扩展为multi-agent voting、ensemble或正式Evaluator validity benchmark。
+最终有效性材料包括16条受控错误案例及45条常规解答人工复核。受控案例绑定题目、注入后的可见解答、人工首错和类型标签，并保存 `high`、`low` 两种配置的最终判断；常规解答记录保存逐题人工过程标签和必要的复核依据。公开数据见 [`results/controlled_errors.jsonl`](../../results/controlled_errors.jsonl) 与 [`results/regular_solutions_review.json`](../../results/regular_solutions_review.json)。
 
 ## CLI
 
@@ -171,4 +154,4 @@ uv run python -m process_evaluation.runner \
   --retry-incomplete
 ```
 
-Evaluator v1默认使用temperature 0.1、high reasoning、8000最大输出tokens、300秒流读取timeout和0次自动重试。这是初始工程默认值，不是已经冻结的正式实验参数；批量评估前仍需小规模验证完成率、JSON遵从率、成本和延迟。
+Process Evaluator 默认使用 temperature 0.1、`high` 推理强度、8000最大输出 token、300秒流读取超时和0次自动重试。批量评估仍需检查调用完成状态和结构化输出校验结果。

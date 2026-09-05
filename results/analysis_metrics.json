@@ -1,0 +1,444 @@
+{
+  "schema_version": "1.0",
+  "solver_prompt_v1_v2": {
+    "sample_count": 25,
+    "versions": {
+      "v1": {
+        "samples": 25,
+        "solver_complete": 25,
+        "answer_correct": 25,
+        "format_mismatch_but_equivalent": 5,
+        "steps": {
+          "total": 155,
+          "mean": 6.2,
+          "median": 6,
+          "min": 3,
+          "max": 9
+        },
+        "structure_issues": {
+          "final_answer_missing": 5
+        },
+        "visible_characters": {
+          "total": 28845,
+          "mean": 1153.8,
+          "median": 1231
+        },
+        "solver_usage": {
+          "prompt_tokens": 2477,
+          "completion_tokens": 123402,
+          "reasoning_tokens": 113289,
+          "non_reasoning_completion_tokens": 10113,
+          "total_tokens": 125879
+        },
+        "solver_completion_tokens": {
+          "mean": 4936.08,
+          "median": 1841,
+          "max": 19643,
+          "at_least_8000": 5,
+          "at_least_16000": 5
+        },
+        "solver_latency_ms": {
+          "total": 1190870,
+          "mean": 47634.8,
+          "median": 20032,
+          "max": 202955
+        },
+        "process": {
+          "evaluation_complete": 25,
+          "process_correct_true": 25,
+          "process_correct_false": 0,
+          "process_correct_null": 0,
+          "needs_review": 5,
+          "global_statuses": {
+            "valid": 25
+          },
+          "local_statuses": {
+            "valid": 155
+          },
+          "evaluator_calls": 180,
+          "complete_evaluator_calls": 180,
+          "evaluator_usage": {
+            "prompt_tokens": 173104,
+            "completion_tokens": 146981,
+            "reasoning_tokens": 129093,
+            "non_reasoning_completion_tokens": 17888,
+            "total_tokens": 320085
+          },
+          "evaluator_latency_ms": {
+            "total": 1645140,
+            "mean_per_sample": 65805.6,
+            "median_per_sample": 54549
+          }
+        },
+        "by_level": {
+          "Level 1": {
+            "samples": 5,
+            "answer_correct": 5,
+            "steps_mean": 5.4,
+            "steps_total": 27,
+            "structure_issue_samples": 1,
+            "solver_completion_tokens_total": 4398,
+            "solver_completion_tokens_mean": 879.6,
+            "solver_completion_tokens_median": 740,
+            "process_correct_true": 5,
+            "needs_review": 1,
+            "evaluator_calls": 32,
+            "evaluator_completion_tokens": 19583
+          },
+          "Level 2": {
+            "samples": 5,
+            "answer_correct": 5,
+            "steps_mean": 5,
+            "steps_total": 25,
+            "structure_issue_samples": 2,
+            "solver_completion_tokens_total": 4126,
+            "solver_completion_tokens_mean": 825.2,
+            "solver_completion_tokens_median": 673,
+            "process_correct_true": 5,
+            "needs_review": 2,
+            "evaluator_calls": 30,
+            "evaluator_completion_tokens": 17797
+          },
+          "Level 3": {
+            "samples": 5,
+            "answer_correct": 5,
+            "steps_mean": 7,
+            "steps_total": 35,
+            "structure_issue_samples": 1,
+            "solver_completion_tokens_total": 24755,
+            "solver_completion_tokens_mean": 4951,
+            "solver_completion_tokens_median": 1028,
+            "process_correct_true": 5,
+            "needs_review": 1,
+            "evaluator_calls": 40,
+            "evaluator_completion_tokens": 34198
+          },
+          "Level 4": {
+            "samples": 5,
+            "answer_correct": 5,
+            "steps_mean": 6.8,
+            "steps_total": 34,
+            "structure_issue_samples": 1,
+            "solver_completion_tokens_total": 30847,
+            "solver_completion_tokens_mean": 6169.4,
+            "solver_completion_tokens_median": 3211,
+            "process_correct_true": 5,
+            "needs_review": 1,
+            "evaluator_calls": 39,
+            "evaluator_completion_tokens": 33766
+          },
+          "Level 5": {
+            "samples": 5,
+            "answer_correct": 5,
+            "steps_mean": 6.8,
+            "steps_total": 34,
+            "structure_issue_samples": 0,
+            "solver_completion_tokens_total": 59276,
+            "solver_completion_tokens_mean": 11855.2,
+            "solver_completion_tokens_median": 16996,
+            "process_correct_true": 5,
+            "needs_review": 0,
+            "evaluator_calls": 39,
+            "evaluator_completion_tokens": 41637
+          }
+        }
+      },
+      "v2": {
+        "samples": 25,
+        "solver_complete": 25,
+        "answer_correct": 25,
+        "format_mismatch_but_equivalent": 3,
+        "steps": {
+          "total": 117,
+          "mean": 4.68,
+          "median": 5,
+          "min": 3,
+          "max": 7
+        },
+        "structure_issues": {},
+        "visible_characters": {
+          "total": 28054,
+          "mean": 1122.16,
+          "median": 960
+        },
+        "solver_usage": {
+          "prompt_tokens": 8202,
+          "completion_tokens": 119145,
+          "reasoning_tokens": 109400,
+          "non_reasoning_completion_tokens": 9745,
+          "total_tokens": 127347
+        },
+        "solver_completion_tokens": {
+          "mean": 4765.8,
+          "median": 2131,
+          "max": 24490,
+          "at_least_8000": 5,
+          "at_least_16000": 2
+        },
+        "solver_latency_ms": {
+          "total": 1185072,
+          "mean": 47402.88,
+          "median": 22108,
+          "max": 225042
+        },
+        "process": {
+          "evaluation_complete": 25,
+          "process_correct_true": 25,
+          "process_correct_false": 0,
+          "process_correct_null": 0,
+          "needs_review": 0,
+          "global_statuses": {
+            "valid": 25
+          },
+          "local_statuses": {
+            "valid": 117
+          },
+          "evaluator_calls": 142,
+          "complete_evaluator_calls": 142,
+          "evaluator_usage": {
+            "prompt_tokens": 137125,
+            "completion_tokens": 126224,
+            "reasoning_tokens": 111491,
+            "non_reasoning_completion_tokens": 14733,
+            "total_tokens": 263349
+          },
+          "evaluator_latency_ms": {
+            "total": 1435800,
+            "mean_per_sample": 57432,
+            "median_per_sample": 43590
+          }
+        },
+        "by_level": {
+          "Level 1": {
+            "samples": 5,
+            "answer_correct": 5,
+            "steps_mean": 4.2,
+            "steps_total": 21,
+            "structure_issue_samples": 0,
+            "solver_completion_tokens_total": 8158,
+            "solver_completion_tokens_mean": 1631.6,
+            "solver_completion_tokens_median": 1433,
+            "process_correct_true": 5,
+            "needs_review": 0,
+            "evaluator_calls": 26,
+            "evaluator_completion_tokens": 14844
+          },
+          "Level 2": {
+            "samples": 5,
+            "answer_correct": 5,
+            "steps_mean": 4.4,
+            "steps_total": 22,
+            "structure_issue_samples": 0,
+            "solver_completion_tokens_total": 7622,
+            "solver_completion_tokens_mean": 1524.4,
+            "solver_completion_tokens_median": 1573,
+            "process_correct_true": 5,
+            "needs_review": 0,
+            "evaluator_calls": 27,
+            "evaluator_completion_tokens": 18094
+          },
+          "Level 3": {
+            "samples": 5,
+            "answer_correct": 5,
+            "steps_mean": 4.6,
+            "steps_total": 23,
+            "structure_issue_samples": 0,
+            "solver_completion_tokens_total": 19255,
+            "solver_completion_tokens_mean": 3851,
+            "solver_completion_tokens_median": 1624,
+            "process_correct_true": 5,
+            "needs_review": 0,
+            "evaluator_calls": 28,
+            "evaluator_completion_tokens": 23222
+          },
+          "Level 4": {
+            "samples": 5,
+            "answer_correct": 5,
+            "steps_mean": 4.6,
+            "steps_total": 23,
+            "structure_issue_samples": 0,
+            "solver_completion_tokens_total": 31369,
+            "solver_completion_tokens_mean": 6273.8,
+            "solver_completion_tokens_median": 4552,
+            "process_correct_true": 5,
+            "needs_review": 0,
+            "evaluator_calls": 28,
+            "evaluator_completion_tokens": 29078
+          },
+          "Level 5": {
+            "samples": 5,
+            "answer_correct": 5,
+            "steps_mean": 5.6,
+            "steps_total": 28,
+            "structure_issue_samples": 0,
+            "solver_completion_tokens_total": 52741,
+            "solver_completion_tokens_mean": 10548.2,
+            "solver_completion_tokens_median": 8319,
+            "process_correct_true": 5,
+            "needs_review": 0,
+            "evaluator_calls": 33,
+            "evaluator_completion_tokens": 40986
+          }
+        }
+      }
+    },
+    "comparison": {
+      "delta_v2_minus_v1": {
+        "steps_total": -38,
+        "steps_percent": -24.516,
+        "visible_characters_total": -791,
+        "visible_characters_percent": -2.742,
+        "solver_prompt_tokens": 5725,
+        "solver_completion_tokens": -4257,
+        "solver_completion_tokens_percent": -3.45,
+        "solver_total_tokens": 1468,
+        "solver_total_tokens_percent": 1.166,
+        "evaluator_calls": -38,
+        "evaluator_calls_percent": -21.111,
+        "evaluator_completion_tokens": -20757,
+        "evaluator_completion_tokens_percent": -14.122,
+        "evaluator_total_tokens": -56736,
+        "evaluator_total_tokens_percent": -17.725
+      },
+      "paired_direction": {
+        "steps": {
+          "v2_lower": 19,
+          "equal": 5,
+          "v2_higher": 1
+        },
+        "solver_completion_tokens": {
+          "v2_lower": 8,
+          "equal": 0,
+          "v2_higher": 17
+        },
+        "evaluator_completion_tokens": {
+          "v2_lower": 19,
+          "equal": 0,
+          "v2_higher": 6
+        }
+      }
+    }
+  },
+  "regular_solutions_45": {
+    "solver_low": {
+      "complete_generations": 45,
+      "answer_correct": 45,
+      "parser_warning_records": 0,
+      "total_tokens": 113594,
+      "reasoning_tokens": 79193
+    },
+    "by_level": {
+      "Level 1": {
+        "samples": 5,
+        "answer_correct": 5,
+        "process_correct": 5,
+        "process_incorrect": 0
+      },
+      "Level 2": {
+        "samples": 5,
+        "answer_correct": 5,
+        "process_correct": 5,
+        "process_incorrect": 0
+      },
+      "Level 3": {
+        "samples": 5,
+        "answer_correct": 5,
+        "process_correct": 5,
+        "process_incorrect": 0
+      },
+      "Level 4": {
+        "samples": 15,
+        "answer_correct": 15,
+        "process_correct": 15,
+        "process_incorrect": 0
+      },
+      "Level 5": {
+        "samples": 15,
+        "answer_correct": 15,
+        "process_correct": 14,
+        "process_incorrect": 1
+      }
+    },
+    "process_evaluator_low": {
+      "targets": 45,
+      "complete_evaluations": 45,
+      "local_calls": 233,
+      "global_calls": 45,
+      "successful_complete_calls": 278,
+      "process_correct": 44,
+      "process_incorrect": 1,
+      "needs_review": 0,
+      "total_tokens": 715097
+    },
+    "solver_high_low_comparison": {
+      "high_complete_generations": 45,
+      "high_answer_correct": 45,
+      "high_total_tokens": 311089,
+      "high_reasoning_tokens": 275718,
+      "low_complete_generations": 45,
+      "low_answer_correct": 45,
+      "low_total_tokens": 113594,
+      "low_reasoning_tokens": 79193,
+      "total_token_reduction_rate": 0.63485,
+      "reasoning_token_reduction_rate": 0.712775,
+      "boundary": "Temperature is 0.9 and each configuration has one generation per sample."
+    },
+    "interpretation_boundary": "All 45 visible solutions have single-reviewer human process labels. Human process accuracy is 44/45 and evaluator agreement is 45/45 on this exploratory single-run set. The only evaluator-positive case is a true issue, so the official flagged-sample false-alarm result is 0/1; the denominator is too small for broad generalization."
+  },
+  "controlled_errors_16": {
+    "process_evaluator_high": {
+      "metrics": {
+        "cases": 16,
+        "process_error_detected": 16,
+        "first_error_step_exact": 16,
+        "error_type_exact": 14,
+        "local_denominator": 15,
+        "local_status_exact": 15,
+        "local_importance_exact": 15,
+        "local_error_type_exact": 13,
+        "local_error_origin_exact": 15,
+        "global_status_exact": 16,
+        "process_complete_exact": 13,
+        "final_answer_supported_exact": 16,
+        "process_correct_exact": 16,
+        "answer_process_relation_exact": 16,
+        "needs_review": 1
+      },
+      "usage": {
+        "calls": 122,
+        "prompt_tokens": 207566,
+        "completion_tokens": 146033,
+        "reasoning_tokens": 134182,
+        "total_tokens": 353599,
+        "latency_ms": 1387358
+      }
+    },
+    "process_evaluator_low": {
+      "metrics": {
+        "cases": 16,
+        "process_error_detected": 13,
+        "first_error_step_exact": 14,
+        "error_type_exact": 14,
+        "local_denominator": 15,
+        "local_status_exact": 13,
+        "local_importance_exact": 15,
+        "local_error_type_exact": 12,
+        "local_error_origin_exact": 13,
+        "global_status_exact": 15,
+        "process_complete_exact": 12,
+        "final_answer_supported_exact": 15,
+        "process_correct_exact": 13,
+        "answer_process_relation_exact": 13,
+        "needs_review": 3
+      },
+      "usage": {
+        "calls": 104,
+        "prompt_tokens": 203321,
+        "completion_tokens": 87331,
+        "reasoning_tokens": 76315,
+        "total_tokens": 290652,
+        "latency_ms": 867764
+      }
+    }
+  }
+}

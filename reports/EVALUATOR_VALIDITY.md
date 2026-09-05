@@ -50,7 +50,7 @@ high配置在16例受控错误中全部正确检出过程问题并定位至人�
 
 唯一被判定存在过程问题的样本为`math-test-precalculus-0488`。人工复核确认其Step 7存在代数变换符号不一致，且后续推导未给出有效修正；尽管最终答案正确，该可见过程本身存在实质性错误。因此，该判定不属于误报，Evaluator给出的首错位置也与人工复核一致。
 
-完整逐题人工参考标签见`experiments/process_evaluator_low_natural_45/human_review.json`。
+完整逐题人工参考标签见 [`results/regular_solutions_review.json`](../results/regular_solutions_review.json)。
 
 ## 4. 验证结论
 
