@@ -29,7 +29,12 @@ from process_evaluation.schema import (
     parse_local_result,
 )
 from process_evaluation.step_parser import StepParseResult, parse_process_steps
-from solver.client import Hy3Client, Hy3RequestConfig, Hy3Response
+from solver.client import (
+    SUPPORTED_REASONING_EFFORTS,
+    Hy3Client,
+    Hy3RequestConfig,
+    Hy3Response,
+)
 from solver.runner import append_record, default_stream_events_path, response_fields
 
 
@@ -76,7 +81,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--top-p", type=float, default=1.0)
     parser.add_argument("--max-tokens", type=int, default=8000)
     parser.add_argument("--thinking", choices=("enabled", "disabled"), default="enabled")
-    parser.add_argument("--reasoning-effort", choices=("low", "high", "max"), default="high")
+    parser.add_argument(
+        "--reasoning-effort",
+        choices=SUPPORTED_REASONING_EFFORTS,
+        default="high",
+    )
     parser.add_argument("--timeout", type=float, default=300.0)
     args = parser.parse_args()
     if not args.all and args.limit < 1:
@@ -433,6 +442,7 @@ def evaluate_target(
     raw_output_path: Path,
     stream_events_path: Path | None,
     max_retries: int,
+    on_stage_result: Callable[[dict[str, Any]], None] | None = None,
 ) -> dict[str, Any]:
     step_parse = parse_process_steps(target.content)
     base = _base_process_record(
@@ -508,9 +518,18 @@ def evaluate_target(
             errors.append(call_error)
             break
         try:
-            local_results.append(
-                parse_local_result(content or "", expected_step_id=step.step_id)
+            local_result = parse_local_result(
+                content or "", expected_step_id=step.step_id
             )
+            local_results.append(local_result)
+            if on_stage_result is not None:
+                on_stage_result(
+                    {
+                        "stage": "local_step",
+                        "step": {"step_id": step.step_id, "text": step.text},
+                        "result": local_result.as_dict(),
+                    }
+                )
         except EvaluatorSchemaError as error:
             errors.append(
                 {
@@ -552,6 +571,10 @@ def evaluate_target(
                     content or "",
                     allowed_step_ids={step.step_id for step in step_parse.steps},
                 )
+                if on_stage_result is not None:
+                    on_stage_result(
+                        {"stage": "global_solution", "result": global_result.as_dict()}
+                    )
             except EvaluatorSchemaError as error:
                 errors.append(
                     {

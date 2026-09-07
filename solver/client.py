@@ -10,6 +10,7 @@ from openai import OpenAI
 
 
 DEFAULT_BASE_URL = "https://tokenhub.tencentmaas.com/v1"
+SUPPORTED_REASONING_EFFORTS = ("low", "high")
 
 
 @dataclass(frozen=True)
@@ -25,6 +26,13 @@ class Hy3RequestConfig:
     thinking: str = "enabled"
     reasoning_effort: str = "high"
     timeout_seconds: float = 300.0
+
+    def __post_init__(self) -> None:
+        if self.reasoning_effort not in SUPPORTED_REASONING_EFFORTS:
+            raise ValueError(
+                "reasoning_effort must be one of "
+                f"{SUPPORTED_REASONING_EFFORTS}, got {self.reasoning_effort!r}"
+            )
 
     @classmethod
     def from_env(

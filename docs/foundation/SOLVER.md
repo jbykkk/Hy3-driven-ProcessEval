@@ -68,7 +68,7 @@ uv run python -m solver.runner \
 
 Prompt 只包含题目与求解指令，不包含参考答案、参考解答或 benchmark metadata。Prompt v1/v2 的最终对照指标见 [`results/analysis_metrics.json`](../../results/analysis_metrics.json)。
 
-runner 默认读取 `data/benchmark/math_text.jsonl` 的250道纯文字MATH题。原含图形子集的`math.jsonl`、GSM8K、AIME和400题合并数据仍保留，但只有显式传入相应`--input`时才使用；AIME当前暂停评测。
+runner默认读取`data/benchmark/math_text.jsonl`的250道纯文字MATH候选题。`data/benchmark/math.jsonl`保留原始分层抽样及其中的Asymptote题目，用于追溯纯文字变体的替换来源，不作为默认Solver输入。
 
 ## API 配置
 
@@ -128,14 +128,6 @@ uv run python -m solver.runner
 ```bash
 uv run python -m solver.runner --id math-test-algebra-0024
 uv run python -m solver.runner --limit 3
-```
-
-补充数据集必须显式指定输入，例如：
-
-```bash
-uv run python -m solver.runner \
-  --input data/benchmark/gsm8k.jsonl \
-  --id gsm8k-test-0008
 ```
 
 只有显式传入 `--all` 才会运行所有未完成样本，避免误消耗额度：

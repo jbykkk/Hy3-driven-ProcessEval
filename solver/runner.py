@@ -13,7 +13,12 @@ from typing import Any, Iterable
 
 from dotenv import load_dotenv
 
-from solver.client import Hy3Client, Hy3RequestConfig, Hy3Response
+from solver.client import (
+    SUPPORTED_REASONING_EFFORTS,
+    Hy3Client,
+    Hy3RequestConfig,
+    Hy3Response,
+)
 from solver.dataset import SolverSample, load_samples
 from solver.parser import parse_solution
 from solver.prompt import INSTRUCTIONS, PROMPT_VERSION, build_messages
@@ -70,7 +75,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--top-p", type=float, default=1.0)
     parser.add_argument("--max-tokens", type=int, default=32000)
     parser.add_argument("--thinking", choices=("enabled", "disabled"), default="enabled")
-    parser.add_argument("--reasoning-effort", choices=("low", "high", "max"), default="high")
+    parser.add_argument(
+        "--reasoning-effort",
+        choices=SUPPORTED_REASONING_EFFORTS,
+        default="high",
+    )
     parser.add_argument("--timeout", type=float, default=300.0)
     args = parser.parse_args()
     if not args.all and args.limit < 1:

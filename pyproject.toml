@@ -2,6 +2,8 @@
 name = "hyllm-math-evaluator"
 version = "0.1.0"
 description = "Process-level evaluation and error localization for Hy3 math reasoning."
+readme = "README.md"
+license = "MIT"
 requires-python = ">=3.10"
 dependencies = [
     "huggingface-hub>=1.28.0",

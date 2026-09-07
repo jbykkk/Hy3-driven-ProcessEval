@@ -41,7 +41,7 @@ class DatasetLoaderTests(unittest.TestCase):
 
 class PromptTests(unittest.TestCase):
     def test_prompt_contains_problem_and_numbered_step_instruction(self) -> None:
-        sample = SolverSample(id="id", dataset="gsm8k", problem="Compute 2 + 3.")
+        sample = SolverSample(id="id", dataset="math", problem="Compute 2 + 3.")
         messages = build_messages(sample)
         self.assertEqual(len(messages), 1)
         self.assertEqual(messages[0]["role"], "user")
@@ -134,6 +134,10 @@ class ParserTests(unittest.TestCase):
 
 
 class ConfigTests(unittest.TestCase):
+    def test_rejects_unsupported_reasoning_effort(self) -> None:
+        with self.assertRaisesRegex(ValueError, "reasoning_effort"):
+            Hy3RequestConfig(api_key="hidden", reasoning_effort="max")
+
     def test_public_config_never_contains_api_key(self) -> None:
         config = Hy3RequestConfig(api_key="do-not-persist")
         serialized = json.dumps(config.public_dict())

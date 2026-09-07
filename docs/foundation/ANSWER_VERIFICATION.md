@@ -39,7 +39,7 @@ uv run python -m evaluation.runner --id math-test-prealgebra-0023
 
 ## 当前 benchmark 的答案形态审计
 
-GSM8K 的 100 题与 AIME 的 50 题在当前 benchmark 中都是整数参考答案。MATH 的 250 题更复杂，按参考答案字符串做启发式、互斥分类后得到：
+当前纯文字MATH候选集的250题按参考答案字符串做启发式、互斥分类后得到：
 
 | 答案形态 | 数量 |
 | --- | ---: |

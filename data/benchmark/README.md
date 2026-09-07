@@ -1,49 +1,22 @@
-# 初始数学 Benchmark
+# MATH Benchmark
 
-本目录由 `scripts/build_benchmark.py` 从 `data/raw/` 中的固定数据版本确定性生成。
-
-当前不计划对任何一个250题集合执行全量API评测。`math_text.jsonl`的250道纯文字题作为可复现候选池保留，其文件构成仍为官方Level 1-5各50题；具体实验只选择少量、明确记录选择规则的样本。原`math.jsonl`、GSM8K与AIME继续保留；`benchmark.jsonl`的400题组成和哈希不变，新增变体不计入这个历史数据池总数。
+本目录只保留项目当前使用的 MATH 数据。两份题集均来自 `EleutherAI/hendrycks_math` 固定 revision `21a5633873b6a120296cce3e2df9d5550074f4a3` 的 test split。
 
 ## 文件
 
-- `gsm8k.jsonl`：GSM8K test split 抽取 100 题，不添加难度。
-- `math.jsonl`：MATH test split 抽取 250 题，Level 1-5 各 50 题。
-- `math_text.jsonl`：保留`math.jsonl`的230道非图形题，并从同一固定revision的test split按Level确定性补入20道纯文字题；Level 1-5仍各50题且不含`[asy]`。
-- `math_text_manifest.json`：纯文字变体的基础文件哈希、筛选规则、逐层排除ID、替换ID和输出哈希。
-- `aime.jsonl`：AIME 2024、2025 各抽取 25 题。
-- `benchmark.jsonl`：以上三个文件按 GSM8K、MATH、AIME 顺序合并，共 400 题。
-- `manifest.json`：数据源 revision、抽样规则、分层数量和文件校验和。
+- `math.jsonl`：原始分层抽样集，共250题，官方Level 1-5各50题；其中20道题的`problem`含Asymptote源码。
+- `math_text.jsonl`：项目实际使用的纯文字候选集，共250题，Level 1-5各50题；保留`math.jsonl`的230道非图形题，并在相同Level确定性补入20道纯文字题。
+- `manifest.json`：数据源revision、抽样种子、分层数量及两份题集的SHA-256。
+- `math_text_manifest.json`：纯文字变体的逐层排除/替换ID及文件哈希。
 
-## JSONL Schema
+每条JSONL记录包含题目、标准答案、上游参考解答、官方难度、学科和固定来源信息。Solver只读取`id`、`dataset`和`problem`，不会接收标准答案、参考过程或metadata。
 
-每行是一个独立对象：
+## 抽样方法
 
-```json
-{
-  "schema_version": "1.0",
-  "id": "全局唯一且稳定的样本 ID",
-  "dataset": "gsm8k | math | aime",
-  "problem": "原始题目文本",
-  "reference_answer": "用于最终答案校验的标准答案",
-  "reference_solution": "原始参考解答；来源未提供时为 null",
-  "metadata": {
-    "source_repo": "Hugging Face 仓库",
-    "source_revision": "固定 revision",
-    "source_split": "test",
-    "source_index": 0,
-    "difficulty": null
-  }
-}
-```
+抽样种子为`20260824`。在每个MATH Level内，按`SHA-256("<seed>:<stable-id>")`升序选择50题。纯文字变体保留不含`[asy]`的已选题，并从未进入`math.jsonl`的同Level纯文字test样本中使用相同排序规则补齐。
 
-`metadata` 允许保留数据集专属字段，例如 MATH 的 `subject`、AIME 的 `year` 和题目 URL。难度标签不跨数据集强行统一。
-
-## 重新生成
+已提交文件可以直接复现本项目的Solver、答案验证和过程评估实验，无需保留`data/raw/`。若要从上游重新生成题集，应先按根目录[README](../../README.md)下载固定revision的数据，再运行：
 
 ```bash
 uv run python scripts/build_benchmark.py
 ```
-
-脚本会同时重建原400题数据池和纯文字MATH变体。纯文字替换只从未进入原`math.jsonl`、不含字面量`[asy]`且难度相同的test样本中选择。
-
-“纯文字”严格指模型输入字段`problem`不含`[asy]`。上游有13条`reference_solution`附带解释性Asymptote插图；这些参考过程不会进入solver prompt，后续过程评估使用前需另行确定处理规则。
