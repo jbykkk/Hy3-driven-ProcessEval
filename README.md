@@ -12,8 +12,10 @@
         |-> Answer Verifier：确定性校验最终答案
         `-> Process Evaluator：逐步审查、首错定位、错误分类与全局聚合
 ```
+## Demo
+**Click to play!**
 
-Solver 不接收标准答案或参考解答；Process Evaluator 只评估 Solver 公开输出的数学过程，不读取模型内部 reasoning。最终答案正确性与过程正确性分别计算，从而避免以正确答案代替对推理有效性的判断。
+[![DemoCover](./assets/democover.png)](./assets/demo.mov)
 
 ## 主要功能
 
@@ -43,7 +45,7 @@ Solver 不接收标准答案或参考解答；Process Evaluator 只评估 Solver
 ### 系统要求
 
 - Python 3.10 或更高版本
-- [uv](https://docs.astral.sh/uv/)（推荐，用于依据 `uv.lock` 创建可复现环境）
+- [uv](https://docs.astral.sh/uv/)（本项目推荐使用 uv 进行管理，用于依据 `uv.lock` 创建可复现环境）
 - 可访问腾讯云 TokenHub 的 Hy3 API 凭证（仅真实调用 Solver 和 Process Evaluator 时需要）
 
 项目运行依赖声明在 `pyproject.toml`，锁定版本记录在 `uv.lock`。安装依赖：
@@ -159,6 +161,8 @@ outputs/runs/<run-id>/
 Solver和应用CLI默认读取`math_text.jsonl`，并且只把题目正文传给Hy3，不向模型提供标准答案、参考解答、难度或学科信息。
 
 MATH数据集的标准答案只由独立答案验证器（Answer Verifier）使用；题目难度用于分层结果分析;参考解答可辅助人工复核，但不会作为Process Evaluator的输入。
+
+如需从上游固定版本重新生成题集，请参阅[原始数据下载说明](data/SOURCES.md)。文档给出了对应数据集 HuggingFace 链接、固定 revision、下载命令以及 `data/raw/math_eleutherai/` 的目录结构；直接使用仓库已提交的题集时无需下载原始数据。
 
 ## License
 

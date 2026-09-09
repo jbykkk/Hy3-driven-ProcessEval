@@ -383,14 +383,14 @@
       "reasoning_token_reduction_rate": 0.712775,
       "boundary": "Temperature is 0.9 and each configuration has one generation per sample."
     },
-    "interpretation_boundary": "All 45 visible solutions have single-reviewer human process labels. Human process accuracy is 44/45 and evaluator agreement is 45/45 on this exploratory single-run set. The only evaluator-positive case is a true issue, so the official flagged-sample false-alarm result is 0/1; the denominator is too small for broad generalization."
+    "interpretation_boundary": "All 45 visible solutions received final human confirmation after the complete workflow review. Human process accuracy is 44/45 and evaluator agreement is 45/45 on this exploratory single-run set. The only evaluator-positive case is a true issue, so the official flagged-sample false-alarm result is 0/1; the denominator is too small for broad generalization."
   },
   "controlled_errors_16": {
     "process_evaluator_high": {
       "metrics": {
         "cases": 16,
-        "process_error_detected": 16,
-        "first_error_step_exact": 16,
+        "error_evidence_detected": 16,
+        "first_error_step_exact": 15,
         "error_type_exact": 14,
         "local_denominator": 15,
         "local_status_exact": 15,
@@ -416,8 +416,8 @@
     "process_evaluator_low": {
       "metrics": {
         "cases": 16,
-        "process_error_detected": 13,
-        "first_error_step_exact": 14,
+        "error_evidence_detected": 15,
+        "first_error_step_exact": 13,
         "error_type_exact": 14,
         "local_denominator": 15,
         "local_status_exact": 13,
