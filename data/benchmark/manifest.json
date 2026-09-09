@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.1",
+  "seed": 20260824,
+  "selection_method": "ascending SHA-256 rank of '<seed>:<stable-id>' within each MATH level",
+  "source": {
+    "repo": "EleutherAI/hendrycks_math",
+    "revision": "21a5633873b6a120296cce3e2df9d5550074f4a3"
+  },
+  "counts": {
+    "math": 250,
+    "math_text": 250
+  },
+  "levels": {
+    "Level 1": 50,
+    "Level 2": 50,
+    "Level 3": 50,
+    "Level 4": 50,
+    "Level 5": 50
+  },
+  "variant": {
+    "base_file": "math.jsonl",
+    "selection_rule": "retain selected records without literal '[asy]'; replace excluded records within the same level by ascending SHA-256 rank from text-only test records not present in math.jsonl",
+    "records": 250,
+    "problem_asymptote_records": 0,
+    "reference_solution_asymptote_records": 13,
+    "replacement_count": 20,
+    "levels": {
+      "Level 1": 50,
+      "Level 2": 50,
+      "Level 3": 50,
+      "Level 4": 50,
+      "Level 5": 50
+    }
+  },
+  "files": {
+    "math.jsonl": {
+      "records": 250,
+      "sha256": "6ddb04a0360ff93e467ac05467867a59ee612a5924156e27dd91fa5cbdc8cc6f"
+    },
+    "math_text.jsonl": {
+      "records": 250,
+      "sha256": "007b163e212272059562bff67e314ad19a6506d44c5799677b94cd9dafea40da"
+    }
+  }
+}
