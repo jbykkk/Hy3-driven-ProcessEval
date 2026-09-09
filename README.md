@@ -13,9 +13,8 @@
         `-> Process Evaluator：逐步审查、首错定位、错误分类与全局聚合
 ```
 ## Demo
-**Click to play!**
 
-[![DemoCover](./assets/democover.png)](./assets/demo.mov)
+![](./assets/demo.gif)
 
 ## 主要功能
 
