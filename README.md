@@ -119,7 +119,7 @@ uv run python -m application run \
   --evaluator-reasoning-effort high
 ```
 
-Hy3 TokenHub 接口当前支持 `low` 和 `high` 两档 `reasoning_effort`，不支持 `max`。提高推理强度通常会增加运行时间和 token 消耗。
+Hy3 TokenHub 接口当前支持 `low` 和 `high` 两档 `reasoning_effort`。提高推理强度通常会增加运行时间和 token 消耗。
 
 Process Evaluator 会对每个可见步骤分别进行一次 Local Evaluation，随后再进行一次 Global Evaluation，因此较长的解答或较高的 Evaluator 推理强度可能显著增加总调用成本。
 
